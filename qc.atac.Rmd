@@ -1,0 +1,41 @@
+---
+title: "ATAC-Seq QC"
+output:
+  html_document:
+    toc: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
+    number_sections: false  
+df_print: kable
+---
+***
+ 
+## Fragment Size Distributions
+```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
+
+p1 <- list.files("./atacQC.out/", pattern = "fragSize.png$", full.names = T)
+
+knitr::include_graphics(p1)
+
+```
+
+## Read Count Frequencies
+
+```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
+
+p2 <- list.files("./atacQC.out/", pattern = "peaks.narrowPeak.Distribution.png$", full.names = T)
+
+knitr::include_graphics(p2)
+
+```
+
+## Peak Annotations
+
+```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
+
+p3 <- list.files("./atacQC.out/", pattern = "narrowPeak.Annotated.png$", full.names = T)
+
+knitr::include_graphics(p3)
+
+```
