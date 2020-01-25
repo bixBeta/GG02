@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# deprecated 
+
 #SBATCH -J RNAseq
 #SBATCH -o %x.out
 #SBATCH -n 12
