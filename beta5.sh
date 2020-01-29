@@ -138,7 +138,7 @@ align(){
 
 	    done
 
-	    source activate RSC
+	 #   source activate RSC
 	    multiqc -f -n ${PIN}.star.multiqc.report .
 	    mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
 		mv *.ReadsPerGene.out.tab STAR.COUNTS
@@ -177,7 +177,7 @@ se_split(){
 
         done
 
-				source activate RSC
+	#			source activate RSC
 				multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
 				mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
 				mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
@@ -228,7 +228,7 @@ alignPE(){
 
 	    done
 
-	    source activate RSC
+	#    source activate RSC
 	    multiqc -f -n ${PIN}.star.multiqc.report .
 	    mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
 		mv *.ReadsPerGene.out.tab STAR.COUNTS
@@ -291,7 +291,7 @@ pe_split(){
 
           done
 
-					source activate RSC
+	#				source activate RSC
 					multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
 					mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
 					mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
@@ -526,13 +526,13 @@ else
 	echo "Trimming for smRNA seq       = " $T >> beta5.run.log
 	echo "SE or PE                     = " $RUN >> beta5.run.log
 	echo "Strandedness specified       = " $STRAND >> beta5.run.log
-    echo "GeneBody Coverage            = " $GBCOV >> beta5.run.log
+    	echo "GeneBody Coverage            = " $GBCOV >> beta5.run.log
 	echo >> beta5.run.log
 
 	echo "ENV INFO: " >> beta5.run.log
 	echo >> beta5.run.log
 	echo "STAR version:" `~/bin/STAR-2.7.0e/bin/Linux_x86_64/STAR --version` >> beta5.run.log
-	echo "multiqc version:" `~/miniconda2/envs/RSC/bin/multiqc --version` >> beta5.run.log
+	echo "multiqc version:" `~/miniconda2/bin/multiqc --version` >> beta5.run.log
 	echo "samtools version:" `/programs/bin/samtools/samtools --version` >> beta5.run.log
 	echo "rseqc version: rseqc=2.6.4 " >> beta5.run.log
 	echo -------------------------------------------------------------------------------------------------- >> beta5.run.log
