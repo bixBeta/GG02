@@ -101,7 +101,7 @@ quant(){
 cleanUp(){
   echo "cleanUp"
   cd mirDeep2_results
-  # rm -r dir_mapper* f1 f2 *_trimmed.fasta *_trimmed.fq
+  rm -r dir_mapper* f1 f2 *_trimmed.fasta *_trimmed.fq
   cd expression_analyses/expression_analyses_${PIN}_${DATE}
       mv *.mrd *.arf ../../
   cd ../../
