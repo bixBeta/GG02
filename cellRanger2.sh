@@ -58,8 +58,8 @@ elif [[ "$1" = "auto" ]]; then
 		  	--localcores 20 --localmem 250
 		done
 
-else [[ "$1" = "idoi" ]]; then
-	#statements
+else [[ "$1" = "idoi" ]]
+
 		#----------------------------------------------------------------------------------------
 		# get sample names and sample ids
 		for i in */
