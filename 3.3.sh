@@ -288,7 +288,7 @@ bedGraphs(){
 				cd ..
 			done
 		cd ..
-	multiqc -n ${PIN}.FRIP.multiqc.report --ignore tagDirs .
+	multiqc -n ${PIN}.FRIP.multiqc.report --ignore tagDirs --ignore peaks.OUT .
 
   cd ..
 }
