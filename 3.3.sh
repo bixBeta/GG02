@@ -207,7 +207,7 @@ callPeak(){
         -f BAMPE \
         -n ${iSUB} \
         -g hs \
-        -p 0.05 \
+        -q 0.05 \
         --outdir peaks.OUT \
         --nomodel --shift 37 --ext 73 \
         --keep-dup all
@@ -291,7 +291,7 @@ bedGraphs(){
 
 	mkdir featureCounts
 	mv *.txt featureCounts
-		
+
 	multiqc -n ${PIN}.FRIP.multiqc.report -b "Please note that the featureCounts M Assigned Column refers to Fragments and Not Reads" --ignore tagDirs --ignore peaks.OUT .
 
   cd ..
