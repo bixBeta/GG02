@@ -64,7 +64,7 @@ trimPE(){
         mkdir TrimQC_stats trimmed_fastqs
         mv *_trimming_report.txt TrimQC_stats
         mv *_val* trimmed_fastqs
-        mv TrimQC_stats fastQC trimmed_fastqs ..
+        mv TrimQC_stats fastQC trimmed_fastqs ../
 
         cd ..
 }
@@ -288,7 +288,11 @@ bedGraphs(){
 				cd ..
 			done
 		cd ..
-	multiqc -n ${PIN}.FRIP.multiqc.report --ignore tagDirs --ignore peaks.OUT .
+
+	mkdir featureCounts
+	mv *.txt featureCounts
+		
+	multiqc -n ${PIN}.FRIP.multiqc.report -b "Please note that the featureCounts M Assigned Column refers to Fragments and Not Reads" --ignore tagDirs --ignore peaks.OUT .
 
   cd ..
 }
