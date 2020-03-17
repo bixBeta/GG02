@@ -93,7 +93,9 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["ehv8"]="/workdir/genomes/FastQ_Screen_Genomes/EHV8/ehv8.star" \
 ["erdman"]="/workdir/genomes/Mycobacterium_tuberculosis/Ensembl_GCA_000668235/GCA_000668235.star" \
 ["TB"]="/workdir/genomes/Mycobacterium_tuberculosis/CDC1551_Ensembl/cdc1551.star" \
-["maize"]="/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/star.maize" )
+["maize"]="/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/star.maize" \
+["finch"]="/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/star.index" \
+["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/star.index" )
 
 declare -A bed12
 
@@ -109,7 +111,9 @@ bed12=(	["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12" \
 ["rat"]="/workdir/genomes/Rattus_norvegicus/rn6/ENSEMBL/Rattus_norvegicus.Rnor_6.0.bed12" \
 ["lonchura"]="/workdir/genomes/Lonchura_striata/LonStrDom1/ENSEMBL/Lonchura_striata_domestica.LonStrDom1.bed12" \
 ["goose"]="/workdir/genomes/Anser_brachyrhynchus/ASM259213v1/ENSEMBL/Anser_brachyrhynchus.ASM259213v1.bed12" \
-["maize"]="/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/Zea_mays.B73_RefGen_v4.bed12" )
+["maize"]="/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/Zea_mays.B73_RefGen_v4.bed12" \
+["finch"]="/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/Taeniopygia_guttata.taeGut3.2.4.bed12" \
+["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/Canis_familiaris.CanFam3.1.bed12" )
 
 
 
@@ -300,7 +304,7 @@ pe_split(){
 							do
 								mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
 							done
-					cd ..							
+					cd ..
 					mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
 					mv *.bam STAR.SPLIT.BAMS
 					mv *.out *.tab *_STARtmp *.list *.multiqc.report_data STAR.SPLIT.LOGS
@@ -436,10 +440,10 @@ if [[ ! -z "${DIR+x}" ]]; then
 
 			elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "PES" ]]; then
 				pe_split
-			
+
 			elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "SE" ]]; then
 				align
-			
+
 			elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "SES" ]]; then
       			se_split
 
@@ -538,4 +542,3 @@ else
 	echo -------------------------------------------------------------------------------------------------- >> beta5.run.log
 
 fi
-
