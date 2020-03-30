@@ -195,21 +195,23 @@ align(){
 
 	    do
 
-	        iSUB=`echo $i | `echo cut -d ${DELIMITER} -f${FIELD}`
+				iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
 
-	        STAR \
-	        --runThreadN 12 \
-	        --genomeDir ${genomeDir[${DIR}]} \
-	        --readFilesIn $i \
-	        --readFilesCommand gunzip -c \
-	        --outSAMstrandField intronMotif \
-	        --outFilterIntronMotifs RemoveNoncanonical \
-	        --outSAMtype BAM SortedByCoordinate \
-	        --outFileNamePrefix $iSUB. \
-	        --limitBAMsortRAM 61675612266 \
-	        --quantMode GeneCounts
+				STAR \
+				--runThreadN 12 \
+				--genomeDir ${genomeDir[${DIR}]} \
+				--readFilesIn $i \
+				--readFilesCommand gunzip -c \
+				--outSAMstrandField intronMotif \
+				--outFilterIntronMotifs RemoveNoncanonical \
+				--outSAMtype BAM SortedByCoordinate \
+				--outFileNamePrefix $iSUB. \
+				--limitBAMsortRAM 61675612266 \
+				--quantMode GeneCounts
 
-	    done
+
+			done
+
 
 	 #   source activate RSC
 	    multiqc -f -n ${PIN}.star.multiqc.report .
@@ -233,7 +235,7 @@ se_split(){
 
         do
 
-          iSUB=`echo $i | `echo cut -d ${DELIMITER} -f${FIELD}`
+          iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
 
           STAR \
           --runThreadN 12 \
@@ -285,7 +287,7 @@ alignPE(){
 
 	    do
 
-	        iSUB=`echo $i | `echo cut -d ${DELIMITER} -f${FIELD}`
+	        iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
 
 	        STAR \
 	        --runThreadN 12 \
@@ -347,7 +349,7 @@ pe_split(){
 
           do
 
-            iSUB=`echo $i | `echo cut -d ${DELIMITER} -f${FIELD}`
+            iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
 
             STAR \
             --runThreadN 12 \
