@@ -16,8 +16,8 @@ usage(){
 	echo "---------------------------------------------------------------------------------------------------------------------------"
 	echo "[-h] --> Display Help"
 	echo "[-p] --> Project Identifier Number"
-  echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default > default: _,5 "
-	echo "[-t] --> Fastq Trimming <nextSE, nextPE, hiseqSE, hiseqPE>"
+  echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
+	echo "[-t] --> Fastq Trimming <nextSE, nextPE, 4colorSE, miSeqPE, novaPE >"
 	echo "[-g] --> Reference Genome <hg38, GRCh38, mm10, GRCm38, etc.>"
 	echo "[-r] --> <SE> <SES> <PE> or <PES> "
 	echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
@@ -98,12 +98,34 @@ trimPE(){
                 cd ..
 }
 
+trimMiSeqPE(){
+
+                cd fastqs
+								ls -1 *_R1_* > .R1
+                ls -1 *_R2_* > .R2
+                paste -d " " .R1 .R2 > Reads.list
+
+                readarray fastqs < Reads.list
+                mkdir fastQC
+
+                for i in "${fastqs[@]}"
+                do
+                        $TRIM --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                done
+
+                mkdir TrimQC_stats trimmed_fastqs
+                mv *_trimming_report.txt TrimQC_stats
+                mv *_val* trimmed_fastqs
+                mv TrimQC_stats fastQC trimmed_fastqs ..
+
+                cd ..
+}
 
 trimHiSeqPE(){
 
                 cd fastqs
-                ls -1 *_R1.fastq* > .R1
-                ls -1 *_R2.fastq* > .R2
+								ls -1 *_1.fq* > .R1
+                ls -1 *_2.fq* > .R2
                 paste -d " " .R1 .R2 > Reads.list
 
                 readarray fastqs < Reads.list
@@ -253,8 +275,8 @@ se_split(){
 alignPE(){
 
 	cd trimmed_fastqs
-	ls -1 *_R1_val_1.fq.gz > .trR1
-	ls -1 *_R2_val_2.fq.gz > .trR2
+	ls -1 *_1.fq.gz > .trR1
+	ls -1 *_2.fq.gz > .trR2
 	paste -d " " .trR1 .trR2 > Trimmed.list
 
 	readarray trimmedFastqs < Trimmed.list
@@ -315,8 +337,8 @@ alignPE(){
 pe_split(){
 
           cd trimmed_fastqs
-          ls -1 *_R1_val_1.fq.gz > .trR1
-          ls -1 *_R2_val_2.fq.gz > .trR2
+          ls -1 *_1.fq.gz > .trR1
+          ls -1 *_2.fq.gz > .trR2
           paste -d " " .trR1 .trR2 > Trimmed.list
 
           readarray trimmedFastqs < Trimmed.list
@@ -470,8 +492,8 @@ if [[ ! -z "${DELIM+x}" ]]; then
     echo "file naming will be done using the default delimiter settings"
   else
 
-    DELIMITER=`echo $DELIM | cut -d _ -f1`
-    FIELD=`echo $DELIM | cut -d , -f2`
+    DELIMITER=`echo $DELIM | cut -d , -f1`
+    FIELD=`echo $DELIM | cut -d , -f2-`
     echo "file naming will be done using the delim = $DELIMITER and field = $FIELD settings"
 
   fi
@@ -489,12 +511,14 @@ if [[ ! -z "${T+x}" ]]; then
 		trimSE
 	elif [[ $T == nextPE ]]; then
 		trimPE
-	elif [[ $T == hiseq ]]; then
+	elif [[ $T == 4colorSE ]]; then
 		trimHiSeq
-  elif [[ $T == hiseqPE]]; then
+	elif [[ $T == miSeqPE ]]; then
+		trimMiSeqPE
+  elif [[ $T == novaPE ]]; then
     trimHiSeqPE
 	else
-		echo "-t only accepts nextSE, nextPE , hiseqSE, hiseqPE as arguments"
+		echo "-t only accepts nextSE, nextPE, 4colorSE, miSeqPE, novaPE as arguments"
 		exit 1
 	fi
 fi
