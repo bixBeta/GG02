@@ -12,11 +12,12 @@ usage(){
 	echo
 	echo
 
-	echo "Usage: bash" $0 "[-h arg] [-p arg] [-t arg] [-g arg] [-q arg]"
+	echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args][-t arg] [-g arg] [-q arg]"
 	echo
 	echo "---------------------------------------------------------------------------------------------------------------"
 	echo "[-h] --> Display Help"
 	echo "[-p] --> Project Identifier Number"
+	echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
 	echo "[-t] --> Trimming <yes>; only use it if trimming is required"
 	echo "[-g] --> Reference Genome <mm10 or hg38>"
 	echo "[-q] --> Execute atacQC.R script <yes>"
@@ -84,7 +85,7 @@ alignPE(){
 
         do
                 # INDEX="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/BWAIndex/genome.fa"
-                iSUB=`echo $i | cut -d "_" -f5`
+                iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
 
                 bwa mem -t 24 -M -R "@RG\tID:${iSUB}\tSM:${iSUB}\tPL:ILLUMINA\tLB:${iSUB}\tPU:1" ${genomeDir[${DIR}]} $i \
                 | samtools view -@ 24 -b -h -F 0x0100 -O BAM -o ${iSUB}.bam
@@ -260,12 +261,9 @@ frip(){
 }
 
 annotatePeaks(){
-	cd dedup-BAMS/peaks.OUT
-	for i in *.narrowPeak
-	do
-		/home/fa286/bin/HOMER/bin/annotatePeaks.pl ${i} ${DIR} -gtf ${gtfs[${DIR}]} > ${i}.Annotated
-	done
 
+	cd dedup-BAMS/peaks.OUT
+	/home/fa286/bin/HOMER/bin/annotatePeaks.pl allSamplesMergedPeakset.saf ${DIR} -gtf ${gtfs[${DIR}]} > allSamplesMergedPeakset.Annotated.saf
 	cd ../..
 }
 
@@ -350,6 +348,11 @@ while getopts "hp:t:g:q:" opt; do
 
 	;;
 
+	d)
+	DELIM=$OPTARG
+
+	;;
+
 
 	\? )
 		echo
@@ -374,6 +377,27 @@ if [[ -z "${PIN+x}" ]]; then
 fi
 
 # PARAMETER CHECKS
+
+					#-------------------------------------------------------------------------------------------------------------
+					#-------------------------------------------------------------------------------------------------------------
+					## check if delimiter parameter exists
+					if [[ ! -z "${DELIM+x}" ]]; then
+					    #statements
+					    if [[ $DELIM == default ]]; then
+
+					    DELIMITER="_"
+					    FIELD="5"
+					    echo "file naming will be done using the default delimiter settings"
+					  else
+
+					    DELIMITER=`echo $DELIM | cut -d , -f1`
+					    FIELD=`echo $DELIM | cut -d , -f2-`
+					    echo "file naming will be done using the delim = $DELIMITER and field = $FIELD settings"
+
+					  fi
+
+					fi
+
 					#-------------------------------------------------------------------------------------------------------------
 					#-------------------------------------------------------------------------------------------------------------
 					## check if trimming parameter exists
@@ -443,20 +467,20 @@ if [[ -z $1 ]] || [[  $1 = "help"  ]] ; then
 	exit 1
 
 else
-	echo >> beta4.atac.log
-	echo `date -u` >> beta4.atac.log
-	echo "Project Identifier Specified = " $PIN >> beta4.atac.log
-	echo "Reference Genome Specified   = " $DIR >> beta4.atac.log
-	echo "Trimming                     = " $T >> beta4.atac.log
-	echo >> beta4.atac.log
+	echo >> beta5.atac.log
+	echo `date -u` >> beta5.atac.log
+	echo "Project Identifier Specified = " $PIN >> beta5.atac.log
+	echo "Reference Genome Specified   = " $DIR >> beta5.atac.log
+	echo "Trimming                     = " $T >> beta5.atac.log
+	echo >> beta5.atac.log
 
-	echo "ENV INFO: " >> beta4.atac.log
-	echo >> beta4.atac.log
-	echo "STAR version:" `~/bin/STAR-2.7.0e/bin/Linux_x86_64/STAR --version` >> beta4.atac.log
-	echo "multiqc version:" `~/miniconda2/envs/RSC/bin/multiqc --version` >> beta4.atac.log
-	echo "samtools version:" `/programs/bin/samtools/samtools --version` >> beta4.atac.log
-	echo "macs2 version: macs2 2.1.0.20150731 " >> beta4.atac.log
-	echo "HOMER version: v4.10.4" >> beta4.atac.log
-	echo -------------------------------------------------------------------------------------------------- >> beta4.atac.log
+	echo "ENV INFO: " >> beta5.atac.log
+	echo >> beta5.atac.log
+	echo "STAR version:" `~/bin/STAR-2.7.0e/bin/Linux_x86_64/STAR --version` >> beta5.atac.log
+	echo "multiqc version:" `~/miniconda2/envs/RSC/bin/multiqc --version` >> beta5.atac.log
+	echo "samtools version:" `/programs/bin/samtools/samtools --version` >> beta5.atac.log
+	echo "macs2 version: macs2 2.1.0.20150731 " >> beta5.atac.log
+	echo "HOMER version: v4.10.4" >> beta5.atac.log
+	echo -------------------------------------------------------------------------------------------------- >> beta5.atac.log
 
 fi
