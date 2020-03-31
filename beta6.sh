@@ -8,7 +8,6 @@
 source ~/.bash_profile
 
 usage(){
-<<<<<<< HEAD
     echo "R N A - S E Q   W O R K F L O W - @bixBeta"
     echo ""
     echo ""
@@ -24,23 +23,6 @@ usage(){
     echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
     echo "[-c] --> GeneBody Coverage <yes, no> "
     echo "---------------------------------------------------------------------------------------------------------------------------"
-=======
-    echo "R N A - S E Q   W O R K F L O W - @bixBeta"
-    echo ""
-    echo ""
-    echo "Usage: bash" $0 "[-h arg] [-p arg] [d args] [-t arg] [-g arg] [-r arg] [-s arg] [-c arg]"
-    echo
-    echo "---------------------------------------------------------------------------------------------------------------------------"
-    echo "[-h] --> Display Help"
-    echo "[-p] --> Project Identifier Number"
-    echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
-    echo "[-t] --> Fastq Trimming <nextSE, nextPE, 4colorSE, miSeqPE, novaPE >"
-    echo "[-g] --> Reference Genome <hg38, GRCh38, mm10, GRCm38, etc.>"
-    echo "[-r] --> <SE> <SES> <PE> or <PES> "
-    echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
-    echo "[-c] --> GeneBody Coverage <yes, no> "
-    echo "---------------------------------------------------------------------------------------------------------------------------"
->>>>>>> 9cdb71c0236de9bf43bdfc0a6227da52073424d2
   echo ""
   echo "******************************************** "
   echo "**********/ EXTENDED GENOME LIST /********** "
@@ -142,11 +124,7 @@ trimMiSeqPE(){
 trimHiSeqPE(){
 
                 cd fastqs
-<<<<<<< HEAD
         ls -1 *_1.fq* > .R1
-=======
-        ls -1 *_1.fq* > .R1
->>>>>>> 9cdb71c0236de9bf43bdfc0a6227da52073424d2
                 ls -1 *_2.fq* > .R2
                 paste -d " " .R1 .R2 > Reads.list
 
@@ -217,25 +195,25 @@ align(){
 
         do
 
-                iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
+        iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
 
-                STAR \
-                --runThreadN 12 \
-                --genomeDir ${genomeDir[${DIR}]} \
-                --readFilesIn $i \
-                --readFilesCommand gunzip -c \
-                --outSAMstrandField intronMotif \
-                --outFilterIntronMotifs RemoveNoncanonical \
-                --outSAMtype BAM SortedByCoordinate \
-                --outFileNamePrefix $iSUB. \
-                --limitBAMsortRAM 61675612266 \
-                --quantMode GeneCounts
-
-
-            done
+        STAR \
+        --runThreadN 12 \
+        --genomeDir ${genomeDir[${DIR}]} \
+        --readFilesIn $i \
+        --readFilesCommand gunzip -c \
+        --outSAMstrandField intronMotif \
+        --outFilterIntronMotifs RemoveNoncanonical \
+        --outSAMtype BAM SortedByCoordinate \
+        --outFileNamePrefix $iSUB. \
+        --limitBAMsortRAM 61675612266 \
+        --quantMode GeneCounts
 
 
-     #   source activate RSC
+        done
+
+
+     #   source activate 
         multiqc -f -n ${PIN}.star.multiqc.report .
         mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
         mv *.ReadsPerGene.out.tab STAR.COUNTS
@@ -471,16 +449,16 @@ while getopts "hp:t:g:s:r:c:d:" opt; do
 
     ;;
 
-  c)
+    c)
 
     GBCOV=$OPTARG
 
-  ;;
+    ;;
 
-  d)
+    d)
     DELIM=$OPTARG
 
-  ;;
+    ;;
 
     \?)
         echo
@@ -651,7 +629,7 @@ else
     echo "Trimming for smRNA seq       = " $T >> beta6.run.log
     echo "SE or PE                     = " $RUN >> beta6.run.log
     echo "Strandedness specified       = " $STRAND >> beta6.run.log
-  echo "GeneBody Coverage            = " $GBCOV >> beta6.run.log
+    echo "GeneBody Coverage            = " $GBCOV >> beta6.run.log
     echo >> beta6.run.log
 
     echo "ENV INFO: " >> beta6.run.log
