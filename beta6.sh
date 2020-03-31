@@ -99,7 +99,7 @@ trimPE(){
 trimMiSeqPE(){
 
                 cd fastqs
-                                ls -1 *_R1_* > .R1
+        ls -1 *_R1_* > .R1
                 ls -1 *_R2_* > .R2
                 paste -d " " .R1 .R2 > Reads.list
 
@@ -211,7 +211,7 @@ align(){
         done
 
 
-     #   source activate 
+        # source activate
         multiqc -f -n ${PIN}.star.multiqc.report .
         mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
         mv *.ReadsPerGene.out.tab STAR.COUNTS
@@ -364,7 +364,7 @@ pe_split(){
 
           done
 
-    #				source activate RSC
+                    # source activate RSC
                     multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
                     mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
                     mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
