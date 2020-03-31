@@ -8,20 +8,20 @@ source ~/.bash_profile
 
 usage(){
 
-	echo "A T A C - S E Q   W O R K F L O W - @bixBeta"
-	echo
-	echo
+    echo "A T A C - S E Q   W O R K F L O W - @bixBeta"
+    echo
+    echo
 
-	echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args][-t arg] [-g arg] [-q arg]"
-	echo
-	echo "---------------------------------------------------------------------------------------------------------------"
-	echo "[-h] --> Display Help"
-	echo "[-p] --> Project Identifier Number"
-	echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
-	echo "[-t] --> Trimming <yes>; only use it if trimming is required"
-	echo "[-g] --> Reference Genome <mm10 or hg38>"
-	echo "[-q] --> Execute atacQC.R script <yes>"
-	echo "---------------------------------------------------------------------------------------------------------------"
+    echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-q arg]"
+    echo
+    echo "---------------------------------------------------------------------------------------------------------------"
+    echo "[-h] --> Display Help"
+    echo "[-p] --> Project Identifier Number"
+    echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
+    echo "[-t] --> Trimming <yes>; only use it if trimming is required"
+    echo "[-g] --> Reference Genome <mm10 or hg38>"
+    echo "[-q] --> Execute atacQC.R script <yes>"
+    echo "---------------------------------------------------------------------------------------------------------------"
 }
 
 
@@ -76,10 +76,10 @@ alignPE(){
         cd trimmed_fastqs
 
         ls -1 *_R1_val_1.fq.gz > .trR1
-      	ls -1 *_R2_val_2.fq.gz > .trR2
-      	paste -d " " .trR1 .trR2 > Trimmed.list
+        ls -1 *_R2_val_2.fq.gz > .trR2
+        paste -d " " .trR1 .trR2 > Trimmed.list
 
-      	readarray trimmedFastqs < Trimmed.list
+        readarray trimmedFastqs < Trimmed.list
 
         for i in "${trimmedFastqs[@]}"
 
@@ -91,34 +91,34 @@ alignPE(){
                 | samtools view -@ 24 -b -h -F 0x0100 -O BAM -o ${iSUB}.bam
         done
 
-				mkdir primary-BAMS
-				mv *.bam primary-BAMS
-				mv primary-BAMS ..
-				cd ..
+                mkdir primary-BAMS
+                mv *.bam primary-BAMS
+                mv primary-BAMS ..
+                cd ..
 }
 
 sort(){
-				cd primary-BAMS
-	        for i in *.bam
-	        do
-	        samtools sort $i > `echo  $i | cut -d "." -f1`.sorted.bam
-	        done
+                cd primary-BAMS
+            for i in *.bam
+            do
+            samtools sort $i > `echo  $i | cut -d "." -f1`.sorted.bam
+            done
 
-	        for i in *.sorted.bam
-	        do
-	        	samtools index $i
-	        done
+            for i in *.sorted.bam
+            do
+                samtools index $i
+            done
 
-					# alignment stats etc. on raw bams
-					for i in *.sorted.bam
-					do
-						iSUB=`echo $i | cut -d "." -f1`
-						samtools flagstat $i > ${iSUB}.primary.flagstat
-						samtools idxstats $i > ${iSUB}.primary.idxstats
-					done
+                    # alignment stats etc. on raw bams
+                    for i in *.sorted.bam
+                    do
+                        iSUB=`echo $i | cut -d "." -f1`
+                        samtools flagstat $i > ${iSUB}.primary.flagstat
+                        samtools idxstats $i > ${iSUB}.primary.idxstats
+                    done
 
-				cd ..
-				pwd
+                cd ..
+                pwd
 }
 
 
@@ -126,20 +126,20 @@ sort(){
 
 
 rmMT(){
-				cd primary-BAMS
-				for i in *.sorted.bam
-				do
+                cd primary-BAMS
+                for i in *.sorted.bam
+                do
 
-					iSUB=`echo $i | cut -d "." -f1`
+                    iSUB=`echo $i | cut -d "." -f1`
 
-					samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs samtools view -b $i > ${iSUB}.noMT.bam
+                    samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs samtools view -b $i > ${iSUB}.noMT.bam
 
-				done
-				cd ..
+                done
+                cd ..
 }
 
 markDups(){
-				cd primary-BAMS
+                cd primary-BAMS
         for i in *.noMT.bam
         do
             iSUB=`echo $i | cut -d "." -f1`
@@ -154,19 +154,19 @@ markDups(){
             TMP_DIR=tmp
 
         done
-				cd ..
+                cd ..
 }
 
 dedupBAM(){
-				cd primary-BAMS
-				# alignment stats etc. on dupMarked no MT bams
-				for i in *.dupMarked.noMT.bam
-				do
-					iSUB=`echo $i | cut -d "." -f1`
-					samtools index $i
-					samtools flagstat $i > ${iSUB}.noMT.flagstat
-					samtools idxstats $i > ${iSUB}.noMT.idxstats
-				done
+                cd primary-BAMS
+                # alignment stats etc. on dupMarked no MT bams
+                for i in *.dupMarked.noMT.bam
+                do
+                    iSUB=`echo $i | cut -d "." -f1`
+                    samtools index $i
+                    samtools flagstat $i > ${iSUB}.noMT.flagstat
+                    samtools idxstats $i > ${iSUB}.noMT.idxstats
+                done
 
         for i in *.dupMarked.noMT.bam
         do
@@ -174,15 +174,15 @@ dedupBAM(){
                 samtools view -b -h -F 0X400 $i > ${iSUB}.DEDUP.bam
         done
 
-				for i in *.DEDUP.bam; do samtools index $i ; samtools idxstats $i > `echo $i | cut -d "." -f1`.DEDUP.idxstats; done
-				for i in *.DEDUP.bam; do samtools flagstat $i > `echo $i | cut -d "." -f1`.DEDUP.flagstat; done
+                for i in *.DEDUP.bam; do samtools index $i ; samtools idxstats $i > `echo $i | cut -d "." -f1`.DEDUP.idxstats; done
+                for i in *.DEDUP.bam; do samtools flagstat $i > `echo $i | cut -d "." -f1`.DEDUP.flagstat; done
 
-				multiqc -n ${PIN}.multiqc.report .
+                multiqc -n ${PIN}.multiqc.report .
 
-				mkdir dedup-BAMS
-				mv *.DEDUP* dedup-BAMS/
-				mv dedup-BAMS ..
-				cd ..
+                mkdir dedup-BAMS
+                mv *.DEDUP* dedup-BAMS/
+                mv dedup-BAMS ..
+                cd ..
 
 }
 
@@ -262,107 +262,107 @@ frip(){
 
 annotatePeaks(){
 
-	cd dedup-BAMS/peaks.OUT
-	/home/fa286/bin/HOMER/bin/annotatePeaks.pl allSamplesMergedPeakset.saf ${DIR} -gtf ${gtfs[${DIR}]} > allSamplesMergedPeakset.Annotated.saf
-	cd ../..
+    cd dedup-BAMS/peaks.OUT
+    /home/fa286/bin/HOMER/bin/annotatePeaks.pl allSamplesMergedPeakset.saf ${DIR} -gtf ${gtfs[${DIR}]} > allSamplesMergedPeakset.Annotated.saf
+    cd ../..
 }
 
 bedGraphs(){
   cd dedup-BAMS
-	for i in *.tag.dir
-	do
-		makeUCSCfile ${i} -o auto -fsize 1e10 -res 1 -color 106,42,73 -style chipseq
-	done
+    for i in *.tag.dir
+    do
+        makeUCSCfile ${i} -o auto -fsize 1e10 -res 1 -color 106,42,73 -style chipseq
+    done
 
-	mkdir tagDirs
-		mv *.tag.dir tagDirs
-		cd tagDirs
-		mkdir bedGraphs
-			for i in *.tag.dir
-			do
-				cd $i
-				zcat *.ucsc.bedGraph.gz | awk '{if(NR>1) print "chr"$0; else print $0}' | gzip > `basename *.ucsc.bedGraph.gz .ucsc.bedGraph.gz`.ucsc.bg.gz
-				mv *.ucsc.bg.gz ../bedGraphs
-				cd ..
-			done
-		cd ..
+    mkdir tagDirs
+        mv *.tag.dir tagDirs
+        cd tagDirs
+        mkdir bedGraphs
+            for i in *.tag.dir
+            do
+                cd $i
+                zcat *.ucsc.bedGraph.gz | awk '{if(NR>1) print "chr"$0; else print $0}' | gzip > `basename *.ucsc.bedGraph.gz .ucsc.bedGraph.gz`.ucsc.bg.gz
+                mv *.ucsc.bg.gz ../bedGraphs
+                cd ..
+            done
+        cd ..
 
-	mkdir featureCounts
-	mv *.txt featureCounts
+    mkdir featureCounts
+    mv *.txt featureCounts
 
-	multiqc -n ${PIN}.FRIP.multiqc.report -b "Please note that the featureCounts M Assigned Column refers to Fragments and Not Reads" --ignore tagDirs --ignore peaks.OUT .
+    multiqc -n ${PIN}.FRIP.multiqc.report -b "Please note that the featureCounts M Assigned Column refers to Fragments and Not Reads" --ignore tagDirs --ignore peaks.OUT .
 
   cd ..
 }
 
 atacQC(){
 
-	cd dedup-BAMS
-	echo "genome alias" = ${gAlias[${DIR}]}
-	/programs/bin/R/Rscript /home/fa286/bin/scripts/atacQC.R ${gAlias[${DIR}]}
-	# ${gAlias[${DIR}]}
-	~/bin/scripts/html.atacQC.sh `echo ${PIN}_atacQC`
+    cd dedup-BAMS
+    echo "genome alias" = ${gAlias[${DIR}]}
+    /programs/bin/R/Rscript /home/fa286/bin/scripts/atacQC.R ${gAlias[${DIR}]}
+    # ${gAlias[${DIR}]}
+    ~/bin/scripts/html.atacQC.sh `echo ${PIN}_atacQC`
 
-	cd ..
+    cd ..
 
-	/home/fa286/bin/tree-1.7.0/tree > folder.structure
+    /home/fa286/bin/tree-1.7.0/tree > folder.structure
 
 }
 
 
-while getopts "hp:t:g:q:" opt; do
-	case ${opt} in
+while getopts "hp:t:g:q:d:" opt; do
+    case ${opt} in
 
-	h)
-		echo
-		echo
-		echo
-		usage
-		echo
-		echo
-		exit 1
+    h)
+        echo
+        echo
+        echo
+        usage
+        echo
+        echo
+        exit 1
 
-	;;
+    ;;
 
-	p )
+    p )
 
-		PIN=$OPTARG
-		echo "Project Identifier = " $PIN
-	;;
+        PIN=$OPTARG
+        echo "Project Identifier = " $PIN
+    ;;
 
-	t )
+    t )
 
-		T=$OPTARG
+        T=$OPTARG
 
-	;;
+    ;;
 
-	g)
+    g)
 
-		DIR=$OPTARG
+        DIR=$OPTARG
 
-	;;
+    ;;
 
-	q)
+    q)
 
-		QC=$OPTARG
+        QC=$OPTARG
 
-	;;
+    ;;
 
-	d)
-	DELIM=$OPTARG
+    d)
+        DELIM=$OPTARG
 
-	;;
+    ;;
 
 
-	\? )
-		echo
-		echo
-		echo
-		usage
+    \? )
+        echo
+        echo
+        echo
+        usage
 
-	;;
+    ;;
 
-	esac
+    esac
 
 done
 # shift $((OPTIND -1))
@@ -373,81 +373,81 @@ done
 
 if [[ -z "${PIN+x}" ]]; then
 
-	PIN="PIN_Null"
+    PIN="PIN_Null"
 fi
 
 # PARAMETER CHECKS
 
-					#-------------------------------------------------------------------------------------------------------------
-					#-------------------------------------------------------------------------------------------------------------
-					## check if delimiter parameter exists
-					if [[ ! -z "${DELIM+x}" ]]; then
-					    #statements
-					    if [[ $DELIM == default ]]; then
+                    #-------------------------------------------------------------------------------------------------------------
+                    #-------------------------------------------------------------------------------------------------------------
+                    ## check if delimiter parameter exists
+                    if [[ ! -z "${DELIM+x}" ]]; then
+                        #statements
+                        if [[ $DELIM == default ]]; then
 
-					    DELIMITER="_"
-					    FIELD="5"
-					    echo "file naming will be done using the default delimiter settings"
-					  else
+                        DELIMITER="_"
+                        FIELD="5"
+                        echo "file naming will be done using the default delimiter settings"
+                      else
 
-					    DELIMITER=`echo $DELIM | cut -d , -f1`
-					    FIELD=`echo $DELIM | cut -d , -f2-`
-					    echo "file naming will be done using the delim = $DELIMITER and field = $FIELD settings"
+                        DELIMITER=`echo $DELIM | cut -d , -f1`
+                        FIELD=`echo $DELIM | cut -d , -f2-`
+                        echo "file naming will be done using the delim = $DELIMITER and field = $FIELD settings"
 
-					  fi
+                      fi
 
-					fi
+                    fi
 
-					#-------------------------------------------------------------------------------------------------------------
-					#-------------------------------------------------------------------------------------------------------------
-					## check if trimming parameter exists
+                    #-------------------------------------------------------------------------------------------------------------
+                    #-------------------------------------------------------------------------------------------------------------
+                    ## check if trimming parameter exists
 
-					if [[ ! -z "${T+x}" ]]; then
+                    if [[ ! -z "${T+x}" ]]; then
 
-						if [[ $T == yes ]]; then
-							trimPE
-						else
-							echo "-t option only accepts yes as an argument"
-							exit 1
-						fi
-					fi
+                        if [[ $T == yes ]]; then
+                            trimPE
+                        else
+                            echo "-t option only accepts yes as an argument"
+                            exit 1
+                        fi
+                    fi
 
-					#-------------------------------------------------------------------------------------------------------------
-					#-------------------------------------------------------------------------------------------------------------
-					## check if genomeDir provided
+                    #-------------------------------------------------------------------------------------------------------------
+                    #-------------------------------------------------------------------------------------------------------------
+                    ## check if genomeDir provided
 
-					if [[ ! -z "${DIR+x}" ]]; then
-						if [ ${genomeDir[${DIR}]+_} ]; then
-							echo Reference genome selected = $DIR
-							echo
-							alignPE
-							sort
-							rmMT
-							markDups
-							dedupBAM
-							callPeak
-							mergedPeaks
-							saf
-							frip
-							tagDir
-							annotatePeaks
-							bedGraphs
-						else
-							echo "The reference genome provided '"$DIR"' is not available"
-							exit 1
+                    if [[ ! -z "${DIR+x}" ]]; then
+                        if [ ${genomeDir[${DIR}]+_} ]; then
+                            echo Reference genome selected = $DIR
+                            echo
+                            alignPE
+                            sort
+                            rmMT
+                            markDups
+                            dedupBAM
+                            callPeak
+                            mergedPeaks
+                            saf
+                            frip
+                            tagDir
+                            annotatePeaks
+                            bedGraphs
+                        else
+                            echo "The reference genome provided '"$DIR"' is not available"
+                            exit 1
 
-						fi
-					fi
+                        fi
+                    fi
 
-					if [[ ! -z "${QC+x}" ]]; then
+                    if [[ ! -z "${QC+x}" ]]; then
 
-						if [[ $QC == yes ]]; then
-							atacQC
-						else
-							echo "-q option only accepts yes as an argument"
-							exit 1
-						fi
-					fi
+                        if [[ $QC == yes ]]; then
+                            atacQC
+                        else
+                            echo "-q option only accepts yes as an argument"
+                            exit 1
+                        fi
+                    fi
 
 
 
@@ -458,29 +458,29 @@ fi
 #-------------------------------------------------------------------------------------------------------------
 
 if [[ -z $1 ]] || [[  $1 = "help"  ]] ; then
-	#statements
-	echo
-	echo
-	usage
-	echo
-	echo
-	exit 1
+    #statements
+    echo
+    echo
+    usage
+    echo
+    echo
+    exit 1
 
 else
-	echo >> beta5.atac.log
-	echo `date -u` >> beta5.atac.log
-	echo "Project Identifier Specified = " $PIN >> beta5.atac.log
-	echo "Reference Genome Specified   = " $DIR >> beta5.atac.log
-	echo "Trimming                     = " $T >> beta5.atac.log
-	echo >> beta5.atac.log
+    echo >> beta5.atac.log
+    echo `date -u` >> beta5.atac.log
+    echo "Project Identifier Specified = " $PIN >> beta5.atac.log
+    echo "Reference Genome Specified   = " $DIR >> beta5.atac.log
+    echo "Trimming                     = " $T >> beta5.atac.log
+    echo >> beta5.atac.log
 
-	echo "ENV INFO: " >> beta5.atac.log
-	echo >> beta5.atac.log
-	echo "STAR version:" `~/bin/STAR-2.7.0e/bin/Linux_x86_64/STAR --version` >> beta5.atac.log
-	echo "multiqc version:" `~/miniconda2/envs/RSC/bin/multiqc --version` >> beta5.atac.log
-	echo "samtools version:" `/programs/bin/samtools/samtools --version` >> beta5.atac.log
-	echo "macs2 version: macs2 2.1.0.20150731 " >> beta5.atac.log
-	echo "HOMER version: v4.10.4" >> beta5.atac.log
-	echo -------------------------------------------------------------------------------------------------- >> beta5.atac.log
+    echo "ENV INFO: " >> beta5.atac.log
+    echo >> beta5.atac.log
+    echo "STAR version:" `~/bin/STAR-2.7.0e/bin/Linux_x86_64/STAR --version` >> beta5.atac.log
+    echo "multiqc version:" `~/miniconda2/envs/RSC/bin/multiqc --version` >> beta5.atac.log
+    echo "samtools version:" `/programs/bin/samtools/samtools --version` >> beta5.atac.log
+    echo "macs2 version: macs2 2.1.0.20150731 " >> beta5.atac.log
+    echo "HOMER version: v4.10.4" >> beta5.atac.log
+    echo -------------------------------------------------------------------------------------------------- >> beta5.atac.log
 
 fi
