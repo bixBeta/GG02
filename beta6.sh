@@ -16,7 +16,7 @@ usage(){
 	echo "---------------------------------------------------------------------------------------------------------------------------"
 	echo "[-h] --> Display Help"
 	echo "[-p] --> Project Identifier Number"
-  echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
+ 	echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
 	echo "[-t] --> Fastq Trimming <nextSE, nextPE, 4colorSE, miSeqPE, novaPE >"
 	echo "[-g] --> Reference Genome <hg38, GRCh38, mm10, GRCm38, etc.>"
 	echo "[-r] --> <SE> <SES> <PE> or <PES> "
@@ -124,7 +124,7 @@ trimMiSeqPE(){
 trimHiSeqPE(){
 
                 cd fastqs
-								ls -1 *_1.fq* > .R1
+		ls -1 *_1.fq* > .R1
                 ls -1 *_2.fq* > .R2
                 paste -d " " .R1 .R2 > Reads.list
 
