@@ -8,6 +8,7 @@
 source ~/.bash_profile
 
 usage(){
+<<<<<<< HEAD
     echo "R N A - S E Q   W O R K F L O W - @bixBeta"
     echo ""
     echo ""
@@ -23,6 +24,23 @@ usage(){
     echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
     echo "[-c] --> GeneBody Coverage <yes, no> "
     echo "---------------------------------------------------------------------------------------------------------------------------"
+=======
+    echo "R N A - S E Q   W O R K F L O W - @bixBeta"
+    echo ""
+    echo ""
+    echo "Usage: bash" $0 "[-h arg] [-p arg] [d args] [-t arg] [-g arg] [-r arg] [-s arg] [-c arg]"
+    echo
+    echo "---------------------------------------------------------------------------------------------------------------------------"
+    echo "[-h] --> Display Help"
+    echo "[-p] --> Project Identifier Number"
+    echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
+    echo "[-t] --> Fastq Trimming <nextSE, nextPE, 4colorSE, miSeqPE, novaPE >"
+    echo "[-g] --> Reference Genome <hg38, GRCh38, mm10, GRCm38, etc.>"
+    echo "[-r] --> <SE> <SES> <PE> or <PES> "
+    echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
+    echo "[-c] --> GeneBody Coverage <yes, no> "
+    echo "---------------------------------------------------------------------------------------------------------------------------"
+>>>>>>> 9cdb71c0236de9bf43bdfc0a6227da52073424d2
   echo ""
   echo "******************************************** "
   echo "**********/ EXTENDED GENOME LIST /********** "
@@ -124,7 +142,11 @@ trimMiSeqPE(){
 trimHiSeqPE(){
 
                 cd fastqs
+<<<<<<< HEAD
         ls -1 *_1.fq* > .R1
+=======
+        ls -1 *_1.fq* > .R1
+>>>>>>> 9cdb71c0236de9bf43bdfc0a6227da52073424d2
                 ls -1 *_2.fq* > .R2
                 paste -d " " .R1 .R2 > Reads.list
 
