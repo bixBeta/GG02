@@ -11,7 +11,7 @@ usage(){
     echo "R N A - S E Q   W O R K F L O W - @bixBeta"
     echo ""
     echo ""
-    echo "Usage: bash" $0 "[-h arg] [-p arg] [d args] [-t arg] [-g arg] [-r arg] [-s arg] [-c arg]"
+    echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-r arg] [-s arg] [-c arg]"
     echo
     echo "---------------------------------------------------------------------------------------------------------------------------"
     echo "[-h] --> Display Help"
@@ -33,8 +33,6 @@ usage(){
     echo "[cat]=/workdir/genomes/Felis_catus/Felis_catus9.0/Ensembl/genomeDir "
     echo "[chicken]=/workdir/genomes/Gallus_gallus/Galgal5/ENSEMBL/galgal5.star "
     echo "[horse]=/workdir/genomes/Equus_caballus/ENSEMBL/Equus_caballus.star "
-    echo "[ATCC_13047]=/workdir/genomes/Enterobacter_cloacae/ATCC_13047/custom/ATCC_13047.GTF "
-    echo "[grape]=/workdir/genomes/Vitis_vinifera/GCA_000003745.2/ENSEMBL/Vitis_vinifera.12X.43.bed12 "
     echo "[rat]=/workdir/genomes/Rattus_norvegicus/rn6/ENSEMBL/rat.star "
     echo "[ercc]=/workdir/genomes/contaminants/ERCC_spikeIns/ercc.star "
     echo "[lonchura]=/workdir/genomes/Lonchura_striata/LonStrDom1/ENSEMBL/lonchura.star "
@@ -99,7 +97,7 @@ trimPE(){
 trimMiSeqPE(){
 
                 cd fastqs
-        ls -1 *_R1_* > .R1
+                ls -1 *_R1_* > .R1
                 ls -1 *_R2_* > .R2
                 paste -d " " .R1 .R2 > Reads.list
 

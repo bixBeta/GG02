@@ -9,6 +9,26 @@ output:
     number_sections: false  
 df_print: kable
 ---
+
+<div>
+<a href="https://www.rnaseqcore.vet.cornell.edu/" target="_blank" class="trex-logo"> <img src="/home/fa286/trex-extended-logo.png" 
+style=
+"position:absolute; 
+top:0px; 
+right:0;
+padding:20px; 
+height:140px; 
+text-align:justify; 
+display:block;
+width:32%;
+height:auto;
+margin:0 auto 20px !important;"> </a>
+</div>
+
+
+
+
+
 ***
  
 ## Fragment Size Distributions
