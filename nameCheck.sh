@@ -15,7 +15,7 @@ if [ "$1" = "help" ] || [ -z "$1" ]
 
   else
 
-  for i in *.gz
+  for i in *
   do
 
     echo $i | `echo cut -d ${1} -f${2}`
