@@ -42,6 +42,7 @@ usage(){
     echo "[TB]=/workdir/genomes/Mycobacterium_tuberculosis/CDC1551_Ensembl/cdc1551.star "
     echo "[maize]=/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/star.maize "
     echo "[finch]=/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/star.index.updated "
+    echo "[finch2]=/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index "
     echo "[dog]=/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/star.index "
 }
 
@@ -52,7 +53,7 @@ trimSE(){
         mkdir TrimQC_stats fastQC trimmed_fastqs
         for i in fastqs/*.gz
         do
-            $TRIM --nextseq 20 --gzip --length 50  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+            trim_galore --nextseq 20 --gzip --length 50  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
         done
         mv *_trimming_report.txt TrimQC_stats
         mv *trimmed.fq.gz trimmed_fastqs
@@ -160,6 +161,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["TB"]="/workdir/genomes/Mycobacterium_tuberculosis/CDC1551_Ensembl/cdc1551.star" \
 ["maize"]="/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/star.maize" \
 ["finch"]="/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/star.index.updated" \
+["finch2"]="/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index" \
 ["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/star.index" )
 
 declare -A bed12
@@ -178,6 +180,7 @@ bed12=(	["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12" \
 ["goose"]="/workdir/genomes/Anser_brachyrhynchus/ASM259213v1/ENSEMBL/Anser_brachyrhynchus.ASM259213v1.bed12" \
 ["maize"]="/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/Zea_mays.B73_RefGen_v4.bed12" \
 ["finch"]="/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/Taeniopygia_guttata.bTaeGut1_v1.p.bed12" \
+["finch2"]="/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/GCF_000277835.1_GeoFor_1.0_genomic.bed12" \
 ["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/Canis_familiaris.CanFam3.1.bed12" )
 
 
