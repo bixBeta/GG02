@@ -121,7 +121,7 @@ trimMiSeqPE(){
 trimHiSeqPE(){
 
                 cd fastqs
-        ls -1 *_1.fq* > .R1
+                ls -1 *_1.fq* > .R1
                 ls -1 *_2.fq* > .R2
                 paste -d " " .R1 .R2 > Reads.list
 
