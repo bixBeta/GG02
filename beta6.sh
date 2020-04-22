@@ -633,6 +633,7 @@ else
 
     echo "ENV INFO: " >> beta6.run.log
     echo >> beta6.run.log
+    echo "trim_galore version:"`trim_galore --version | grep 'version' | cut -d "n" -f2` >> beta6.run.log
     echo "STAR version:" `~/bin/STAR-2.7.0e/bin/Linux_x86_64/STAR --version` >> beta6.run.log
     echo "multiqc version:" `~/miniconda2/bin/multiqc --version` >> beta6.run.log
     echo "samtools version:" `/programs/bin/samtools/samtools --version` >> beta6.run.log
