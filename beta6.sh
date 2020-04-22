@@ -65,7 +65,7 @@ trimHiSeq(){
         mkdir TrimQC_stats fastQC trimmed_fastqs
         for i in fastqs/*.gz
         do
-            $TRIM --quality 20 --gzip --length 50  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+            trim_galore --quality 20 --gzip --length 50  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
         done
         mv *_trimming_report.txt TrimQC_stats
         mv *trimmed.fq.gz trimmed_fastqs
@@ -84,7 +84,7 @@ trimPE(){
 
                 for i in "${fastqs[@]}"
                 do
-                        $TRIM --nextseq 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                        trim_galore --nextseq 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
                 done
 
                 mkdir TrimQC_stats trimmed_fastqs
@@ -107,7 +107,7 @@ trimMiSeqPE(){
 
                 for i in "${fastqs[@]}"
                 do
-                        $TRIM --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                        trim_galore --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
                 done
 
                 mkdir TrimQC_stats trimmed_fastqs
@@ -130,7 +130,7 @@ trimHiSeqPE(){
 
                 for i in "${fastqs[@]}"
                 do
-                        $TRIM --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                        trim_galore --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
                 done
 
                 mkdir TrimQC_stats trimmed_fastqs
