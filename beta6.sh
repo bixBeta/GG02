@@ -386,7 +386,14 @@ pe_split(){
 
 
 geneBodyCov(){
-        cd STAR/STAR.BAMS
+        cd STAR*/*.BAMS
+
+        for i in *.bam
+        do
+          BASE=`basename $(echo $i) .Aligned.sortedByCoord.out.bam `
+          mv $i ${BASE}.bam
+        done
+
         for i in *.bam
         do
             /programs/bin/samtools/samtools index -b $i
@@ -398,7 +405,7 @@ geneBodyCov(){
         echo
         echo
         source activate RSeQC
-        geneBody_coverage.py -r ${bed12[${DIR}]} -i STAR.BAMS/ -o ${PIN}
+        geneBody_coverage.py -r ${bed12[${DIR}]} -i *.BAMS/ -o ${PIN}
         mkdir geneBodyCov
         mv *geneBodyCoverage.* log.txt geneBodyCov
         cd ..
