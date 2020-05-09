@@ -61,12 +61,22 @@ fastq2fasta(){
 config(){
   echo "config"
   cd mirDeep2_results
-  ls -1 *.fasta > f1
-  readarray fastas < f1
 
 
-  for i in "${fastas[@]}"
-    do
+
+  if [ -f config.txt ]; then
+      echo "config file exists"
+      CONFIG="config.txt"
+      cd ..
+
+  else
+
+    ls -1 *.fasta > f1
+    readarray fastas < f1
+
+
+    for i in "${fastas[@]}"
+      do
 
                 if  echo $DELIM | grep -q "|"
 
@@ -80,10 +90,11 @@ config(){
 
     done
 
-  paste f1 f2 > config.txt
+    paste f1 f2 > config.txt
+    CONFIG="config.txt"
+    cd ..
 
-  CONFIG="config.txt"
-  cd ..
+  fi
 
 }
 
