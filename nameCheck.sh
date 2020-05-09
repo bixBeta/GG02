@@ -8,7 +8,7 @@ if [ "$1" = "help" ] || [ -z "$1" ]
     echo "   bash $0 <delim,field> "
     echo "   comma spearated values for delimiter and field"
     echo "    simple example: -,2 "
-    echo "    complex example: \"-,2 | tail -c 4\""
+    echo "    complex example: \"-,2 | tail -c 4\" or \"-,2 | grep -o ...$\""
     echo "--------------------------------------------------------------------------------------------------------------------------"
     echo ""
     echo ""
