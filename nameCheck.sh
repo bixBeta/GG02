@@ -17,6 +17,7 @@ if [ "$1" = "help" ] || [ -z "$1" ]
 
   else
 
+  DELIM=$1
   for i in *
   do
 
