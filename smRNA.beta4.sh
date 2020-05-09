@@ -10,13 +10,14 @@ usage(){
 
   	echo "Usage: bash" $0 "[-h arg] [-p arg] [-t arg] [-g arg]"
 	echo
-	echo "---------------------------------------------------------------------------------------------------------------"
+	echo "---------------------------------------------------------------------------------------------------------------------------------------"
 	echo "[-h] --> Display Help "
 	echo "[-p] --> Project Identifier Number "
+	echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: -,2 (complex field example: 2 | tail -c 4)"
 	echo "[-t] --> NextSeq run < yes, no, na > "
   	echo "[-g] --> Mapper Genome < hsa, mmu, cel > "
-	echo "---------------------------------------------------------------------------------------------------------------"
-
+	echo "[-c] --> CleanUP < yes or no > "
+	echo "---------------------------------------------------------------------------------------------------------------------------------------"
 }
 
 
@@ -29,9 +30,6 @@ trimSmall(){
 		done
 		mv *_trimming_report.txt TrimQC_stats
 		mv *trimmed.fq.gz mirDeep2_results
-    cd mirDeep2_results
-    gunzip *
-    cd ..
 
 }
 
@@ -44,9 +42,6 @@ trimHiSeq(){
 		done
 		mv *_trimming_report.txt TrimQC_stats
 		mv *trimmed.fq.gz mirDeep2_results
-    cd mirDeep2_results
-    gunzip *
-    cd ..
 
 }
 
@@ -68,9 +63,21 @@ config(){
   cd mirDeep2_results
   ls -1 *.fasta > f1
   readarray fastas < f1
+
+
   for i in "${fastas[@]}"
     do
-      echo $i | cut -d "-" -f2 >> f2
+
+				if  echo $DELIM | grep -q "|"
+
+				then
+				echo $i | cut -d ${DELIMITER} -f${FIELD} | ${CCOUNT} >> f2
+
+				else
+				echo $i | cut -d ${DELIMITER} -f${FIELD} >> f2
+
+				fi
+
     done
 
   paste f1 f2 > config.txt
@@ -127,7 +134,7 @@ cleanUp(){
 # mapper
 
 
-while getopts "hp:t:g:" opt; do
+while getopts "hp:t:g:d:c:" opt; do
 	case ${opt} in
 
 	h)
@@ -160,6 +167,18 @@ while getopts "hp:t:g:" opt; do
 
   ;;
 
+	d )
+
+    DELIM=$OPTARG
+
+  ;;
+
+	c )
+
+		CLEAN=$OPTARG
+
+	;;
+
 	\? )
 		echo
 		echo
@@ -180,6 +199,29 @@ if [[ -z "${PIN+x}" ]]; then
 	PIN="PIN_Null"
 fi
 
+#-------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------
+## check if delimiter parameter exists
+
+if [[ ! -z "${DELIM+x}" ]]; then
+    #statements
+    if [[ $DELIM == default ]]; then
+
+    DELIMITER="-"
+    FIELD="2"
+    echo "file naming will be done using the default delimiter settings"
+
+	else
+
+		DELIMITER=`echo $DELIM | cut -d , -f1`
+		FIELD=`echo $DELIM | cut -d , -f2- | cut -d "|" -f1`
+		CCOUNT=`echo $DELIM | cut -d , -f2- | cut -d "|" -f2-`
+
+    echo "file naming will be done using the delim = $DELIMITER and field = $FIELD settings"
+
+  fi
+
+fi
 #-------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------
 ## check if trimming parameter exists and run on nextseq 500 series (or 2 color bias )
@@ -207,11 +249,27 @@ if [[ ! -z "${G+x}" ]]; then
   config
   mapper
   quant
-  cleanUp
 
 elif [[ -z "$G"  ]]; then
   echo "Genome info not provided "
 fi
+
+#-------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------
+## check if clean up parameter exists
+
+if [[ ! -z "${CLEAN+x}" ]]; then
+	#statements
+
+	if [[ $CLEAN == yes ]]; then
+		cleanUp
+
+  else
+    echo 'cleanUP not required at this time'
+
+	fi
+fi
+
 #-------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------
 
@@ -225,9 +283,9 @@ if [[ -z $1 ]] || [[  $1 = "--help"  ]] ; then
 	exit 1
 else
 	echo
-	echo `date` >> beta3.small.run.log
-	echo "Project Identifier Specified = " $PIN >> beta3.small.run.log
-	echo "Trimming for NextSeq         = " $T >> beta3.small.run.log
-	echo "Selected Genome              = " $G >> beta3.small.run.log
-	echo -------------------------------------------------------------------------------------------------- >> beta3.small.run.log
+	echo `date` >> beta4.small.run.log
+	echo "Project Identifier Specified = " $PIN >> beta4.small.run.log
+	echo "Trimming for NextSeq         = " $T >> beta4.small.run.log
+	echo "Selected Genome              = " $G >> beta4.small.run.log
+	echo -------------------------------------------------------------------------------------------------- >> beta4.small.run.log
 fi
