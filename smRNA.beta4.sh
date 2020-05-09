@@ -124,7 +124,7 @@ cleanUp(){
   cd ..
 
   echo ""
-  echo "DONE =)"
+  echo "DONE =) "
 
 }
 
