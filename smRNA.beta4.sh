@@ -231,9 +231,11 @@ if [[ ! -z "${T+x}" ]]; then
 
 	if [[ $T == yes ]]; then
 		trimSmall
+		fastq2fasta
 
   else
     trimHiSeq
+		fastq2fasta
 
 	fi
 fi
@@ -245,7 +247,6 @@ fi
 if [[ ! -z "${G+x}" ]]; then
 	#statements
   echo "Genome selected --> $G "
-  fastq2fasta
   config
   mapper
   quant
