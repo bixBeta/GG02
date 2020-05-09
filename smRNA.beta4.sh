@@ -4,44 +4,44 @@
 
 usage(){
 
-	echo "sm R N A - S E Q   W O R K F L O W - @bixBeta"
-	echo
-	echo
+    echo "sm R N A - S E Q   W O R K F L O W - @bixBeta"
+    echo
+    echo
 
-  	echo "Usage: bash" $0 "[-h arg] [-p arg] [-t arg] [-g arg]"
-	echo
-	echo "---------------------------------------------------------------------------------------------------------------------------------------"
-	echo "[-h] --> Display Help "
-	echo "[-p] --> Project Identifier Number "
-	echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: -,2 (complex field example: 2 | tail -c 4)"
-	echo "[-t] --> NextSeq run < yes, no, na > "
-  	echo "[-g] --> Mapper Genome < hsa, mmu, cel > "
-	echo "[-c] --> CleanUP < yes or no > "
-	echo "---------------------------------------------------------------------------------------------------------------------------------------"
+    echo "Usage: bash" $0 "[-h arg] [-p arg] [-t arg] [-g arg]"
+    echo
+    echo "---------------------------------------------------------------------------------------------------------------------------------------"
+    echo "[-h] --> Display Help "
+    echo "[-p] --> Project Identifier Number "
+    echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: -,2 (complex field example: 2 | tail -c 4)"
+    echo "[-t] --> NextSeq run < yes, no, na > "
+    echo "[-g] --> Mapper Genome < hsa, mmu, cel > "
+    echo "[-c] --> CleanUP < yes or no > "
+    echo "---------------------------------------------------------------------------------------------------------------------------------------"
 }
 
 
 trimSmall(){
     echo "trimSmall"
-		mkdir TrimQC_stats fastQC mirDeep2_results
-		for i in fastqs/*.gz
-		do
-			/home/fa286/bin/TrimGalore-0.6.0/trim_galore --nextseq 20 --gzip --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
-		done
-		mv *_trimming_report.txt TrimQC_stats
-		mv *trimmed.fq.gz mirDeep2_results
+        mkdir TrimQC_stats fastQC mirDeep2_results
+        for i in fastqs/*.gz
+        do
+            /home/fa286/bin/TrimGalore-0.6.0/trim_galore --nextseq 20 --gzip --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+        done
+        mv *_trimming_report.txt TrimQC_stats
+        mv *trimmed.fq.gz mirDeep2_results
 
 }
 
 trimHiSeq(){
     echo "trimHiSeq"
-		mkdir TrimQC_stats fastQC mirDeep2_results
-		for i in fastqs/*.gz
-		do
-			/home/fa286/bin/TrimGalore-0.6.0/trim_galore --quality 20 --gzip --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
-		done
-		mv *_trimming_report.txt TrimQC_stats
-		mv *trimmed.fq.gz mirDeep2_results
+        mkdir TrimQC_stats fastQC mirDeep2_results
+        for i in fastqs/*.gz
+        do
+            /home/fa286/bin/TrimGalore-0.6.0/trim_galore --quality 20 --gzip --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+        done
+        mv *_trimming_report.txt TrimQC_stats
+        mv *trimmed.fq.gz mirDeep2_results
 
 }
 
@@ -68,15 +68,15 @@ config(){
   for i in "${fastas[@]}"
     do
 
-				if  echo $DELIM | grep -q "|"
+                if  echo $DELIM | grep -q "|"
 
-				then
-				echo $i | cut -d ${DELIMITER} -f${FIELD} | ${CCOUNT} >> f2
+                then
+                echo $i | cut -d ${DELIMITER} -f${FIELD} | ${CCOUNT} >> f2
 
-				else
-				echo $i | cut -d ${DELIMITER} -f${FIELD} >> f2
+                else
+                echo $i | cut -d ${DELIMITER} -f${FIELD} >> f2
 
-				fi
+                fi
 
     done
 
@@ -135,30 +135,30 @@ cleanUp(){
 
 
 while getopts "hp:t:g:d:c:" opt; do
-	case ${opt} in
+    case ${opt} in
 
-	h)
-		echo
-		echo
-		echo
-		usage
-		echo
-		echo
-		exit 1
+    h)
+        echo
+        echo
+        echo
+        usage
+        echo
+        echo
+        exit 1
 
-	;;
+    ;;
 
-	p )
+    p )
 
-		PIN=$OPTARG
-		echo "Project Identifier = " $PIN
-	;;
+        PIN=$OPTARG
+        echo "Project Identifier = " $PIN
+    ;;
 
-	t )
+    t )
 
-		T=$OPTARG
+        T=$OPTARG
 
-	;;
+    ;;
 
 
   g )
@@ -167,27 +167,27 @@ while getopts "hp:t:g:d:c:" opt; do
 
   ;;
 
-	d )
+    d )
 
     DELIM=$OPTARG
 
   ;;
 
-	c )
+    c )
 
-		CLEAN=$OPTARG
+        CLEAN=$OPTARG
 
-	;;
+    ;;
 
-	\? )
-		echo
-		echo
-		echo
-		usage
+    \? )
+        echo
+        echo
+        echo
+        usage
 
-	;;
+    ;;
 
-	esac
+    esac
 
 done
 #-------------------------------------------------------------------------------------------------------------
@@ -196,7 +196,7 @@ done
 
 if [[ -z "${PIN+x}" ]]; then
 
-	PIN="PIN_Null"
+    PIN="PIN_Null"
 fi
 
 #-------------------------------------------------------------------------------------------------------------
@@ -211,11 +211,11 @@ if [[ ! -z "${DELIM+x}" ]]; then
     FIELD="2"
     echo "file naming will be done using the default delimiter settings"
 
-	else
+    else
 
-		DELIMITER=`echo $DELIM | cut -d , -f1`
-		FIELD=`echo $DELIM | cut -d , -f2- | cut -d "|" -f1`
-		CCOUNT=`echo $DELIM | cut -d , -f2- | cut -d "|" -f2-`
+        DELIMITER=`echo $DELIM | cut -d , -f1`
+        FIELD=`echo $DELIM | cut -d , -f2- | cut -d "|" -f1`
+        CCOUNT=`echo $DELIM | cut -d , -f2- | cut -d "|" -f2-`
 
     echo "file naming will be done using the delim = $DELIMITER and field = $FIELD settings"
 
@@ -227,15 +227,15 @@ fi
 ## check if trimming parameter exists and run on nextseq 500 series (or 2 color bias )
 
 if [[ ! -z "${T+x}" ]]; then
-	#statements
+    #statements
 
-	if [[ $T == yes ]]; then
-		trimSmall
+    if [[ $T == yes ]]; then
+        trimSmall
 
   else
     trimHiSeq
 
-	fi
+    fi
 fi
 
 #-------------------------------------------------------------------------------------------------------------
@@ -243,7 +243,7 @@ fi
 ## check if genome parameter is  provided
 
 if [[ ! -z "${G+x}" ]]; then
-	#statements
+    #statements
   echo "Genome selected --> $G "
   fastq2fasta
   config
@@ -259,33 +259,33 @@ fi
 ## check if clean up parameter exists
 
 if [[ ! -z "${CLEAN+x}" ]]; then
-	#statements
+    #statements
 
-	if [[ $CLEAN == yes ]]; then
-		cleanUp
+    if [[ $CLEAN == yes ]]; then
+        cleanUp
 
   else
     echo 'cleanUP not required at this time'
 
-	fi
+    fi
 fi
 
 #-------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------
 
 if [[ -z $1 ]] || [[  $1 = "--help"  ]] ; then
-	#statements
-	echo
-	echo
-	usage
-	echo
-	echo
-	exit 1
+    #statements
+    echo
+    echo
+    usage
+    echo
+    echo
+    exit 1
 else
-	echo
-	echo `date` >> beta4.small.run.log
-	echo "Project Identifier Specified = " $PIN >> beta4.small.run.log
-	echo "Trimming for NextSeq         = " $T >> beta4.small.run.log
-	echo "Selected Genome              = " $G >> beta4.small.run.log
-	echo -------------------------------------------------------------------------------------------------- >> beta4.small.run.log
+    echo
+    echo `date` >> beta4.small.run.log
+    echo "Project Identifier Specified = " $PIN >> beta4.small.run.log
+    echo "Trimming for NextSeq         = " $T >> beta4.small.run.log
+    echo "Selected Genome              = " $G >> beta4.small.run.log
+    echo -------------------------------------------------------------------------------------------------- >> beta4.small.run.log
 fi
