@@ -229,14 +229,11 @@ fi
 if [[ ! -z "${T+x}" ]]; then
     #statements
 
-<<<<<<< HEAD
     if [[ $T == yes ]]; then
         trimSmall
-=======
     if [[ $T == yes ]]; then
         trimSmall
         fastq2fasta
->>>>>>> 2d5d702d41900baee611978cf1efd7df34393485
 
   else
     trimHiSeq
