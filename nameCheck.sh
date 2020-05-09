@@ -3,11 +3,12 @@
 if [ "$1" = "help" ] || [ -z "$1" ]
     then
     echo ""
-    echo "--------------------------------------------------------------------------------------"
+    echo "--------------------------------------------------------------------------------------------------------------------------"
     echo " To run this script, use the following syntax:"
-    echo "   bash" $0 "<delimiter> <field>"
+    echo "   bash $0 Comma Spearated Values for Delimiter and Field <delim,field> "
+    echo "    default: -,2 (complex field example: 2 | tail -c 4)"
     echo ""
-    echo "--------------------------------------------------------------------------------------"
+    echo "--------------------------------------------------------------------------------------------------------------------------"
     echo ""
     echo ""
     echo ""
@@ -18,7 +19,20 @@ if [ "$1" = "help" ] || [ -z "$1" ]
   for i in *
   do
 
-    echo $i | `echo cut -d ${1} -f${2}`
+    DELIMITER=`echo $DELIM | cut -d , -f1`
+    FIELD=`echo $DELIM | cut -d , -f2- | cut -d "|" -f1`
+    CCOUNT=`echo $DELIM | cut -d , -f2- | cut -d "|" -f2-`
+
+        if  echo $DELIM | grep -q "|"
+
+        then
+        echo $i | cut -d ${DELIMITER} -f${FIELD} | ${CCOUNT}
+
+        else
+        echo $i | cut -d ${DELIMITER} -f${FIELD}
+
+        fi
+
   done
 
 fi
