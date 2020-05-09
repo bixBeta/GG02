@@ -217,7 +217,7 @@ if [[ ! -z "${DELIM+x}" ]]; then
 		FIELD=`echo $DELIM | cut -d , -f2- | cut -d "|" -f1`
 		CCOUNT=`echo $DELIM | cut -d , -f2- | cut -d "|" -f2-`
 
-    echo "file naming will be done using the delim = $DELIMITER and field = $FIELD settings"
+    echo "file naming will be done using the delim = $DELIMITER and field = $FIELD initial params for $DELIM"
 
   fi
 
