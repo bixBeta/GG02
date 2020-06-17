@@ -6,7 +6,7 @@
 #SBATCH --mem-per-cpu=18000
 
 
-if [ "$1" = "help" ] || [ -z "$1" ]
+if [ "$1" = "help" ] || [ "$1" = "-h" ]
 then
     echo ""
     echo "--------------------------------------------------------------------------------------"
@@ -44,6 +44,10 @@ then
     exit 1
 
 else
+
+
+
+
         for i in *.gz
         do
           fastq_screen --outdir fq.screen_out --conf /home/fa286/bin/scripts/my.fastq.conf $i
