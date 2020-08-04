@@ -18,7 +18,7 @@ usage(){
     echo "[-h] --> Display Help"
     echo "[-p] --> Project Identifier Number"
     echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
-    echo "[-t] --> Trimming <yes>; only use it if trimming is required"
+    echo "[-t] --> Trimming <nextseq or nova>;"
     echo "[-g] --> Reference Genome <mm10 or hg38>"
     echo "[-q] --> Execute atacQC.R script <yes>"
     echo "---------------------------------------------------------------------------------------------------------------"
@@ -69,6 +69,32 @@ trimPE(){
 
         cd ..
 }
+
+
+trimHiSeqPE(){
+
+                cd fastqs
+                ls -1 *_1.fq* > .R1
+                ls -1 *_2.fq* > .R2
+                paste -d " " .R1 .R2 > Reads.list
+
+                readarray fastqs < Reads.list
+                mkdir fastQC
+
+                for i in "${fastqs[@]}"
+                do
+                        trim_galore --quality 20 --gzip --length 20  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                done
+
+                mkdir TrimQC_stats trimmed_fastqs
+                mv *_trimming_report.txt TrimQC_stats
+                mv *_val* trimmed_fastqs
+                mv TrimQC_stats fastQC trimmed_fastqs ..
+
+                cd ..
+}
+
+
 
 
 alignPE(){
@@ -404,11 +430,14 @@ fi
 
                     if [[ ! -z "${T+x}" ]]; then
 
-                        if [[ $T == yes ]]; then
+                        if [[ $T == nextseq ]]; then
                             trimPE
+                        elif [[ $T == nova ]]; then
+                            trimHiSeqPE
                         else
-                            echo "-t option only accepts yes as an argument"
-                            exit 1
+                        echo "-t only accepts nextseq or nova as arguments"
+                        exit 1
+
                         fi
                     fi
 
