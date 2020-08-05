@@ -101,8 +101,8 @@ alignPE(){
 
         cd trimmed_fastqs
 
-        ls -1 *_R1_val_1.fq.gz > .trR1
-        ls -1 *_R2_val_2.fq.gz > .trR2
+        ls -1 *_val_1.fq.gz > .trR1
+        ls -1 *_val_2.fq.gz > .trR2
         paste -d " " .trR1 .trR2 > Trimmed.list
 
         readarray trimmedFastqs < Trimmed.list
