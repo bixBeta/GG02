@@ -19,7 +19,7 @@ usage(){
     echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
     echo "[-t] --> Fastq Trimming <nextSE, nextPE, 4colorSE, miSeqPE, novaPE >"
     echo "[-g] --> Reference Genome <hg38, GRCh38, mm10, GRCm38, etc.>"
-    echo "[-r] --> <SE> <SES> <PE> or <PES> "
+    echo "[-r] --> <SE> <SES> <PE> <PES> <UNMS> or <UNMP> "
     echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
     echo "[-c] --> GeneBody Coverage <yes, no> "
     echo "---------------------------------------------------------------------------------------------------------------------------"
@@ -44,6 +44,7 @@ usage(){
     echo "[finch]=/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/star.index.updated "
     echo "[finch2]=/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index "
     echo "[dog]=/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/star.index "
+    echo "[green]=/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir "
 }
 
 
@@ -162,6 +163,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["maize"]="/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/star.maize" \
 ["finch"]="/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/star.index.updated" \
 ["finch2"]="/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index" \
+["green"]="/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir" \
 ["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/star.index" )
 
 declare -A bed12
@@ -385,6 +387,111 @@ pe_split(){
 }
 
 
+UNMSE() {
+          cd STAR.SPLIT/STAR.SPLIT.Unmapped/
+
+          ls -1 *.mate* > unmapped.list
+
+          grepOldRef=`head -1 unmapped.list | grep -o -P '(?<=.not.).*(?=.out.mate*)'`
+
+          readarray unmappedSE < unmapped.list
+
+          for i in "${unmappedSE[@]}"
+
+          do
+
+            iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
+
+            STAR \
+            --runThreadN 12 \
+            --genomeDir ${genomeDir[${DIR}]} \
+            --readFilesIn $i \
+            --readFilesCommand gunzip -c \
+            --outSAMstrandField intronMotif \
+            --outReadsUnmapped Fastx \
+            --outFilterIntronMotifs RemoveNoncanonical \
+            --outSAMtype BAM SortedByCoordinate \
+            --outFileNamePrefix ${iSUB}. \
+            --limitBAMsortRAM 61675612266 \
+            --quantMode GeneCounts
+
+          done
+
+          multiqc -f -n ${PIN}.star.unmapped.${grepOldRef}.mapped.to.${DIR}.multiqc.report .
+
+          mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
+          mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
+          cd STAR.SPLIT.Unmapped
+              for i in *Unmapped.out.mate*
+                  do
+                      mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                  done
+          cd ..
+          mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
+          mv *.bam STAR.SPLIT.BAMS
+          mv *.out *.tab *_STARtmp *.list *.multiqc.report_data STAR.SPLIT.LOGS
+          mkdir STAR.SPLIT.unmapped.${grepOldRef}.mapped.to.${DIR}
+          mv STAR.* *.html STAR.SPLIT.unmapped.${grepOldRef}.mapped.to.${DIR}
+          # mv STAR.SPLIT ..
+          cd ../../
+
+
+}
+
+UNMPE() {
+          cd STAR.SPLIT/STAR.SPLIT.Unmapped/
+
+          ls -1 *mate1* > .unR1
+          ls -1 *mate2 > .unR2
+          paste -d " " .unR1 .unR2 > unmapped.list
+
+          grepOldRef=`head -1 .unR1 | grep -o -P '(?<=.not.).*(?=.out.mate*)'`
+
+          readarray unmappedPE < unmapped.list
+
+          for i in "${unmappedPE[@]}"
+
+          do
+
+            iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
+
+            STAR \
+            --runThreadN 12 \
+            --genomeDir ${genomeDir[${DIR}]} \
+            --readFilesIn $i \
+            --readFilesCommand gunzip -c \
+            --outSAMstrandField intronMotif \
+            --outReadsUnmapped Fastx \
+            --outFilterIntronMotifs RemoveNoncanonical \
+            --outSAMtype BAM SortedByCoordinate \
+            --outFileNamePrefix ${iSUB}. \
+            --limitBAMsortRAM 61675612266 \
+            --quantMode GeneCounts
+
+          done
+
+          multiqc -f -n ${PIN}.star.unmapped.${grepOldRef}.mapped.to.${DIR}.multiqc.report .
+
+          mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
+          mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
+          cd STAR.SPLIT.Unmapped
+              for i in *Unmapped.out.mate*
+                  do
+                      mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                  done
+          cd ..
+          mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
+          mv *.bam STAR.SPLIT.BAMS
+          mv *.out *.tab *_STARtmp *.list *.multiqc.report_data STAR.SPLIT.LOGS
+          mkdir STAR.SPLIT.unmapped.${grepOldRef}.mapped.to.${DIR}
+          mv STAR.* *.html STAR.SPLIT.unmapped.${grepOldRef}.mapped.to.${DIR}
+          # mv STAR.SPLIT ..
+          cd ../../
+
+
+}
+
+
 geneBodyCov(){
         cd STAR*/*.BAMS
 
@@ -551,6 +658,12 @@ if [[ ! -z "${DIR+x}" ]]; then
 
             elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "SES" ]]; then
                 se_split
+
+            elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "UNMS" ]]; then
+                UNMSE
+
+            elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "UNMP" ]]; then
+                UNMPE
 
             else
                 echo "missing -r option "
