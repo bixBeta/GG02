@@ -406,7 +406,6 @@ UNMSE() {
             --runThreadN 12 \
             --genomeDir ${genomeDir[${DIR}]} \
             --readFilesIn $i \
-            --readFilesCommand gunzip -c \
             --outSAMstrandField intronMotif \
             --outReadsUnmapped Fastx \
             --outFilterIntronMotifs RemoveNoncanonical \
@@ -459,7 +458,6 @@ UNMPE() {
             --runThreadN 12 \
             --genomeDir ${genomeDir[${DIR}]} \
             --readFilesIn $i \
-            --readFilesCommand gunzip -c \
             --outSAMstrandField intronMotif \
             --outReadsUnmapped Fastx \
             --outFilterIntronMotifs RemoveNoncanonical \
