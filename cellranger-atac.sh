@@ -66,11 +66,12 @@ elif [[ "$1" = "auto" ]]; then
 
         done
 
-    mkdir CellRangerATAC-Output
+    DATE=`date +"%m_%d_%H-%M"`
+    mkdir CellRangerATAC-Output_${DATE}
     readarray sampleIDs < idoi
       for i in "${sampleIDs[@]}"
       do
-        mv $i CellRangerATAC-Output
+        mv $i CellRangerATAC-Output_${DATE}
       done
 
 elif [[ "$1" = "no-dups" ]]; then
@@ -123,11 +124,13 @@ elif [[ "$1" = "no-dups" ]]; then
                    --localcores 20 --localmem 250
 
         done
-    mkdir CellRangerATAC-Output
+
+        DATE=`date +"%m_%d_%H-%M"`
+        mkdir CellRangerATAC-Output_${DATE}
     readarray sampleIDs < idoi
       for i in "${sampleIDs[@]}"
       do
-        mv $i CellRangerATAC-Output
+        mv $i CellRangerATAC-Output_${DATE}
       done
 
 
@@ -177,12 +180,12 @@ else [[ "$1" = "idoi" ]]
 
         done
 
-    mkdir CellRangerATAC-Output
+        DATE=`date +"%m_%d_%H-%M"`
+        mkdir CellRangerATAC-Output_${DATE}
     readarray sampleIDs < idoi
       for i in "${sampleIDs[@]}"
       do
-        mv $i CellRangerATAC-Output
+        mv $i CellRangerATAC-Output_${DATE}
       done
 
 fi
-
