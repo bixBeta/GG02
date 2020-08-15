@@ -189,5 +189,6 @@ else [[ "$1" = "idoi" ]]
         done
         
         mv .paths.info .ids .names idoi CellRangerATAC-Output_${DATE}
+        chmod -R 777 CellRangerATAC-Output_${DATE}
 
 fi
