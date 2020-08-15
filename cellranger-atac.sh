@@ -182,10 +182,12 @@ else [[ "$1" = "idoi" ]]
 
         DATE=`date +"%m_%d_%H-%M"`
         mkdir CellRangerATAC-Output_${DATE}
-    readarray sampleIDs < idoi
-      for i in "${sampleIDs[@]}"
-      do
+        readarray sampleIDs < idoi
+        for i in "${sampleIDs[@]}"
+        do
         mv $i CellRangerATAC-Output_${DATE}
-      done
+        done
+        
+        mv .paths.info .ids .names idoi CellRangerATAC-Output_${DATE}
 
 fi
