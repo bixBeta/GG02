@@ -45,7 +45,7 @@ usage(){
     echo "[finch2]=/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index "
     echo "[dog]=/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/star.index "
     echo "[green]=/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir "
-    echo "[BG8]=/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/genomeDir "
+    echo "[BG8]=/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/star.index.5 "
 }
 
 
@@ -166,7 +166,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["finch2"]="/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index" \
 ["green"]="/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir" \
 ["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/star.index" \
-["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/genomeDir" )
+["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/star.index.5" )
 
 declare -A bed12
 
