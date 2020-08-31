@@ -28,7 +28,7 @@ else [[ "$1" = "idoi" ]]
     cd ..
   done
 
-  find . -type d | sed 1,2d | cut -d / -f2 | sort >> names
+  find . -type d | sed 1d | cut -d / -f2 | sort >> names
 
   # cellranger count
   readarray sampleIDs < idoi
