@@ -20,59 +20,50 @@ if [ "$1" = "help" ] || [ -z "$1" ]
 
 else [[ "$1" = "idoi" ]]
 
+  for i in */
 
-        #----------------------------------------------------------------------------------------
-        # get sample names and sample ids
-        for i in */
-        do
-            cd $i/outs
-            DIR=`pwd`
-            cat input_samplesheet.csv | cut -d "," -f3 | cut -d "-" -f2 | cut -d "_" -f3 | sed 1,2d >> ../../.ids
-            cat input_samplesheet.csv | cut -d "," -f3 | sed 1,2d >> ../../.names
-            cd ../../
-        done
-        #----------------------------------------------------------------------------------------
-        # get fastqs path info
-        for i in  */
-        do
-            cd $i/outs
-            cat input_samplesheet.csv | cut -d "," -f3 | sed 1,2d | awk '{print "'$i'" "outs/fastq_path/ :" $0}' >> ../../.paths.info
-            cd ../../
-        done
-        #----------------------------------------------------------------------------------------
-        # cellranger count
-        readarray sampleIDs < idoi
-        for i in "${sampleIDs[@]}"
-        do
-            ID=$i
-            GREP_PATH=$(grep `echo $i`$ .paths.info | cut -d ":" -f1  | xargs | sed -e 's/ /,/g')
-            GREP_NAME=$(grep `echo $i`$ .names | xargs | sed -e 's/ /,/g')
+  do
+    cd $i
+    echo `pwd` >> ../paths
+    cd ..
+  done
+
+  find . -type d | sed 1,2d | cut -d / -f2 | sort >> names
+
+  # cellranger count
+  readarray sampleIDs < idoi
+  for i in "${sampleIDs[@]}"
+  do
+      ID=$i
+      GREP_PATH=$(grep `echo $i`$ .paths.info | cut -d ":" -f1  | xargs | sed -e 's/ /,/g')
+      GREP_NAME=$(grep `echo $i`$ .names | xargs | sed -e 's/ /,/g')
 
 
-            echo "SAMPLE_ID = $ID"
-            echo "FASTQ_PATH = $GREP_PATH"
-            echo "SAMPLE_NAME = $GREP_NAME"
-            echo "-----------------------------------"
-            echo ""
+      echo "SAMPLE_ID = $ID"
+      echo "FASTQ_PATH = $GREP_PATH"
+      echo "SAMPLE_NAME = $GREP_NAME"
+      echo "-----------------------------------"
+      echo ""
 
-            /programs/cellranger-atac-1.2.0/cellranger-atac count --id=$ID \
-                   --reference=/workdir/singleCellData/10x_reference_files/refdata-cellranger-atac-GRCh38-1.2.0 \
-                   --fastqs=$GREP_PATH \
-                   --sample=$GREP_NAME \
-                   --localcores 20 --localmem 250
+      # /programs/cellranger-atac-1.2.0/cellranger-atac count --id=$ID \
+      #        --reference=/workdir/singleCellData/10x_reference_files/refdata-cellranger-atac-GRCh38-1.2.0 \
+      #        --fastqs=$GREP_PATH \
+      #        --sample=$GREP_NAME \
+      #        --localcores 20 --localmem 250
 
 
-        done
+  done
 
-        DATE=`date +"%m_%d_%H-%M"`
-        mkdir CellRangerATAC-Output_${DATE}
-        readarray sampleIDs < idoi
-        for i in "${sampleIDs[@]}"
-        do
-        mv $i CellRangerATAC-Output_${DATE}
-        done
+  # DATE=`date +"%m_%d_%H-%M"`
+  # mkdir CellRangerATAC-Output_${DATE}
+  # readarray sampleIDs < idoi
+  # for i in "${sampleIDs[@]}"
+  # do
+  # mv $i CellRangerATAC-Output_${DATE}
+  # done
+  #
+  # mv .paths.info .ids .names idoi CellRangerATAC-Output_${DATE}
+  # chmod -R 777 CellRangerATAC-Output_${DATE}
 
-        mv .paths.info .ids .names idoi CellRangerATAC-Output_${DATE}
-        chmod -R 777 CellRangerATAC-Output_${DATE}
 
 fi
