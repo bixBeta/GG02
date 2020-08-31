@@ -6,7 +6,7 @@ if [ "$1" = "help" ] || [ -z "$1" ]
     echo "--------------------------------------------------------------------------------------"
     echo " To run this script, use the following syntax:"
     echo "   bash" $0 "<auto> or <idoi>"
-    echo "    	auto - autodetects duplicate sampleIDs "
+    echo "    	auto - autodetects only duplicate sampleIDs "
     echo "--------------------------------------------------------------------------------------"
     echo ""
     echo ""
@@ -58,6 +58,18 @@ elif [[ "$1" = "auto" ]]; then
 		  	--localcores 20 --localmem 250
 		done
 
+    DATE=`date +"%m_%d_%H-%M"`
+    mkdir CellRanger-RNAseq-Counts-Output_${DATE}
+    readarray sampleIDs < idoi
+    for i in "${sampleIDs[@]}"
+    do
+    mv $i CellRanger-RNAseq-Counts-Output_${DATE}
+    done
+
+    mv .paths.info .ids .names idoi CellRanger-RNAseq-Counts-Output_${DATE}
+    chmod -R 777 CellRanger-RNAseq-Counts-Output_${DATE}
+    
+
 else [[ "$1" = "idoi" ]]
 
 		#----------------------------------------------------------------------------------------
@@ -99,5 +111,16 @@ else [[ "$1" = "idoi" ]]
 		  	--sample=$GREP_NAME \
 		  	--localcores 20 --localmem 250
 		done
+
+    DATE=`date +"%m_%d_%H-%M"`
+    mkdir CellRanger-RNAseq-Counts-Output_${DATE}
+    readarray sampleIDs < idoi
+    for i in "${sampleIDs[@]}"
+    do
+    mv $i CellRanger-RNAseq-Counts-Output_${DATE}
+    done
+
+    mv .paths.info .ids .names idoi CellRanger-RNAseq-Counts-Output_${DATE}
+    chmod -R 777 CellRanger-RNAseq-Counts-Output_${DATE}
 
 fi
