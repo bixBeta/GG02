@@ -45,25 +45,25 @@ else [[ "$1" = "idoi" ]]
       echo "-----------------------------------"
       echo ""
 
-      # /programs/cellranger-atac-1.2.0/cellranger-atac count --id=$ID \
-      #        --reference=/workdir/singleCellData/10x_reference_files/refdata-cellranger-atac-GRCh38-1.2.0 \
-      #        --fastqs=$GREP_PATH \
-      #        --sample=$GREP_NAME \
-      #        --localcores 20 --localmem 250
+      /programs/cellranger-atac-1.2.0/cellranger-atac count --id=$ID \
+             --reference=/workdir/singleCellData/10x_reference_files/refdata-cellranger-atac-GRCh38-1.2.0 \
+             --fastqs=$GREP_PATH \
+             --sample=$GREP_NAME \
+             --localcores 20 --localmem 250
 
 
   done
 
-  # DATE=`date +"%m_%d_%H-%M"`
-  # mkdir CellRangerATAC-Output_${DATE}
-  # readarray sampleIDs < idoi
-  # for i in "${sampleIDs[@]}"
-  # do
-  # mv $i CellRangerATAC-Output_${DATE}
-  # done
-  #
-  # mv .paths.info .ids .names idoi CellRangerATAC-Output_${DATE}
-  # chmod -R 777 CellRangerATAC-Output_${DATE}
+  DATE=`date +"%m_%d_%H-%M"`
+  mkdir CellRangerATAC-Output_${DATE}
+  readarray sampleIDs < idoi
+  for i in "${sampleIDs[@]}"
+  do
+  mv $i CellRangerATAC-Output_${DATE}
+  done
+
+  mv .paths.info .ids .names idoi CellRangerATAC-Output_${DATE}
+  chmod -R 777 CellRangerATAC-Output_${DATE}
 
 
 fi
