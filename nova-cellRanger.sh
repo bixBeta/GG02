@@ -45,11 +45,11 @@ else [[ "$1" = "idoi" ]]
       echo "-----------------------------------"
       echo ""
 
-      /programs/cellranger-atac-1.2.0/cellranger-atac count --id=$ID \
-             --reference=/workdir/singleCellData/10x_reference_files/refdata-cellranger-atac-GRCh38-1.2.0 \
-             --fastqs=$GREP_PATH \
-             --sample=$GREP_NAME \
-             --localcores 20 --localmem 250
+      /programs/cellranger-3.0.2/cellranger count --id=$ID \
+            --transcriptome=/workdir/singleCellData/10x_reference_files/refdata-cellranger-GRCh38-3.0.0/ \
+            --fastqs=$GREP_PATH \
+            --sample=$GREP_NAME \
+            --localcores 20 --localmem 250
 
 
   done
@@ -62,7 +62,7 @@ else [[ "$1" = "idoi" ]]
   mv $i CellRangerATAC-Output_${DATE}
   done
 
-  mv .paths.info .ids .names idoi CellRangerATAC-Output_${DATE}
+  mv paths names idoi CellRangerATAC-Output_${DATE}
   chmod -R 777 CellRangerATAC-Output_${DATE}
 
 
