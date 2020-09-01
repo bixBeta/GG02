@@ -55,16 +55,15 @@ else [[ "$1" = "idoi" ]]
   done
 
   DATE=`date +"%m_%d_%H-%M"`
-  mkdir CellRangerATAC-Output_${DATE}
+  mkdir CellRanger-scRNAseq-Output_${DATE}
   readarray sampleIDs < idoi
   for i in "${sampleIDs[@]}"
   do
-  mv $i CellRangerATAC-Output_${DATE}
+  mv $i CellRanger-scRNAseq-Output_${DATE}
   done
 
-  mv paths names idoi CellRangerATAC-Output_${DATE}
-  chmod -R 777 CellRangerATAC-Output_${DATE}
-
+  mv paths names idoi CellRanger-scRNAseq-Output_${DATE}
+  chmod -R 777 CellRanger-scRNAseq-Output_${DATE}
 
 fi
 
