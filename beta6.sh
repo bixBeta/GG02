@@ -43,7 +43,7 @@ usage(){
     echo "[maize]=/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/star.maize "
     echo "[finch]=/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/star.index.updated "
     echo "[finch2]=/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index "
-    echo "[dog]=/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/star.index "
+    echo "[dog]=/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/CanFam3.1.101/genomeDir "
     echo "[green]=/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir "
     echo "[BG8]=/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir "
 }
@@ -165,7 +165,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["finch"]="/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/star.index.updated" \
 ["finch2"]="/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index" \
 ["green"]="/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir" \
-["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/star.index" \
+["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/CanFam3.1.101/genomeDir" \
 ["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir" )
 
 declare -A bed12
@@ -185,7 +185,7 @@ bed12=(	["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12" \
 ["maize"]="/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/Zea_mays.B73_RefGen_v4.bed12" \
 ["finch"]="/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/Taeniopygia_guttata.bTaeGut1_v1.p.bed12" \
 ["finch2"]="/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/GCF_000277835.1_GeoFor_1.0_genomic.bed12" \
-["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/Canis_familiaris.CanFam3.1.bed12" \
+["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/CanFam3.1.101/Canis_lupus_familiaris.CanFam3.1.101.bed12" \
 ["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/test/ncbi-genomes-2020-08-27/GCF_000214275.2_ASM21427v3_genomic.bed12" )
 
 
