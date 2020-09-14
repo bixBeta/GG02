@@ -13,7 +13,7 @@ else
 
 scp /home/fa286/bin/scripts/qc.atac.Rmd .
 
-Rscript /home/fa286/bin/scripts/knit.atacQC.R $1
+/programs/R-3.6.3/bin/Rscript /home/fa286/bin/scripts/knit.atacQC.R $1
 
 rm qc.atac.Rmd
 
