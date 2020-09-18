@@ -46,6 +46,8 @@ usage(){
     echo "[dog]=/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/CanFam3.1.101/genomeDir "
     echo "[green]=/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir "
     echo "[BG8]=/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir "
+    echo "[faba]=/workdir/genomes/Vicia_faba/VfEP_Reference-Unigene/NCBI/genomeDir-wo-gff" 
+    echo "[aphid]=/workdir/genomes/Acyrthosiphon_pisum/pea_aphid_22Mar2018_4r6ur/NCBI/genomeDir" 
 }
 
 
@@ -166,6 +168,8 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["finch2"]="/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index" \
 ["green"]="/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir" \
 ["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/CanFam3.1.101/genomeDir" \
+["faba"]="/workdir/genomes/Vicia_faba/VfEP_Reference-Unigene/NCBI/genomeDir-wo-gff" \
+["aphid"]="/workdir/genomes/Acyrthosiphon_pisum/pea_aphid_22Mar2018_4r6ur/NCBI/genomeDir" \
 ["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir" )
 
 declare -A bed12
