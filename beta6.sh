@@ -19,7 +19,7 @@ usage(){
     echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
     echo "[-t] --> Fastq Trimming <nextSE, nextPE, 4colorSE, miSeqPE, novaPE >"
     echo "[-g] --> Reference Genome <hg38, GRCh38, mm10, GRCm38, etc.>"
-    echo "[-r] --> <SE> <SES> <PE> <PES> <UNMS> or <UNMP> "
+    echo "[-r] --> <SE> <SES> <PE> <PES> <PEBS> <UNMS> or <UNMP> "
     echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
     echo "[-c] --> GeneBody Coverage <yes, no> "
     echo "---------------------------------------------------------------------------------------------------------------------------"
@@ -33,7 +33,7 @@ usage(){
     echo "[cat]=/workdir/genomes/Felis_catus/Felis_catus9.0/Ensembl/genomeDir "
     echo "[chicken]=/workdir/genomes/Gallus_gallus/Galgal5/ENSEMBL/galgal5.star "
     echo "[horse]=/workdir/genomes/Equus_caballus/EquCab3/ENSEMBL/Equus_caballus.star "
-    echo "[horse2]=/workdir/genomes/Equus_caballus/EquCab2/ENSEMBL/EquCab2.star.index " 
+    echo "[horse2]=/workdir/genomes/Equus_caballus/EquCab2/ENSEMBL/EquCab2.star.index "
     echo "[rat]=/workdir/genomes/Rattus_norvegicus/rn6/ENSEMBL/rat.star "
     echo "[ercc]=/workdir/genomes/contaminants/ERCC_spikeIns/ercc.star "
     echo "[lonchura]=/workdir/genomes/Lonchura_striata/LonStrDom1/ENSEMBL/lonchura.star "
@@ -47,10 +47,11 @@ usage(){
     echo "[dog]=/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/CanFam3.1.101/genomeDir "
     echo "[green]=/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir "
     echo "[BG8]=/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir "
-    echo "[faba]=/workdir/genomes/Vicia_faba/VfEP_Reference-Unigene/NCBI/genomeDir-wo-gff" 
-    echo "[aphid]=/workdir/genomes/Acyrthosiphon_pisum/pea_aphid_22Mar2018_4r6ur/NCBI/genomeDir" 
+    echo "[faba]=/workdir/genomes/Vicia_faba/VfEP_Reference-Unigene/NCBI/genomeDir-wo-gff"
+    echo "[aphid]=/workdir/genomes/Acyrthosiphon_pisum/pea_aphid_22Mar2018_4r6ur/NCBI/genomeDir"
     echo "[cholera]=/workdir/genomes/Vibrio_cholerae/N16961/NCBI/genomeDir"
-    
+    echo "[salmonella]=/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir"
+
 }
 
 
@@ -175,7 +176,8 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["faba"]="/workdir/genomes/Vicia_faba/VfEP_Reference-Unigene/NCBI/genomeDir-wo-gff" \
 ["aphid"]="/workdir/genomes/Acyrthosiphon_pisum/pea_aphid_22Mar2018_4r6ur/NCBI/genomeDir" \
 ["cholera"]="/workdir/genomes/Vibrio_cholerae/N16961/NCBI/genomeDir" \
-["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir" )
+["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir" \
+["salmonella"]="/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir" )
 
 declare -A bed12
 
@@ -398,6 +400,59 @@ pe_split(){
                     mv STAR.SPLIT ..
                     cd ..
 }
+
+
+pe_bacteria_split(){
+
+          cd trimmed_fastqs
+          ls -1 *_1.fq.gz > .trR1
+          ls -1 *_2.fq.gz > .trR2
+          paste -d " " .trR1 .trR2 > Trimmed.list
+
+          readarray trimmedFastqs < Trimmed.list
+
+          for i in "${trimmedFastqs[@]}"
+
+          do
+
+            iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
+
+            STAR \
+            --runThreadN 12 \
+            --genomeDir ${genomeDir[${DIR}]} \
+            --readFilesIn $i \
+            --readFilesCommand gunzip -c \
+            --outSAMstrandField intronMotif \
+            --alignIntronMax 1 \
+            --alignMatesGapMax 45000 \
+            --outFilterIntronMotifs RemoveNoncanonical \
+            --outSAMtype BAM SortedByCoordinate \
+            --outReadsUnmapped Fastx \
+            --outFileNamePrefix ${iSUB}. \
+            --limitBAMsortRAM 61675612266 \
+            --quantMode GeneCounts
+
+          done
+
+                    # source activate RSC
+                    multiqc -f -n ${PIN}.star.multiqc.report .
+                    mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
+                    mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
+                    cd STAR.SPLIT.Unmapped
+                        for i in *mate*
+                            do
+                                mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                            done
+                    cd ..
+                    mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
+                    mv *.bam STAR.SPLIT.BAMS
+                    mv *.out *.tab *_STARtmp *.list *.multiqc.report_data STAR.SPLIT.LOGS
+                    mkdir STAR.SPLIT
+                    mv STAR.* *.html STAR.SPLIT
+                    mv STAR.SPLIT ..
+                    cd ..
+}
+
 
 
 UNMSE() {
@@ -675,6 +730,9 @@ if [[ ! -z "${DIR+x}" ]]; then
 
             elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "UNMP" ]]; then
                 UNMPE
+
+            elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "PEBS" ]]; then
+              pe_bacteria_split
 
             else
                 echo "missing -r option "
