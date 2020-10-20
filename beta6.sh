@@ -177,6 +177,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["aphid"]="/workdir/genomes/Acyrthosiphon_pisum/pea_aphid_22Mar2018_4r6ur/NCBI/genomeDir" \
 ["cholera"]="/workdir/genomes/Vibrio_cholerae/N16961/NCBI/genomeDir" \
 ["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir" \
+["aedes"]="/workdir/genomes/Aedes_aegypti/AaegL5.0/NCBI/AaegL5.0.star" \
 ["salmonella"]="/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir" )
 
 declare -A bed12
@@ -198,6 +199,7 @@ bed12=(	["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12" \
 ["finch"]="/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/Taeniopygia_guttata.bTaeGut1_v1.p.bed12" \
 ["finch2"]="/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/GCF_000277835.1_GeoFor_1.0_genomic.bed12" \
 ["dog"]="/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/CanFam3.1.101/Canis_lupus_familiaris.CanFam3.1.101.bed12" \
+["aedes"]="/workdir/genomes/Aedes_aegypti/AaegL5.0/NCBI/GCF_002204515.2_AaegL5.0_genomic.bed12" \
 ["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/test/ncbi-genomes-2020-08-27/GCF_000214275.2_ASM21427v3_genomic.bed12" )
 
 
