@@ -51,6 +51,7 @@ usage(){
     echo "[aphid]=/workdir/genomes/Acyrthosiphon_pisum/pea_aphid_22Mar2018_4r6ur/NCBI/genomeDir"
     echo "[cholera]=/workdir/genomes/Vibrio_cholerae/N16961/NCBI/genomeDir"
     echo "[salmonella]=/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir"
+    echo "[aedes]=/workdir/genomes/Aedes_aegypti/AaegL5.0/NCBI/AaegL5.0.star"
 
 }
 
