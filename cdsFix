@@ -1,0 +1,3 @@
+sed 's/	CDS	/	exon	/g' $1 > 1.gtf
+sed 's/Protein Homology/ProteinHomology/g' 1.gtf > 2.gtf
+
