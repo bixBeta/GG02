@@ -19,7 +19,7 @@ usage(){
     echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
     echo "[-t] --> Fastq Trimming <nextSE, nextPE, 4colorSE, miSeqPE, novaPE >"
     echo "[-g] --> Reference Genome <hg38, GRCh38, mm10, GRCm38, etc.>"
-    echo "[-r] --> <SE> <SES> <PE> <PES> <PEBS> <UNMS> or <UNMP> "
+    echo "[-r] --> <SE> <SES> <PE> <PES> <SEBS> <PEBS> <UNMS> or <UNMP> "
     echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
     echo "[-c] --> GeneBody Coverage <yes, no> "
     echo "---------------------------------------------------------------------------------------------------------------------------"
@@ -457,6 +457,53 @@ pe_bacteria_split(){
 }
 
 
+se_bacteria_split(){
+          cd trimmed_fastqs
+
+          for i in *_trimmed.fq.gz
+
+          do
+
+            iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
+
+            STAR \
+            --runThreadN 12 \
+            --genomeDir ${genomeDir[${DIR}]} \
+            --readFilesIn $i \
+            --readFilesCommand gunzip -c \
+            --outSAMstrandField intronMotif \
+            --alignIntronMax 1 \
+            --alignMatesGapMax 45000 \
+            --outFilterIntronMotifs RemoveNoncanonical \
+            --outSAMtype BAM SortedByCoordinate \
+            --outReadsUnmapped Fastx \
+            --outFileNamePrefix ${iSUB}. \
+            --limitBAMsortRAM 61675612266 \
+            --quantMode GeneCounts
+
+          done
+
+  #			source activate RSC
+          multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
+          mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
+          mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
+          cd STAR.SPLIT.Unmapped
+              for i in *mate*
+                  do
+                      mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                  done
+          cd ..
+          mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
+          mv *.bam STAR.SPLIT.BAMS
+          mv *.out *.tab *_STARtmp *.list *.multiqc.report_data STAR.SPLIT.LOGS
+          mkdir STAR.SPLIT
+          mv STAR.* *.html STAR.SPLIT
+          mv STAR.SPLIT ..
+          cd ..
+
+}
+
+
 
 UNMSE() {
           cd STAR.SPLIT/STAR.SPLIT.Unmapped/
@@ -737,6 +784,8 @@ if [[ ! -z "${DIR+x}" ]]; then
             elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "PEBS" ]]; then
               pe_bacteria_split
 
+            elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "SEBS" ]]; then
+              se_bacteria_split
             else
                 echo "missing -r option "
                 usage
