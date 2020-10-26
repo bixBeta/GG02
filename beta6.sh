@@ -46,7 +46,7 @@ usage(){
     echo "[finch2]=/workdir/genomes/Geospiza_fortis_ground_finch/GeoFor_1.0/NCBI/star.index "
     echo "[dog]=/workdir/genomes/Canis_familiaris/canFam3/ENSEMBL/CanFam3.1.101/genomeDir "
     echo "[green]=/workdir/genomes/Chlorocebus_sabaeus/CHlSab1/ENSEMBL/genomeDir "
-    echo "[BG8]=/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir "
+    echo "[BG8]=/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom3-CDS2exon/genomeDir_fixSpaces "
     echo "[faba]=/workdir/genomes/Vicia_faba/VfEP_Reference-Unigene/NCBI/genomeDir-wo-gff"
     echo "[aphid]=/workdir/genomes/Acyrthosiphon_pisum/pea_aphid_22Mar2018_4r6ur/NCBI/genomeDir"
     echo "[cholera]=/workdir/genomes/Vibrio_cholerae/N16961/NCBI/genomeDir"
@@ -177,7 +177,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["faba"]="/workdir/genomes/Vicia_faba/VfEP_Reference-Unigene/NCBI/genomeDir-wo-gff" \
 ["aphid"]="/workdir/genomes/Acyrthosiphon_pisum/pea_aphid_22Mar2018_4r6ur/NCBI/genomeDir" \
 ["cholera"]="/workdir/genomes/Vibrio_cholerae/N16961/NCBI/genomeDir" \
-["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom-gtf/genomeDir" \
+["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom3-CDS2exon/genomeDir_fixSpaces" \
 ["aedes"]="/workdir/genomes/Aedes_aegypti/AaegL5.0/NCBI/AaegL5.0.star" \
 ["salmonella"]="/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir" )
 
