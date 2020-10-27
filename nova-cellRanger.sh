@@ -44,7 +44,7 @@ else [[ "$1" = "idoi" ]]
     #    echo "SAMPLE_NAME = $GREP_NAME"
     echo "-----------------------------------"
     echo ""
-    done
+    
 
 
   
