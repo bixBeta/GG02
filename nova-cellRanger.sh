@@ -31,20 +31,21 @@ else [[ "$1" = "idoi" ]]
   find . -type d | sed 1d | cut -d / -f2 | sort >> names
 
   # cellranger count
-  readarray sampleIDs < idoi
-  
-  
-    for i in "${sampleIDs[@]}"
+  cat idoi | while read i 
     do
 
     ID=$i
-    GREP_NAME=`grep --no-filename $(echo $ID"$\|^R"$ID"\|^"$ID) names | xargs | sed -e 's/ /,/g'`
+    G="$ID$|^R$ID|^$ID"
+
+    GREP_NAME=`egrep -h $G names | xargs | sed -e 's/ /,/g'`
 
     echo "SAMPLE_ID = $ID"
     echo "FASTQ_PATH = $GREP_NAME"
-    echo "SAMPLE_NAME = $GREP_NAME"
+    #    echo "SAMPLE_NAME = $GREP_NAME"
     echo "-----------------------------------"
     echo ""
+    done
+
 
   
        /programs/cellranger-3.0.2/cellranger count --id=$ID \
