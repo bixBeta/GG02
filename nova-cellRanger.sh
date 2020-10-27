@@ -20,39 +20,43 @@ if [ "$1" = "help" ] || [ -z "$1" ]
 
 else [[ "$1" = "idoi" ]]
 
-  for i in */
+#   for i in */
 
-  do
-    cd $i
-    echo `pwd` >> ../paths
-    cd ..
-  done
+#   do
+#     cd $i
+#     echo `pwd` >> ../paths
+#     cd ..
+#   done
 
   find . -type d | sed 1d | cut -d / -f2 | sort >> names
 
   # cellranger count
   readarray sampleIDs < idoi
-  for i in "${sampleIDs[@]}"
-  do
-      ID=$i
-      GREP_PATH=$(grep `echo $i` paths | xargs | sed -e 's/ /,/g')
-      GREP_NAME=$(grep `echo $i` names | xargs | sed -e 's/ /,/g')
+  
+  
+    for i in "${sampleIDs[@]}"
+    do
 
+    ID=$i
+    GREP_NAME=`grep --no-filename $(echo $ID"$\|^R"$ID"\|^"$ID) names | xargs | sed -e 's/ /,/g'`
 
-      echo "SAMPLE_ID = $ID"
-      echo "FASTQ_PATH = $GREP_PATH"
-      echo "SAMPLE_NAME = $GREP_NAME"
-      echo "-----------------------------------"
-      echo ""
+    echo "SAMPLE_ID = $ID"
+    echo "FASTQ_PATH = $GREP_NAME"
+    echo "SAMPLE_NAME = $GREP_NAME"
+    echo "-----------------------------------"
+    echo ""
 
-      /programs/cellranger-3.0.2/cellranger count --id=$ID \
+  
+       /programs/cellranger-3.0.2/cellranger count --id=$ID \
             --transcriptome=/workdir/singleCellData/10x_reference_files/refdata-cellranger-GRCh38-3.0.0/ \
-            --fastqs=$GREP_PATH \
+            --fastqs=$GREP_NAME \
             --sample=$GREP_NAME \
             --localcores 20 --localmem 250
 
+    done
+  
+  
 
-  done
 
   DATE=`date +"%m_%d_%H-%M"`
   mkdir CellRanger-scRNAseq-Output_${DATE}
