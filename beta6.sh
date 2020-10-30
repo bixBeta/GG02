@@ -52,6 +52,7 @@ usage(){
     echo "[cholera]=/workdir/genomes/Vibrio_cholerae/N16961/NCBI/genomeDir"
     echo "[salmonella]=/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir"
     echo "[aedes]=/workdir/genomes/Aedes_aegypti/AaegL5.0/NCBI/AaegL5.0.star"
+    ech0 "[DC3000]=/workdir/genomes/Pseudomonas_syringae/Tomato_D3000_ASM17289v1/NCBI/star.index"
 
 }
 
@@ -179,6 +180,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["cholera"]="/workdir/genomes/Vibrio_cholerae/N16961/NCBI/genomeDir" \
 ["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/custom3-CDS2exon/genomeDir_fixSpaces" \
 ["aedes"]="/workdir/genomes/Aedes_aegypti/AaegL5.0/NCBI/AaegL5.0.star" \
+["DC3000"]="/workdir/genomes/Pseudomonas_syringae/Tomato_D3000_ASM17289v1/NCBI/star.index" \
 ["salmonella"]="/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir" )
 
 declare -A bed12
