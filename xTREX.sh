@@ -13,9 +13,9 @@ if [[ $1 = "help" ]] || [[ -z $1 ]]; then
 
 elif [[ $1 = "hg38" ]]; then
 
-	BED12='/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12'
+    BED12='/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12'
 
-	for i in *.gz
+    for i in *.gz
 
     do
         DIR='/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star'
@@ -37,9 +37,9 @@ elif [[ $1 = "hg38" ]]; then
 
 elif [[ $1 = "mm10" ]]; then
 
-	BED12='/workdir/genomes/Mus_musculus/mm10/UCSC/BED12/mm10.ucsc.bed12'
+    BED12='/workdir/genomes/Mus_musculus/mm10/UCSC/BED12/mm10.ucsc.bed12'
 
-	for i in *_trimmed.fq.gz
+    for i in *_trimmed.fq.gz
 
     do
         DIR='/workdir/genomes/Mus_musculus/mm10/UCSC/mm10.star'
@@ -61,9 +61,9 @@ elif [[ $1 = "mm10" ]]; then
 
 elif [[ $1 = "cat" ]]; then
 
-	BED12='/workdir/genomes/Felis_catus/Felis_catus9.0/Ensembl/Felis_catus.Felis_catus_9.0.95.bed12'
+    BED12='/workdir/genomes/Felis_catus/Felis_catus9.0/Ensembl/Felis_catus.Felis_catus_9.0.95.bed12'
 
-	for i in *_trimmed.fq.gz
+    for i in *_trimmed.fq.gz
 
     do
         DIR='/workdir/genomes/Felis_catus/Felis_catus9.0/Ensembl/genomeDir'
@@ -85,9 +85,9 @@ elif [[ $1 = "cat" ]]; then
 
 elif [[ $1 = "chicken" ]]; then
 
-	BED12='/workdir/genomes/Gallus_gallus/Galgal5/ENSEMBL/Gallus_gallus.Gallus_gallus-5.0.bed12'
+    BED12='/workdir/genomes/Gallus_gallus/Galgal5/ENSEMBL/Gallus_gallus.Gallus_gallus-5.0.bed12'
 
-	for i in *_trimmed.fq.gz
+    for i in *_trimmed.fq.gz
 
     do
         DIR='/workdir/genomes/Gallus_gallus/Galgal5/ENSEMBL/galgal5.star'
@@ -108,10 +108,10 @@ elif [[ $1 = "chicken" ]]; then
     done
 
 else
-	echo ""
-	echo "Please select appropriate genome Index"
-	echo ""
-	exit 1
+    echo ""
+    echo "Please select appropriate genome Index"
+    echo ""
+    exit 1
 
 fi
 
@@ -120,24 +120,24 @@ fi
 PIN=$2
 source activate RSC
 
-	multiqc -f -n ${PIN}.star.multiqc.report .
+    multiqc -f -n ${PIN}.star.multiqc.report .
 
-	mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
-	mv *.ReadsPerGene.out.tab STAR.COUNTS
-	mv *.bam STAR.BAMS
-	mv *.out *.tab *_STARtmp *.list *star.multiqc.report_data STAR.LOGS
+    mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
+    mv *.ReadsPerGene.out.tab STAR.COUNTS
+    mv *.bam STAR.BAMS
+    mv *.out *.tab *_STARtmp *.list *star.multiqc.report_data STAR.LOGS
 
-	cd STAR.BAMS
+    cd STAR.BAMS
 
-	for i in *.bam
+    for i in *.bam
 
-	    do
-	    samtools index -b $i
-	    done
+        do
+        samtools index -b $i
+        done
 
-	cd ..
+    cd ..
 
-	geneBody_coverage.py -r $BED12 -i STAR.BAMS/ -o $PIN
-	mkdir geneBodyCov
-	mv *geneBodyCoverage.* log.txt geneBodyCov
+    geneBody_coverage.py -r $BED12 -i STAR.BAMS/ -o $PIN
+    mkdir geneBodyCov
+    mv *geneBodyCoverage.* log.txt geneBodyCov
 

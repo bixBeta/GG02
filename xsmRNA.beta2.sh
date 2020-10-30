@@ -5,25 +5,25 @@
 usage(){
 
   echo "Usage: bash" $0 "[-h arg] [-p arg] [-t arg]"
-	echo
-	echo "---------------------------------------------------------------------------------------------------------------"
-	echo "[-h] --> Display Help"
-	echo "[-p] --> Project Identifier Number"
-	echo "[-t] --> NextSeq run <yes, no, na >"
-	echo "---------------------------------------------------------------------------------------------------------------"
+    echo
+    echo "---------------------------------------------------------------------------------------------------------------"
+    echo "[-h] --> Display Help"
+    echo "[-p] --> Project Identifier Number"
+    echo "[-t] --> NextSeq run <yes, no, na >"
+    echo "---------------------------------------------------------------------------------------------------------------"
 
 }
 
 
 trimSmall(){
     echo "trimSmall"
-		mkdir TrimQC_stats fastQC trimmed_fastqs
-		for i in fastqs/*.gz
-		do
-			/home/fa286/bin/TrimGalore-0.6.0/trim_galore --nextseq 20 --gzip --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
-		done
-		mv *_trimming_report.txt TrimQC_stats
-		mv *trimmed.fq.gz trimmed_fastqs
+        mkdir TrimQC_stats fastQC trimmed_fastqs
+        for i in fastqs/*.gz
+        do
+            /home/fa286/bin/TrimGalore-0.6.0/trim_galore --nextseq 20 --gzip --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+        done
+        mv *_trimming_report.txt TrimQC_stats
+        mv *trimmed.fq.gz trimmed_fastqs
     cd trimmed_fastqs
     gunzip *
     cd ..
@@ -32,13 +32,13 @@ trimSmall(){
 
 trimHiSeq(){
     echo "trimHiSeq"
-		mkdir TrimQC_stats fastQC trimmed_fastqs
-		for i in fastqs/*.gz
-		do
-			/home/fa286/bin/TrimGalore-0.6.0/trim_galore --quality 20 --gzip --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
-		done
-		mv *_trimming_report.txt TrimQC_stats
-		mv *trimmed.fq.gz trimmed_fastqs
+        mkdir TrimQC_stats fastQC trimmed_fastqs
+        for i in fastqs/*.gz
+        do
+            /home/fa286/bin/TrimGalore-0.6.0/trim_galore --quality 20 --gzip --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+        done
+        mv *_trimming_report.txt TrimQC_stats
+        mv *trimmed.fq.gz trimmed_fastqs
     cd trimmed_fastqs
     gunzip *
     cd ..
@@ -112,40 +112,40 @@ cleanUp(){
 
 
 while getopts "hp:t:" opt; do
-	case ${opt} in
+    case ${opt} in
 
-	h)
-		echo
-		echo
-		echo
-		usage
-		echo
-		echo
-		exit 1
+    h)
+        echo
+        echo
+        echo
+        usage
+        echo
+        echo
+        exit 1
 
-	;;
+    ;;
 
-	p )
+    p )
 
-		PIN=$OPTARG
-		echo "Project Identifier = " $PIN
-	;;
+        PIN=$OPTARG
+        echo "Project Identifier = " $PIN
+    ;;
 
-	t )
+    t )
 
-		T=$OPTARG
+        T=$OPTARG
 
-	;;
+    ;;
 
-	\? )
-		echo
-		echo
-		echo
-		usage
+    \? )
+        echo
+        echo
+        echo
+        usage
 
-	;;
+    ;;
 
-	esac
+    esac
 
 done
 #-------------------------------------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ done
 
 if [[ -z "${PIN+x}" ]]; then
 
-	PIN="PIN_Null"
+    PIN="PIN_Null"
 fi
 
 #-------------------------------------------------------------------------------------------------------------
@@ -162,10 +162,10 @@ fi
 ## check if trimming parameter exists and run on nextseq 500 series (or 2 color bias )
 
 if [[ ! -z "${T+x}" ]]; then
-	#statements
+    #statements
 
-	if [[ $T == yes ]]; then
-		trimSmall
+    if [[ $T == yes ]]; then
+        trimSmall
     fastq2fasta
     config
     mapper
@@ -174,7 +174,7 @@ if [[ ! -z "${T+x}" ]]; then
 
   elif [[ $T == no ]]; then
     #statements
-		trimHiSeq
+        trimHiSeq
     fastq2fasta
     config
     mapper
@@ -188,7 +188,7 @@ if [[ ! -z "${T+x}" ]]; then
     quantHuman
     cleanUp
 
-	fi
+    fi
 fi
 
 
@@ -196,18 +196,18 @@ fi
 #-------------------------------------------------------------------------------------------------------------
 
 if [[ -z $1 ]] || [[  $1 = "--help"  ]] ; then
-	#statements
-	echo
-	echo
-	usage
-	echo
-	echo
-	exit 1
+    #statements
+    echo
+    echo
+    usage
+    echo
+    echo
+    exit 1
 else
-	echo
-	echo `date` >> beta2.small.run.log
-	echo "Project Identifier Specified = " $PIN >> beta2.small.run.log
-	echo "Trimming for NextSeq         = " $T >> beta2.small.run.log
-	echo -------------------------------------------------------------------------------------------------- >> beta2.small.run.log
+    echo
+    echo `date` >> beta2.small.run.log
+    echo "Project Identifier Specified = " $PIN >> beta2.small.run.log
+    echo "Trimming for NextSeq         = " $T >> beta2.small.run.log
+    echo -------------------------------------------------------------------------------------------------- >> beta2.small.run.log
 fi
 
