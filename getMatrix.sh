@@ -13,9 +13,9 @@ if [ "$1" = "help" ] || [ -z "$1" ]
 
 else
 
-    echo *.ReadsPerGene.out.tab.rawCounts | sed -e 's/ /    /g' > colnames
-    paste *.ReadsPerGene.out.tab.rawCounts > $1.rawCounts.txt.temp
+    echo *.ReadsPerGene.out.tab.rawCounts | sed -e 's/ /    /g' > .colnames
+    paste *.ReadsPerGene.out.tab.rawCounts > .$1.rawCounts.txt.temp
 
-    cat colnames $1.rawCounts.txt.temp > $1.rawCounts.txt
-
+    cat colnames .$1.rawCounts.txt.temp > $1.rawCounts.txt
+    rm .$1.rawCounts.txt.temp
 fi
