@@ -28,15 +28,14 @@ else [[ "$1" = "idoi" ]]
 #     cd ..
 #   done
 
-  find . -type d | sed 1d | cut -d / -f2 | sort >> names
+    find . -type d | sed 1d | cut -d / -f2 | sort >> names
 
-  # cellranger count
-  cat idoi | while read i 
+     # cellranger count
+    cat idoi | while read i 
     do
 
     ID=$i
-    G="$ID$|^R$ID|^$ID"
-
+    G="$ID$|^R$ID|^$ID|R$ID$|$ID$"
     GREP_NAME=`egrep -h $G names | xargs | sed -e 's/ /,/g'`
 
     echo "SAMPLE_ID = $ID"
@@ -44,10 +43,8 @@ else [[ "$1" = "idoi" ]]
     #    echo "SAMPLE_NAME = $GREP_NAME"
     echo "-----------------------------------"
     echo ""
-    
 
 
-  
        /programs/cellranger-3.0.2/cellranger count --id=$ID \
             --transcriptome=/workdir/singleCellData/10x_reference_files/refdata-cellranger-GRCh38-3.0.0/ \
             --fastqs=$GREP_NAME \
