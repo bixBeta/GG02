@@ -10,14 +10,14 @@ usage(){
 
     echo "Usage: bash" $0 "[-h arg] [-p arg] [-t arg] [-g arg]"
     echo
-    echo "---------------------------------------------------------------------------------------------------------------------------------------"
+    echo "-------------------------------------------------------------------------------------------------------------------------------------------------------"
     echo "[-h] --> Display Help "
     echo "[-p] --> Project Identifier Number "
-    echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: -,2 (complex field example: 2 | tail -c 4)"
+    echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: -,2 (complex field example: 2 | tail -c 4 or grep -o '...$')"
     echo "[-t] --> NextSeq run < yes, no, na > "
     echo "[-g] --> Mapper Genome < hsa, mmu, cel > "
     echo "[-c] --> CleanUP < yes or no > "
-    echo "---------------------------------------------------------------------------------------------------------------------------------------"
+    echo "-------------------------------------------------------------------------------------------------------------------------------------------------------"
 }
 
 
