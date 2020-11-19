@@ -109,8 +109,8 @@ mapper(){
 quant(){
   echo "quant"
   cd mirDeep2_results
-  quantifier.pl -p /workdir/RSC/referenceFiles/miRBase/v22_1/hairpin.fa \
-  -m /workdir/RSC/referenceFiles/miRBase/v22_1/mature.fa \
+  quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
+  -m /workdir/genomes/smRNA/mature.fa \
   -t $G -y ${PIN}_${DATE} -r ${PIN}_${DATE}.collapsed.fa -W -d
   cd ..
 }
