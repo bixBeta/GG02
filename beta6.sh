@@ -53,6 +53,7 @@ usage(){
     echo "[salmonella]=/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir"
     echo "[aedes]=/workdir/genomes/Aedes_aegypti/AaegL5.0/NCBI/AaegL5.0.star"
     echo "[DC3000]=/workdir/genomes/Pseudomonas_syringae/Tomato_D3000_ASM17289v1/NCBI/star.index"
+    echo "[Theileria]=/workdir/genomes/Theileria/Tannulata_ASM322v1/NCBI/starIndex"
 
 }
 
@@ -182,6 +183,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["aedes"]="/workdir/genomes/Aedes_aegypti/AaegL5.0/NCBI/AaegL5.0.star" \
 ["aedesVB"]="/workdir/genomes/Aedes_aegypti/AaegL5.0/Vectorbase/AaegyptiLVP_AGWG_release49/genomeDir.vectorBase" \
 ["DC3000"]="/workdir/genomes/Pseudomonas_syringae/Tomato_D3000_ASM17289v1/NCBI/star.index" \
+["Theileria"]="/workdir/genomes/Theileria/Tannulata_ASM322v1/NCBI/starIndex" \
 ["salmonella"]="/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir" )
 
 declare -A bed12
