@@ -32,7 +32,7 @@ usage(){
     echo "[GRCm38]=/workdir/genomes/Mus_musculus/mm10/ENSEMBL/GRCm38.star "
     echo "[cat]=/workdir/genomes/Felis_catus/Felis_catus9.0/Ensembl/genomeDir "
     echo "[chicken]=/workdir/genomes/Gallus_gallus/Galgal5/ENSEMBL/galgal5.star "
-    echo "[horse]=/workdir/genomes/Equus_caballus/EquCab3/ENSEMBL/Equus_caballus.star "
+    echo "[horse]=/workdir/genomes/Equus_caballus/EquCab3/ENSEMBL/gtf.102/star.index.102 "
     echo "[horse2]=/workdir/genomes/Equus_caballus/EquCab2/ENSEMBL/EquCab2.star.index "
     echo "[rat]=/workdir/genomes/Rattus_norvegicus/rn6/ENSEMBL/rat.star "
     echo "[ercc]=/workdir/genomes/contaminants/ERCC_spikeIns/ercc.star "
@@ -161,7 +161,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["GRCm38"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/GRCm38.star" \
 ["cat"]="/workdir/genomes/Felis_catus/Felis_catus9.0/Ensembl/genomeDir" \
 ["chicken"]="/workdir/genomes/Gallus_gallus/Galgal5/ENSEMBL/galgal5.star" \
-["horse"]="/workdir/genomes/Equus_caballus/EquCab3/ENSEMBL/Equus_caballus.star" \
+["horse"]="/workdir/genomes/Equus_caballus/EquCab3/ENSEMBL/gtf.102/star.index.102" \
 ["horse2"]="/workdir/genomes/Equus_caballus/EquCab2/ENSEMBL/EquCab2.star.index" \
 ["ATCC_13047"]="/workdir/genomes/Enterobacter_cloacae/ATCC_13047/custom/ATCC_13047.GTF" \
 ["grape"]="/workdir/genomes/Vitis_vinifera/GCA_000003745.2/ENSEMBL/Vitis_vinifera.12X.43.bed12" \
@@ -196,7 +196,7 @@ bed12=(	["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12" \
 ["GRCm38"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/Mus_musculus.GRCm38.bed12" \
 ["cat"]="/workdir/genomes/Felis_catus/Felis_catus9.0/Ensembl/Felis_catus.Felis_catus_9.0.95.bed12" \
 ["chicken"]="/workdir/genomes/Gallus_gallus/Galgal5/ENSEMBL/Gallus_gallus.Gallus_gallus-5.0.bed12" \
-["horse"]="/workdir/genomes/Equus_caballus/EquCab3/ENSEMBL/Equus_caballus.EquCab3.0.96.bed12" \
+["horse"]="/workdir/genomes/Equus_caballus/EquCab3/ENSEMBL/gtf.102/Equus_caballus.EquCab3.0.102.bed12" \
 ["horse2"]="/workdir/genomes/Equus_caballus/EquCab2/ENSEMBL/Equus_caballus.EquCab2.94.BED12" \
 ["ATCC_13047"]="/workdir/genomes/Enterobacter_cloacae/ATCC_13047/GCF_000025565.1_ASM2556v1_genomic.bed12" \
 ["grape"]="/workdir/genomes/Vitis_vinifera/GCA_000003745.2/ENSEMBL/Vitis_vinifera.star" \
