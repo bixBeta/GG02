@@ -55,6 +55,7 @@ usage(){
     echo "[DC3000]=/workdir/genomes/Pseudomonas_syringae/Tomato_DC3000/NCBI/star.index"
     echo "[Theileria]=/workdir/genomes/Theileria/Tannulata_ASM322v1/NCBI/starIndex"
     echo "[cow]=/workdir/genomes/Bos_taurus/ARS-UCD1.2_GCA_002263795.2/ENSEMBL/star.index"
+    echo "[EA273]=/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir" 
 
 }
 
@@ -186,7 +187,8 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["DC3000"]="/workdir/genomes/Pseudomonas_syringae/Tomato_DC3000/NCBI/star.index" \
 ["Theileria"]="/workdir/genomes/Theileria/Tannulata_ASM322v1/NCBI/starIndex" \
 ["cow"]="/workdir/genomes/Bos_taurus/ARS-UCD1.2_GCA_002263795.2/ENSEMBL/star.index" \
-["salmonella"]="/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir" )
+["salmonella"]="/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir" \
+["EA273"]="/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir" )
 
 declare -A bed12
 
