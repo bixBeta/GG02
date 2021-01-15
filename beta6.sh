@@ -200,7 +200,7 @@ bed12=(	["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12" \
 ["GRCm38"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/Mus_musculus.GRCm38.bed12" \
 ["cat"]="/workdir/genomes/Felis_catus/Felis_catus9.0/Ensembl/Felis_catus.Felis_catus_9.0.95.bed12" \
 ["chicken"]="/workdir/genomes/Gallus_gallus/Galgal5/ENSEMBL/Gallus_gallus.Gallus_gallus-5.0.bed12" \
-["chicken6"]="/workdir/genomes/Gallus_gallus/Galgal6/Gallus_gallus.GRCg6a.bed12 \
+["chicken6"]="/workdir/genomes/Gallus_gallus/Galgal6/Gallus_gallus.GRCg6a.bed12" \
 ["horse"]="/workdir/genomes/Equus_caballus/EquCab3/ENSEMBL/gtf.102/Equus_caballus.EquCab3.0.102.bed12" \
 ["horse2"]="/workdir/genomes/Equus_caballus/EquCab2/ENSEMBL/Equus_caballus.EquCab2.94.BED12" \
 ["ATCC_13047"]="/workdir/genomes/Enterobacter_cloacae/ATCC_13047/GCF_000025565.1_ASM2556v1_genomic.bed12" \
