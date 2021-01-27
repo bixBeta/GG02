@@ -57,6 +57,7 @@ usage(){
     echo "[Theileria]=/workdir/genomes/Theileria/Tannulata_ASM322v1/NCBI/starIndex"
     echo "[cow]=/workdir/genomes/Bos_taurus/ARS-UCD1.2_GCA_002263795.2/ENSEMBL/star.index"
     echo "[EA273]=/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir" 
+    echo "[ddSmed]=/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/genomeDir"
 
 }
 
@@ -190,7 +191,8 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["Theileria"]="/workdir/genomes/Theileria/Tannulata_ASM322v1/NCBI/starIndex" \
 ["cow"]="/workdir/genomes/Bos_taurus/ARS-UCD1.2_GCA_002263795.2/ENSEMBL/star.index" \
 ["salmonella"]="/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir" \
-["EA273"]="/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir" )
+["EA273"]="/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir" \
+["ddSmed"]="/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/genomeDir" )
 
 declare -A bed12
 
@@ -215,7 +217,8 @@ bed12=(	["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12" \
 ["aedes"]="/workdir/genomes/Aedes_aegypti/AaegL5.0/NCBI/GCF_002204515.2_AaegL5.0_genomic.bed12" \
 ["aedesVB"]="/workdir/genomes/Aedes_aegypti/AaegL5.0/Vectorbase/AaegyptiLVP_AGWG_release49/VectorBase-49_AaegyptiLVP_AGWG.BED12" \
 ["cow"]="/workdir/genomes/Bos_taurus/ARS-UCD1.2_GCA_002263795.2/ENSEMBL/Bos_taurus.ARS-UCD1.2.BED12" \
-["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/test/ncbi-genomes-2020-08-27/GCF_000214275.2_ASM21427v3_genomic.bed12" )
+["BG8"]="/workdir/genomes/Methylomicrobium_album_BG8/ASM21427v3/NCBI/test/ncbi-genomes-2020-08-27/GCF_000214275.2_ASM21427v3_genomic.bed12" \
+["ddSmed"]="/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/dd_Smed_v6.pcf.bed12")
 
 
 
