@@ -161,6 +161,8 @@ else [[ "$1" = "idoi" ]]
         for i in "${sampleIDs[@]}"
         do
             ID=$i
+
+
             GREP_PATH=$(grep `echo $i`$ .paths.info | cut -d ":" -f1  | xargs | sed -e 's/ /,/g')
             GREP_NAME=$(grep `echo $i`$ .names | xargs | sed -e 's/ /,/g')
 
@@ -187,7 +189,7 @@ else [[ "$1" = "idoi" ]]
         do
         mv $i CellRangerATAC-Output_${DATE}
         done
-        
+
         mv .paths.info .ids .names idoi CellRangerATAC-Output_${DATE}
         chmod -R 777 CellRangerATAC-Output_${DATE}
 

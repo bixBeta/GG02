@@ -101,18 +101,58 @@ config(){
 mapper(){
   echo "mapper"
   cd mirDeep2_results
-  DATE=`date +"%m_%d_%H-%M"`
-  mapper.pl $CONFIG -d -c -m -s ${PIN}_${DATE}.collapsed.fa
+
+  if [ -f *collapsed.fa ]; then
+
+    echo "collapsed fasta exists"
+
+    PIN=`echo *.collapsed.fa | cut -d '_' -f1`
+    DATE=`echo *.collapsed.fa | cut -d '_' -f2 | cut -d '.' -f1`
+
+  else
+
+    DATE=`date +"%m_%d_%H-%M"`
+    mapper.pl $CONFIG -d -c -m -s ${PIN}_${DATE}.collapsed.fa
+
+  fi
+
   cd ..
+
+
 }
 
 quant(){
+
   echo "quant"
   cd mirDeep2_results
-  quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
-  -m /workdir/genomes/smRNA/mature.fa \
-  -t $G -y ${PIN}_${DATE} -r ${PIN}_${DATE}.collapsed.fa -W -d
+
+    if [ -d expression_analyses_${PIN}_${DATE} ]; then
+
+      echo
+      echo "previous expression analyses detected, re-setting the DATE variable"
+      echo
+
+      DATE=`date +"%m_%d_%H-%M"`
+      echo
+      echo "New DATE = $DATE"
+      echo
+
+      quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
+      -m /workdir/genomes/smRNA/mature.fa \
+      -t $G -y ${PIN}_${DATE} -r ${PIN}_${DATE}.collapsed.fa -W -d
+
+
+    else
+
+      quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
+      -m /workdir/genomes/smRNA/mature.fa \
+      -t $G -y ${PIN}_${DATE} -r ${PIN}_${DATE}.collapsed.fa -W -d
+
+    fi
+
+
   cd ..
+
 }
 
 
@@ -295,9 +335,9 @@ if [[ -z $1 ]] || [[  $1 = "--help"  ]] ; then
     exit 1
 else
     echo
-    echo `date` >> beta4.small.run.log
-    echo "Project Identifier Specified = " $PIN >> beta4.small.run.log
-    echo "Trimming for NextSeq         = " $T >> beta4.small.run.log
-    echo "Selected Genome              = " $G >> beta4.small.run.log
-    echo -------------------------------------------------------------------------------------------------- >> beta4.small.run.log
+    echo `date` >> beta5.small.run.log
+    echo "Project Identifier Specified = " $PIN >> beta5.small.run.log
+    echo "Trimming for NextSeq         = " $T >> beta5.small.run.log
+    echo "Selected Genome              = " $G >> beta5.small.run.log
+    echo -------------------------------------------------------------------------------------------------- >> beta5.small.run.log
 fi
