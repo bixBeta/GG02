@@ -78,23 +78,29 @@ config(){
   else
 
     ls -1 *.fasta > f1
-    readarray fastas < f1
 
+    # readarray fastas < f1
+    #
+    #
+    # for i in "${fastas[@]}"
+    #   do
+    #
+    #             if  echo $DELIM | grep -q "|"
+    #
+    #             then
+    #             echo $i | cut -d ${DELIMITER} -f${FIELD} | ${CCOUNT} >> f2
+    #
+    #             else
+    #             echo $i | cut -d ${DELIMITER} -f${FIELD} >> f2
+    #
+    #             fi
+    #
+    # done
 
-    for i in "${fastas[@]}"
-      do
+    COUNTER=`wc -l f1 | cut -d " " -f1`
+    COUNTERC=`expr $COUNTER + 100 `
 
-                if  echo $DELIM | grep -q "|"
-
-                then
-                echo $i | cut -d ${DELIMITER} -f${FIELD} | ${CCOUNT} >> f2
-
-                else
-                echo $i | cut -d ${DELIMITER} -f${FIELD} >> f2
-
-                fi
-
-    done
+    seq 100 1 $COUNTERC > f2
 
     paste f1 f2 > config.txt
     CONFIG="config.txt"
