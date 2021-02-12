@@ -144,14 +144,17 @@ quant(){
       echo "previous expression analyses detected, re-setting the DATE variable"
       echo
 
+      COLLAPSED="${PIN}_${DATE}.collapsed.fa"
+
       DATE=`date +"%m_%d_%H-%M"`
+
       echo
       echo "New DATE = $DATE"
       echo
 
       quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
       -m /workdir/genomes/smRNA/mature.fa \
-      -t $G -y ${PIN}_${DATE} -r ${PIN}_${DATE}.collapsed.fa -W -d
+      -t $G -y ${PIN}_${DATE} -r ${COLLAPSED} -W -d
 
 
     else
