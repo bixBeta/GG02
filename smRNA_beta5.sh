@@ -100,7 +100,7 @@ config(){
     COUNTER=`wc -l f1 | cut -d " " -f1`
     COUNTERC=`expr $COUNTER + 100 `
 
-    seq 100 1 $COUNTERC > f2
+    seq 101 1 $COUNTERC > f2
 
     paste f1 f2 > config.txt
     CONFIG="config.txt"
