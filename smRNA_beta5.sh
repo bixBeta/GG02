@@ -119,7 +119,7 @@ mapper(){
     echo "collapsed fasta exists"
 
     PIN=`echo *.collapsed.fa | cut -d '_' -f1`
-    DATE=`echo *.collapsed.fa | cut -d '_' -f2 | cut -d '.' -f1`
+    DATE=`echo *.collapsed.fa | cut -d '_' -f2- | cut -d '.' -f1`
 
   else
 
