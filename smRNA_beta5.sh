@@ -1,5 +1,11 @@
 #!/bin/sh
 
+#SBATCH -J smRNA
+#SBATCH -o %x.out
+#SBATCH -n 6
+#SBATCH --mem-per-cpu=18000
+
+
 # source /programs/bin/util/setup_mirdeep2.sh
 
 usage(){
