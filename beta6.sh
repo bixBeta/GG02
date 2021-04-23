@@ -56,7 +56,7 @@ usage(){
     echo "[DC3000]=/workdir/genomes/Pseudomonas_syringae/Tomato_DC3000/NCBI/star.index"
     echo "[Theileria]=/workdir/genomes/Theileria/Tannulata_ASM322v1/NCBI/starIndex"
     echo "[cow]=/workdir/genomes/Bos_taurus/ARS-UCD1.2_GCA_002263795.2/ENSEMBL/star.index"
-    echo "[EA273]=/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir" 
+    echo "[EA273]=/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir"
     echo "[ddSmed]=/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/genomeDir"
 
 }
@@ -68,7 +68,7 @@ trimSE(){
         mkdir TrimQC_stats fastQC trimmed_fastqs
         for i in fastqs/*.gz
         do
-            trim_galore --nextseq 20 --gzip --length 50  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+            trim_galore -j 8  --nextseq 20 --gzip --length 50  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
         done
         mv *_trimming_report.txt TrimQC_stats
         mv *trimmed.fq.gz trimmed_fastqs
@@ -80,7 +80,7 @@ trimHiSeq(){
         mkdir TrimQC_stats fastQC trimmed_fastqs
         for i in fastqs/*.gz
         do
-            trim_galore --quality 20 --gzip --length 50  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+            trim_galore -j 8  --quality 20 --gzip --length 50  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
         done
         mv *_trimming_report.txt TrimQC_stats
         mv *trimmed.fq.gz trimmed_fastqs
@@ -99,7 +99,7 @@ trimPE(){
 
                 for i in "${fastqs[@]}"
                 do
-                        trim_galore --nextseq 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                        trim_galore -j 8  --nextseq 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
                 done
 
                 mkdir TrimQC_stats trimmed_fastqs
@@ -122,7 +122,7 @@ trimMiSeqPE(){
 
                 for i in "${fastqs[@]}"
                 do
-                        trim_galore --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                        trim_galore -j 8  --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
                 done
 
                 mkdir TrimQC_stats trimmed_fastqs
@@ -145,7 +145,7 @@ trimHiSeqPE(){
 
                 for i in "${fastqs[@]}"
                 do
-                        trim_galore --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                        trim_galore -j 8  --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
                 done
 
                 mkdir TrimQC_stats trimmed_fastqs
@@ -891,7 +891,7 @@ else
 
     echo "ENV INFO: " >> beta6.run.log
     echo >> beta6.run.log
-    echo "trim_galore version:"`trim_galore --version | grep 'version' | cut -d "n" -f2` >> beta6.run.log
+    echo "trim_galore -j 8  version:"`trim_galore -j 8  --version | grep 'version' | cut -d "n" -f2` >> beta6.run.log
     echo "STAR version:" `~/bin/STAR-2.7.0e/bin/Linux_x86_64/STAR --version` >> beta6.run.log
     echo "multiqc version:" `~/miniconda2/bin/multiqc --version` >> beta6.run.log
     echo "samtools version:" `/programs/bin/samtools/samtools --version` >> beta6.run.log
