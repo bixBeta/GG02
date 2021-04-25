@@ -62,7 +62,7 @@ elif [[ "$1" = "auto" ]]; then
                    --reference=/workdir/singleCellData/10x_reference_files/refdata-cellranger-atac-GRCh38-1.2.0 \
                    --fastqs=$GREP_PATH \
                    --sample=$GREP_NAME \
-                   --localcores 20 --localmem 250
+                   --localcores 48 --localmem 250
 
         done
 
@@ -121,7 +121,7 @@ elif [[ "$1" = "no-dups" ]]; then
                    --reference=/workdir/singleCellData/10x_reference_files/refdata-cellranger-atac-GRCh38-1.2.0 \
                    --fastqs=$GREP_PATH \
                    --sample=$GREP_NAME \
-                   --localcores 20 --localmem 250
+                   --localcores 48 --localmem 250
 
         done
 
@@ -177,7 +177,7 @@ else [[ "$1" = "idoi" ]]
                    --reference=/workdir/singleCellData/10x_reference_files/refdata-cellranger-atac-GRCh38-1.2.0 \
                    --fastqs=$GREP_PATH \
                    --sample=$GREP_NAME \
-                   --localcores 20 --localmem 500
+                   --localcores 48 --localmem 500
 
 
         done
