@@ -157,14 +157,17 @@ else [[ "$1" = "idoi" ]]
         done
         #----------------------------------------------------------------------------------------
         # cellranger count
-        readarray sampleIDs < idoi
-        for i in "${sampleIDs[@]}"
-        do
+         cat idoi | while read i     
+         do
             ID=$i
 
+                       
+            G="$ID$|A$ID$" 
 
-            GREP_PATH=$(grep `echo $i`$ .paths.info | cut -d ":" -f1  | xargs | sed -e 's/ /,/g')
-            GREP_NAME=$(grep `echo $i`$ .names | xargs | sed -e 's/ /,/g')
+
+            GREP_PATH=$(egrep -h $G .paths.info | cut -d ":" -f1  | xargs | sed -e 's/ /,/g')    
+            GREP_NAME=`egrep -h $G .names | xargs | sed -e 's/ /,/g'`
+
 
 
             echo "SAMPLE_ID = $ID"
