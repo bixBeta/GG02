@@ -177,7 +177,7 @@ else [[ "$1" = "idoi" ]]
             echo ""
 
             /programs/cellranger-atac-1.2.0/cellranger-atac count --id=$ID \
-                   --reference=/workdir/singleCellData/10x_reference_files/refdata-cellranger-atac-GRCh38-1.2.0 \
+                   --reference=/workdir/fa286/rsync-ref/refdata-cellranger-atac-GRCh38-1.2.0 \
                    --fastqs=$GREP_PATH \
                    --sample=$GREP_NAME \
                    --localcores 48 --localmem 500
