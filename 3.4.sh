@@ -46,7 +46,7 @@ gAlias=(
 ["hg38"]="human"
 )
 
-declare -A gSize # for compatibility with atacQC.R
+declare -A gSize # for macs2
 gAlias=(
 ["mm10"]="mm" \
 ["hg38"]="hs"
