@@ -46,6 +46,14 @@ gAlias=(
 ["hg38"]="human"
 )
 
+declare -A gSize # for macs2
+gAlias=(
+["mm10"]="mm" \
+["hg38"]="hs"
+)
+
+
+
 
 trimPE(){
 
@@ -233,7 +241,7 @@ callPeak(){
         macs2 callpeak -t $i \
         -f BAMPE \
         -n ${iSUB} \
-        -g hs \
+        -g ${gSize[${DIR}]} \
         -q 0.05 \
         --outdir peaks.OUT \
         --nomodel --shift 37 --ext 73 \
@@ -255,7 +263,7 @@ mergedPeaks(){
     macs2 callpeak -t ${allBams} \
     -f BAMPE \
     -n allSamplesMergedPeakset \
-    -g hs \
+    -g ${gSize[${DIR}]} \
     -q 0.05 \
     --outdir peaks.OUT \
     --nomodel --shift 37 --ext 73 \
