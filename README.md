@@ -15,7 +15,7 @@ Dependencies:
 #### 3.4.sh <- ATAC-seq workflow
 Usage:
 
-`nohup bash 3.4.sh "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-q arg]" &> 3.4.log` 
+`nohup bash 3.4.sh "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-q arg]" > 3.4.log &` 
 
 Params Description:
 
