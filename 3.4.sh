@@ -245,6 +245,7 @@ callPeak(){
         -q 0.05 \
         --outdir peaks.OUT \
         --nomodel --shift 37 --ext 73 \
+        --fe-cutoff 5 \
         --keep-dup all
       done
 
@@ -267,6 +268,7 @@ mergedPeaks(){
     -q 0.05 \
     --outdir peaks.OUT \
     --nomodel --shift 37 --ext 73 \
+    --fe-cutoff 5 \
     --keep-dup all
 
   cd ..
