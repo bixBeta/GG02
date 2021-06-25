@@ -335,7 +335,7 @@ atacQC(){
 
     cd dedup-BAMS
     echo "genome alias" = ${gAlias[${DIR}]}
-    /programs/R-3.6.3/bin/Rscript /home/fa286/bin/scripts/atacQC.R ${gAlias[${DIR}]}
+    Rscript /home/fa286/bin/scripts/atacQC.R ${gAlias[${DIR}]}
     # ${gAlias[${DIR}]}
     ~/bin/scripts/html.atacQC.sh `echo ${PIN}_atacQC`
 
