@@ -51,6 +51,12 @@ knitr::include_graphics(p2)
 
 ```
 
+
+## TSSE Scores
+
+![](atacQC.out/TSSE_scores.png){width=1000px}
+
+
 ## Peak Annotations
 
 ```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
