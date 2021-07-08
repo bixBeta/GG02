@@ -114,9 +114,11 @@ for (i in 1:length(files)) {
   c2 <- plotAnnoBar(peakAnno, title = basename(files[[i]]))
   print(c2)
   dev.off()
+  write.table(c2$data, file = paste0(c2$labels$title, "__percent__annot__log.txt"), sep = "\t")
+
 }
 
 
 system("mkdir atacQC.out")
-system("mv *.png atacQC.out")
+system("mv *.png *__percent__annot__log.txt atacQC.out")
 
