@@ -4,7 +4,7 @@ args <-  commandArgs(trailingOnly = T)
 # check for required argument
 
 if (length(args)==0) {
-  print(" Usage = Rscript atacQC.R < human, mouse  or 'path to gtf annotation' >")  
+  print(" Usage = Rscript atacqc__DEV.R < human, mouse  or 'path to gtf annotation' >")  
   stop("Missing gtf annotation path !!! \n", call.=FALSE)
   
 } 
