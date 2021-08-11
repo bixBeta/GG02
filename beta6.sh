@@ -40,7 +40,7 @@ usage(){
     echo "[lonchura]=/workdir/genomes/Lonchura_striata/LonStrDom1/ENSEMBL/lonchura.star "
     echo "[goose]=/workdir/genomes/Anser_brachyrhynchus/ASM259213v1/ENSEMBL/goose.star "
     echo "[ehv8]=/workdir/genomes/FastQ_Screen_Genomes/EHV8/ehv8.star "
-    echo "[erdman]=/workdir/genomes/Mycobacterium_tuberculosis/Ensembl_GCA_000668235/GCA_000668235.star "
+    echo "[erdman]=/workdir/genomes/Mycobacterium_tuberculosis/Erdman_GCA_000350205.1/ENSEMBL/genomeDir "
     echo "[TB]=/workdir/genomes/Mycobacterium_tuberculosis/CDC1551_Ensembl/cdc1551.star "
     echo "[maize]=/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/star.maize "
     echo "[finch]=/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/star.index.updated "
@@ -58,6 +58,7 @@ usage(){
     echo "[cow]=/workdir/genomes/Bos_taurus/ARS-UCD1.2_GCA_002263795.2/ENSEMBL/star.index"
     echo "[EA273]=/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir"
     echo "[ddSmed]=/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/genomeDir"
+    echo "[macaca]=/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir"
 
 }
 
@@ -174,7 +175,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["lonchura"]="/workdir/genomes/Lonchura_striata/LonStrDom1/ENSEMBL/lonchura.star" \
 ["goose"]="/workdir/genomes/Anser_brachyrhynchus/ASM259213v1/ENSEMBL/goose.star" \
 ["ehv8"]="/workdir/genomes/FastQ_Screen_Genomes/EHV8/ehv8.star" \
-["erdman"]="/workdir/genomes/Mycobacterium_tuberculosis/Ensembl_GCA_000668235/GCA_000668235.star" \
+["erdman"]="/workdir/genomes/Mycobacterium_tuberculosis/Erdman_GCA_000350205.1/ENSEMBL/genomeDir" \
 ["TB"]="/workdir/genomes/Mycobacterium_tuberculosis/CDC1551_Ensembl/cdc1551.star" \
 ["maize"]="/workdir/genomes/Zea_mays/B73_RefGen_v4/ENSEMBL/star.maize" \
 ["finch"]="/workdir/genomes/Taeniopygia_guttata/taeGut3.2.4/ENSEMBL/UPDATED.ANNOTS/star.index.updated" \
@@ -193,7 +194,8 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["salmonella"]="/workdir/genomes/Salmonella_enterica/ASM21085v2/NCBI/genomeDir" \
 ["EA273"]="/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir" \
 ["ddSmed"]="/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/genomeDir" \
-["yeast"]="/workdir/genomes/Saccharomyces_cerevisiae/R64-1-1_GCA_000146045.2/ENSEMBL/star.index" )
+["yeast"]="/workdir/genomes/Saccharomyces_cerevisiae/R64-1-1_GCA_000146045.2/ENSEMBL/star.index" \
+["macaca"]="/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir" )
 
 declare -A bed12
 
