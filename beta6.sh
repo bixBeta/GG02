@@ -546,6 +546,8 @@ UNMSE() {
             --genomeDir ${genomeDir[${DIR}]} \
             --readFilesIn $i \
             --outSAMstrandField intronMotif \
+            --alignIntronMax 1 \
+            --alignMatesGapMax 45000 \
             --outReadsUnmapped Fastx \
             --outFilterIntronMotifs RemoveNoncanonical \
             --outSAMtype BAM SortedByCoordinate \
@@ -598,6 +600,8 @@ UNMPE() {
             --genomeDir ${genomeDir[${DIR}]} \
             --readFilesIn $i \
             --outSAMstrandField intronMotif \
+            --alignIntronMax 1 \
+            --alignMatesGapMax 45000 \
             --outReadsUnmapped Fastx \
             --outFilterIntronMotifs RemoveNoncanonical \
             --outSAMtype BAM SortedByCoordinate \
