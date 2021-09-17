@@ -64,6 +64,7 @@ usage(){
     echo "[ddSmed]=/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/genomeDir"
     echo "[yeast]=/workdir/genomes/Saccharomyces_cerevisiae/R64-1-1_GCA_000146045.2/ENSEMBL/star.index"
     echo "[macaca]=/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir"
+    echo "[TAIR10]=/workdir/genomes/Arabidopsis_thaliana/TAIR10/ENSEMBL/genomeDir"
 
 }
 
@@ -201,6 +202,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["EA273"]="/workdir/genomes/Erwinia_amylovora/GCF_000091565.1/ncbi/genomeDir" \
 ["ddSmed"]="/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/genomeDir" \
 ["yeast"]="/workdir/genomes/Saccharomyces_cerevisiae/R64-1-1_GCA_000146045.2/ENSEMBL/star.index" \
+["TAIR10"]="/workdir/genomes/Arabidopsis_thaliana/TAIR10/ENSEMBL/genomeDir" \
 ["macaca"]="/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir" )
 
 declare -A bed12
@@ -778,7 +780,7 @@ if [[ ! -z "${T+x}" ]]; then
     elif [[ $T == miSeqPE ]]; then
         trimMiSeqPE
   elif [[ $T == novaPE ]]; then
-    trimHiSeqPE
+    trimPE
     else
         echo "-t only accepts nextSE, nextPE, 4colorSE, miSeqPE, novaPE as arguments"
         exit 1
