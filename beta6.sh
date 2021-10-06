@@ -543,7 +543,6 @@ se_bacteria_split(){
 UNMSE() {
           cd STAR.SPLIT/STAR.SPLIT.Unmapped/
 
-          gunzip *mate*
 
           ls -1 *.mate* > unmapped.list
 
@@ -565,6 +564,7 @@ UNMSE() {
             --alignIntronMax 1 \
             --alignMatesGapMax 45000 \
             --outReadsUnmapped Fastx \
+            --readFilesCommand gunzip -c \
             --outFilterIntronMotifs RemoveNoncanonical \
             --outSAMtype BAM SortedByCoordinate \
             --outFileNamePrefix ${iSUB}. \
@@ -597,7 +597,7 @@ UNMSE() {
 
 UNMPE() {
           cd STAR.SPLIT/STAR.SPLIT.Unmapped/
-          gunzip *mate*
+
           ls -1 *mate1* > .unR1
           ls -1 *mate2 > .unR2
           paste -d " " .unR1 .unR2 > unmapped.list
@@ -620,6 +620,7 @@ UNMPE() {
             --alignIntronMax 1 \
             --alignMatesGapMax 45000 \
             --outReadsUnmapped Fastx \
+            --readFilesCommand gunzip -c \
             --outFilterIntronMotifs RemoveNoncanonical \
             --outSAMtype BAM SortedByCoordinate \
             --outFileNamePrefix ${iSUB}. \
