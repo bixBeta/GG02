@@ -65,6 +65,7 @@ usage(){
     echo "[yeast]=/workdir/genomes/Saccharomyces_cerevisiae/R64-1-1_GCA_000146045.2/ENSEMBL/star.index"
     echo "[macaca]=/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir"
     echo "[TAIR10]=/workdir/genomes/Arabidopsis_thaliana/TAIR10/ENSEMBL/genomeDir"
+    echo "[crow]=/workdir/genomes/Corvus_moneduloides/bCorMon1/NCBI/genomeDir"
 
 }
 
@@ -203,6 +204,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["ddSmed"]="/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/genomeDir" \
 ["yeast"]="/workdir/genomes/Saccharomyces_cerevisiae/R64-1-1_GCA_000146045.2/ENSEMBL/star.index" \
 ["TAIR10"]="/workdir/genomes/Arabidopsis_thaliana/TAIR10/ENSEMBL/genomeDir" \
+["crow"]="/workdir/genomes/Corvus_moneduloides/bCorMon1/NCBI/genomeDir" \
 ["macaca"]="/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir" )
 
 declare -A bed12
@@ -308,6 +310,7 @@ se_split(){
                     for i in *mate*
                         do
                             mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                            gzip *mate*
                         done
                 cd ..
                 mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
@@ -422,6 +425,7 @@ pe_split(){
                         for i in *mate*
                             do
                                 mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                                gzip *mate*
                             done
                     cd ..
                     mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
@@ -474,6 +478,7 @@ pe_bacteria_split(){
                         for i in *mate*
                             do
                                 mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                                gzip *mate*
                             done
                     cd ..
                     mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
@@ -520,6 +525,7 @@ se_bacteria_split(){
               for i in *mate*
                   do
                       mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                      gzip *mate*
                   done
           cd ..
           mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
@@ -536,6 +542,8 @@ se_bacteria_split(){
 
 UNMSE() {
           cd STAR.SPLIT/STAR.SPLIT.Unmapped/
+
+          gunzip *mate*
 
           ls -1 *.mate* > unmapped.list
 
@@ -573,6 +581,7 @@ UNMSE() {
               for i in *Unmapped.out.mate*
                   do
                       mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                      gzip *mate*
                   done
           cd ..
           mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
@@ -588,7 +597,7 @@ UNMSE() {
 
 UNMPE() {
           cd STAR.SPLIT/STAR.SPLIT.Unmapped/
-
+          gunzip *mate*
           ls -1 *mate1* > .unR1
           ls -1 *mate2 > .unR2
           paste -d " " .unR1 .unR2 > unmapped.list
@@ -627,6 +636,7 @@ UNMPE() {
               for i in *Unmapped.out.mate*
                   do
                       mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
+                      gzip *mate*
                   done
           cd ..
           mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
