@@ -3,7 +3,7 @@ title: "ATAC-Seq QC"
 output:
   html_document:
     toc: true
-    toc_float: 
+    toc_float:
       collapsed: false
       smooth_scroll: true
     number_sections: false  
@@ -11,14 +11,14 @@ df_print: kable
 ---
 
 <div>
-<a href="https://www.rnaseqcore.vet.cornell.edu/" target="_blank" class="trex-logo"> <img src="/home/fa286/trex-extended-logo.png" 
+<a href="https://www.rnaseqcore.vet.cornell.edu/" target="_blank" class="trex-logo"> <img src="/home/fa286/trex-extended-logo.png"
 style=
-"position:absolute; 
-top:0px; 
+"position:absolute;
+top:0px;
 right:0;
-padding:20px; 
-height:140px; 
-text-align:justify; 
+padding:20px;
+height:140px;
+text-align:justify;
 display:block;
 width:32%;
 height:auto;
@@ -31,7 +31,7 @@ margin:0 auto 20px !important;"> </a>
 <br><br><br><br><br>
 
 ***
- 
+
 ## Fragment Size Distributions
 ```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
 
@@ -57,12 +57,68 @@ knitr::include_graphics(p2)
 ![](atacQC.out/TSSE_scores.png){width=1000px}
 
 
-## Peak Annotations
 
-```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
+```{r out.width=c('50%', '50%'), fig.show='hold', echo=F , eval=F}
 
 p3 <- list.files("./atacQC.out/", pattern = "narrowPeak.Annotated.png$", full.names = T)
 
 knitr::include_graphics(p3)
+
+```
+
+
+## Peak Annotations
+
+```{r echo=FALSE, eval=T, out.width=1000, out.height=1000}
+logs = list.files(path = "./atacQC.out/", pattern = "__percent__annot__log.txt$", full.names = T)
+
+logs.list = list()
+for (i in 1:length(logs)) {
+  logs.list[[i]] <- read.table(logs[i], header = T, sep = "\t", row.names = 1)
+  names(logs.list)[[i]] <-  gsub(pattern = "_peaks.narrowPeak__percent__annot__log.txt",
+                                 replacement = "", basename(logs[[i]]))
+}
+
+
+logs.df <- do.call("rbind", logs.list)
+
+suppressPackageStartupMessages(library(tidyr))
+logs.df$tmp = rownames(logs.df)
+logs.df = separate(logs.df, col = tmp, into = "sampleID", sep = "\\.", extra = "drop")
+
+colors<-  c("#EF8A62",
+            "#1f78b4",
+            "#1b9e77",
+            "khaki4",
+            "#E9A3C9",
+            "#A1D76A",
+            "#FFFF33",
+            "grey",
+            "#b3e2cd",
+            "#67A9CF",
+            "peachpuff2",
+            "red",
+            "magenta3",
+            "blue",
+            "yellow"
+)
+
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(plotly))
+logs.df$Frequency = round(logs.df$Frequency, 1)
+  m <- list(
+      l = 50,
+      r = 50,
+      b = 100,
+      pad = 20
+    )
+logs.df %>% plot_ly(x = ~Frequency, y = ~sampleID, type = 'bar', orientation = "h",
+        name = ~Feature, color = ~Feature, colors =rev(colors) ) %>%
+  layout(yaxis = list(title = 'Percentage(%)'), barmode = 'stack',
+         legend = list(orientation = 'h', xanchor = "center",
+                       x = 0.5, y = -0.1), margin = m)
+
+
+
 
 ```
