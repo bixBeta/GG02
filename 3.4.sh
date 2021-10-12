@@ -52,7 +52,11 @@ gSize=(
 ["hg38"]="hs"
 )
 
-
+declare -A blkList
+blkList=(
+["mm10"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/mm10-blacklist.v2.bed" \
+["hg38"]="/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/hg38-blacklist.v2.bed"
+)
 
 
 trimPE(){
@@ -169,6 +173,16 @@ rmMT(){
                     samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs samtools view -b $i > ${iSUB}.noMT.bam
 
                 done
+
+
+
+                for i in *.noMT.bam
+                do
+                    iSUB=`echo $i | cut -d "." -f1`
+                    bedtools intersect -v -a $i -b ${blkList[${DIR}]} > ${iSUB}.noBlacklist.noMT.bam
+                done
+
+
                 cd ..
 }
 
