@@ -41,16 +41,6 @@ knitr::include_graphics(p1)
 
 ```
 
-## Read Count Frequencies
-
-```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
-
-p2 <- list.files("./atacQC.out/", pattern = "peaks.narrowPeak.Distribution.png$", full.names = T)
-
-knitr::include_graphics(p2)
-
-```
-
 
 ## TSSE Scores
 
@@ -120,5 +110,16 @@ logs.df %>% plot_ly(x = ~Frequency, y = ~sampleID, type = 'bar', orientation = "
 
 
 
+
+```
+
+
+## Read Count Frequencies
+
+```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
+
+p2 <- list.files("./atacQC.out/", pattern = "peaks.narrowPeak.Distribution.png$", full.names = T)
+
+knitr::include_graphics(p2)
 
 ```
