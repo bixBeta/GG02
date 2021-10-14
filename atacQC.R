@@ -161,5 +161,6 @@ dev.off()
 
 
 
-system("mkdir atacQC.out___DEV")
-system("mv *.png atacQC.out___DEV")
+system("mkdir atacQC.out")
+system("mv *.png atacQC.out")
+system("mv *_peaks.narrowPeak__percent__annot__log.txt atacQC.out")
