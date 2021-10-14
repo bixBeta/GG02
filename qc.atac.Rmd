@@ -44,7 +44,8 @@ knitr::include_graphics(p1)
 
 ## TSSE Scores 
 
-[(see encode guidelines here)]("https://www.encodeproject.org/atac-seq/#standards")
+[Encode Guidelines](https://www.encodeproject.org/atac-seq/#standards)
+
 ![](atacQC.out/TSSE_scores.png){width=1000px}
 
 
