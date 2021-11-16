@@ -141,7 +141,7 @@ trimMiSeqPE(){
                 cd ..
 }
 
-trimHiSeqPE(){
+trimNovaPE(){
 
                 cd fastqs
                 ls -1 *_1.fq* > .R1
@@ -153,7 +153,7 @@ trimHiSeqPE(){
 
                 for i in "${fastqs[@]}"
                 do
-                        trim_galore -j 8  --quality 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                        trim_galore -j 8  --nextseq 20 --gzip --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
                 done
 
                 mkdir TrimQC_stats trimmed_fastqs
@@ -791,7 +791,7 @@ if [[ ! -z "${T+x}" ]]; then
     elif [[ $T == miSeqPE ]]; then
         trimMiSeqPE
   elif [[ $T == novaPE ]]; then
-    trimHiSeqPE
+    trimNovaPE
     else
         echo "-t only accepts nextSE, nextPE, 4colorSE, miSeqPE, novaPE as arguments"
         exit 1
