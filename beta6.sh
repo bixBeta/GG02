@@ -559,7 +559,7 @@ UNMSE() {
           do
 
             #iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
-            iSUB=`basename $i .gz`
+            iSUB=`basename $i \.gz`
 
             STAR \
             --runThreadN 12 \
@@ -617,8 +617,8 @@ UNMPE() {
           do
 
             #iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
-            iSUB=`basename $i .gz`
-            
+            iSUB=`basename $i \.gz`
+
             STAR \
             --runThreadN 12 \
             --genomeDir ${genomeDir[${DIR}]} \
