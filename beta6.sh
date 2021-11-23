@@ -310,8 +310,9 @@ se_split(){
                     for i in *mate*
                         do
                             mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
-                            gzip *mate*
+
                         done
+                        gzip *mate*
                 cd ..
                 mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
                 mv *.bam STAR.SPLIT.BAMS
@@ -425,8 +426,9 @@ pe_split(){
                         for i in *mate*
                             do
                                 mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
-                                gzip *mate*
+
                             done
+                            gzip *mate*
                     cd ..
                     mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
                     mv *.bam STAR.SPLIT.BAMS
@@ -478,8 +480,9 @@ pe_bacteria_split(){
                         for i in *mate*
                             do
                                 mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
-                                gzip *mate*
+
                             done
+                            gzip *mate*
                     cd ..
                     mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
                     mv *.bam STAR.SPLIT.BAMS
@@ -525,8 +528,9 @@ se_bacteria_split(){
               for i in *mate*
                   do
                       mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
-                      gzip *mate*
+
                   done
+                  gzip *mate*
           cd ..
           mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
           mv *.bam STAR.SPLIT.BAMS
@@ -581,8 +585,9 @@ UNMSE() {
               for i in *Unmapped.out.mate*
                   do
                       mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
-                      gzip *mate*
+
                   done
+                  gzip *mate*
           cd ..
           mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
           mv *.bam STAR.SPLIT.BAMS
@@ -637,8 +642,9 @@ UNMPE() {
               for i in *Unmapped.out.mate*
                   do
                       mv $i `echo $i | sed "s/Unmapped/not.$DIR/g"`
-                      gzip *mate*
+
                   done
+                  gzip *mate*
           cd ..
           mv *.ReadsPerGene.out.tab STAR.SPLIT.COUNTS
           mv *.bam STAR.SPLIT.BAMS
