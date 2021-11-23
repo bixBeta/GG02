@@ -604,7 +604,7 @@ UNMPE() {
           cd STAR.SPLIT/STAR.SPLIT.Unmapped/
 
           ls -1 *mate1* > .unR1
-          ls -1 *mate2 > .unR2
+          ls -1 *mate2* > .unR2
           paste -d " " .unR1 .unR2 > unmapped.list
 
           grepOldRef=`head -1 .unR1 | grep -o -P '(?<=.not.).*(?=.out.mate*)'`
