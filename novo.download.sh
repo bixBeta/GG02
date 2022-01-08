@@ -42,7 +42,7 @@ mdcheck(){
 	sort MD5.txt > sorted.MD5.txt
 	sort myMD5s.txt > sorted.myMD5s.txt
 
-	diff sorter.MD5.txt sorted.myMD5s.txt > diff.command.out
+	diff sorted.MD5.txt sorted.myMD5s.txt > diff.command.out
 
     cd ..
 
