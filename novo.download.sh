@@ -37,7 +37,7 @@ mdcheck(){
 	echo ""
 
 	cd usftp21.novogene.com/
-	md5sum rawdata/*/*.gz >> myMD5s.txt
+	md5sum raw_data/*/*.gz >> myMD5s.txt
 
 	sort MD5.txt > sorted.MD5.txt
 	sort myMD5s.txt > sorted.myMD5s.txt
