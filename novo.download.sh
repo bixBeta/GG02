@@ -45,15 +45,15 @@ mdcheck(){
 	diff sorter.MD5.txt sorted.myMD5s.txt > diff.command.out
 
     cd ..
-    
+
     mv usftp21.novogene.com $MASTER
 }
 
 
-# need username 
+# need username
 # need password
 # need md5 checks
-# 
+#
 
 while getopts "hu:p:m:" opt; do
     case ${opt} in
@@ -72,7 +72,7 @@ while getopts "hu:p:m:" opt; do
     u )
 
         USERPW=$OPTARG
-        
+
     ;;
 
     p )
@@ -87,7 +87,7 @@ while getopts "hu:p:m:" opt; do
 
     ;;
 
-    
+
     \?)
         echo
         echo
@@ -99,15 +99,15 @@ while getopts "hu:p:m:" opt; do
     esac
 done
 
-# check if PROJECT parameter provided 
+# check if PROJECT parameter provided
 
 if [[ ! -z "${PROJ+x}" ]]; then
 
-	MASTER=`echo $PROJ | sed 's/,/-/g`
+	MASTER=`echo $PROJ | sed 's/,/-/g'`
 
 fi
 
-# split user and pw  
+# split user and pw
 
 if [[ ! -z "${USERPW+x}" ]]; then
 
@@ -142,11 +142,9 @@ if [[ -z $1 ]] || [[  $1 = "help"  ]] || [[  $1 = "--help"  ]] ; then
 else
     echo >> ftp.log
     echo `date` >> ftp.log
-    echo "Projects included in the download = " $PROJ >> ftp.log
+    echo "Projects included in the download = " $MASTER >> ftp.log
     echo "md5s checked  = " $MD >> ftp.log
 
 
 
 fi
-
-
