@@ -25,24 +25,24 @@ usage(){
 
 
 donwload(){
-	echo ""
-	echo "User = $USER, PW = $PW "
-	echo ""
-	wget -r -c ftp://${USER}:${PW}@usftp21.novogene.com:21/
+    echo ""
+    echo "User = $USER, PW = $PW "
+    echo ""
+    wget -r -c ftp://${USER}:${PW}@usftp21.novogene.com:21/
 }
 
 
 mdcheck(){
 
-	echo ""
+    echo ""
 
-	cd usftp21.novogene.com/
-	md5sum rawdata/*/*.gz >> myMD5s.txt
+    cd usftp21.novogene.com/
+    md5sum rawdata/*/*.gz >> myMD5s.txt
 
-	sort MD5.txt > sorted.MD5.txt
-	sort myMD5s.txt > sorted.myMD5s.txt
+    sort MD5.txt > sorted.MD5.txt
+    sort myMD5s.txt > sorted.myMD5s.txt
 
-	diff sorter.MD5.txt sorted.myMD5s.txt > diff.command.out
+    diff sorter.MD5.txt sorted.myMD5s.txt > diff.command.out
 
     cd ..
     
@@ -103,7 +103,7 @@ done
 
 if [[ ! -z "${PROJ+x}" ]]; then
 
-	MASTER=`echo $PROJ | sed 's/,/-/g`
+    MASTER=`echo $PROJ | sed 's/,/-/g`
 
 fi
 
@@ -111,9 +111,9 @@ fi
 
 if [[ ! -z "${USERPW+x}" ]]; then
 
-	USER=`echo $USERPW | cut -d , -f1`
-	PW=`echo $USERPW | cut -d , -f2 `
-	donwload
+    USER=`echo $USERPW | cut -d , -f1`
+    PW=`echo $USERPW | cut -d , -f2 `
+    donwload
 
 fi
 
