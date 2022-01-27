@@ -188,7 +188,7 @@ rmMT(){
 
 markDups(){
                 cd primary-BAMS
-        for i in *.noMT.bam
+        for i in *.noBlacklist.noMT.bam
         do
             iSUB=`echo $i | cut -d "." -f1`
             java -jar /programs/bin/picard-tools/picard.jar \
