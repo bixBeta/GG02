@@ -47,8 +47,21 @@ mdcheck(){
     cd ..
 
     mv usftp21.novogene.com $MASTER
-    
+
     chmod -R 777 $MASTER
+
+    cd $MASTER
+
+    mkdir -m 777 fastqs
+    mv raw_data/*/*.gz fastqs
+
+    cd ..
+
+
+    rsync -avR $MASTER/fastqs/ /workdir/fa286/projects/mix/
+    rsync -arctuxzv --remove-source-files $MASTER/fastqs/* $ARCHIVE/$MASTER/
+
+
 }
 
 
