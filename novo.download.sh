@@ -39,14 +39,16 @@ mdcheck(){
 	cd usftp21.novogene.com/
 	md5sum raw_data/*/*.gz >> myMD5s.txt
 
-	sort MD5.txt > sorted.MD5.txt
-	sort myMD5s.txt > sorted.myMD5s.txt
+	sort -k2 -n MD5.txt > sorted.MD5.txt
+	sort -k2 -n myMD5s.txt > sorted.myMD5s.txt
 
 	diff sorted.MD5.txt sorted.myMD5s.txt > diff.command.out
 
     cd ..
 
     mv usftp21.novogene.com $MASTER
+    
+    chmod -R 777 $MASTER
 }
 
 
