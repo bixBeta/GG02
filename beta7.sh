@@ -653,16 +653,16 @@ customSTAR(){
 
             done
 
-        # #    source activate RSC
-        #     multiqc -f -n ${PIN}.star.multiqc.report .
-        #     mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
-        #     mv *.ReadsPerGene.out.tab STAR.COUNTS
-        #     mv *.bam STAR.BAMS
-        #     mv *.out *.tab *_STARtmp *.list *star.multiqc.report_data STAR.LOGS
-        #     mkdir STAR
-        #     mv STAR.* *.html STAR
-        #
-        #     mv STAR ..
+        #    source activate RSC
+            multiqc -f -n ${PIN}.star.multiqc.report .
+            mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
+            mv *.ReadsPerGene.out.tab STAR.COUNTS
+            mv *.bam STAR.BAMS
+            mv *.out *.tab *_STARtmp *.list *star.multiqc.report_data STAR.LOGS
+            mkdir STAR
+            mv STAR.* *.html STAR
+
+            mv STAR ..
         cd ..
 
 
