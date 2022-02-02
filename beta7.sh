@@ -624,7 +624,50 @@ UNMPE() {
 
 }
 
+customSTAR(){
+        echo Reference genome selected = $CUSTOMGENOME
+        cd trimmed_fastqs
+        ls -1 *_1.fq.gz > .trR1
+        ls -1 *_2.fq.gz > .trR2
+        paste -d " " .trR1 .trR2 > Trimmed.list
 
+        readarray trimmedFastqs < Trimmed.list
+
+        for i in "${trimmedFastqs[@]}"
+
+            do
+
+                iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
+
+                STAR \
+                --runThreadN 12 \
+                --genomeDir $CUSTOMGENOME \
+                --readFilesIn $i \
+                --readFilesCommand gunzip -c \
+                --outSAMstrandField intronMotif \
+                --outFilterIntronMotifs RemoveNoncanonical \
+                --outSAMtype BAM SortedByCoordinate \
+                --outFileNamePrefix ${iSUB}. \
+                --limitBAMsortRAM 61675612266 \
+                --quantMode GeneCounts
+
+            done
+
+        #    source activate RSC
+            multiqc -f -n ${PIN}.star.multiqc.report .
+            mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
+            mv *.ReadsPerGene.out.tab STAR.COUNTS
+            mv *.bam STAR.BAMS
+            mv *.out *.tab *_STARtmp *.list *star.multiqc.report_data STAR.LOGS
+            mkdir STAR
+            mv STAR.* *.html STAR
+
+            mv STAR ..
+        cd ..
+
+
+
+}
 geneBodyCov(){
         cd STAR*/*.BAMS
 
@@ -651,7 +694,7 @@ geneBodyCov(){
         cd ..
 }
 
-while getopts "hp:t:g:s:r:c:d:" opt; do
+while getopts "hp:t:g:s:r:c:d:m:" opt; do
     case ${opt} in
 
     h)
@@ -698,14 +741,18 @@ while getopts "hp:t:g:s:r:c:d:" opt; do
 
     c)
 
-    GBCOV=$OPTARG
+        GBCOV=$OPTARG
 
     ;;
 
     d)
-    DELIM=$OPTARG
+        DELIM=$OPTARG
 
     ;;
+
+    m)
+
+        CUSTOMGENOME=$OPTARG
 
     \?)
         echo
@@ -806,12 +853,16 @@ if [[ ! -z "${DIR+x}" ]]; then
 
             elif [[ ! -z "${RUN+x}" ]] && [[ $RUN == "SEBS" ]]; then
               se_bacteria_split
+
             else
                 echo "missing -r option "
                 usage
                 exit 1
         fi
 
+    elif [[ ! "${CUSTOMGENOME+x}" ]]; then
+
+            customSTAR
 
     else
         echo "The reference genome provided '"$DIR"' is not available"
