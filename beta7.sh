@@ -625,7 +625,7 @@ UNMPE() {
 }
 
 customSTAR(){
-        echo Reference genome selected = $CUSTOMGENOME
+        echo Reference genome selected = ${CUSTOMGENOME}
         cd trimmed_fastqs
         ls -1 *_1.fq.gz > .trR1
         ls -1 *_2.fq.gz > .trR2
@@ -653,16 +653,16 @@ customSTAR(){
 
             done
 
-        #    source activate RSC
-            multiqc -f -n ${PIN}.star.multiqc.report .
-            mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
-            mv *.ReadsPerGene.out.tab STAR.COUNTS
-            mv *.bam STAR.BAMS
-            mv *.out *.tab *_STARtmp *.list *star.multiqc.report_data STAR.LOGS
-            mkdir STAR
-            mv STAR.* *.html STAR
-
-            mv STAR ..
+        # #    source activate RSC
+        #     multiqc -f -n ${PIN}.star.multiqc.report .
+        #     mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
+        #     mv *.ReadsPerGene.out.tab STAR.COUNTS
+        #     mv *.bam STAR.BAMS
+        #     mv *.out *.tab *_STARtmp *.list *star.multiqc.report_data STAR.LOGS
+        #     mkdir STAR
+        #     mv STAR.* *.html STAR
+        #
+        #     mv STAR ..
         cd ..
 
 
