@@ -22,7 +22,7 @@ usage(){
     echo "[-r] --> <SE> <SES> <PE> <PES> <SEBS> <PEBS> <UNMS> or <UNMP> "
     echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
     echo "[-c] --> GeneBody Coverage <yes, no> "
-    echo "[-m] --> custom
+    echo "[-m] --> custom"
     echo "---------------------------------------------------------------------------------------------------------------------------"
     echo ""
     echo "***************************************************************** "
