@@ -861,10 +861,6 @@ if [[ ! -z "${DIR+x}" ]]; then
                 exit 1
         fi
 
-    elif [[ ! "${CUSTOMGENOME+x}" ]]; then
-
-            customSTAR
-
     else
         echo "The reference genome provided '"$DIR"' is not available"
         echo " OR missing -r "
@@ -872,6 +868,12 @@ if [[ ! -z "${DIR+x}" ]]; then
 
     fi
 fi
+
+if [[ ! "${CUSTOMGENOME+x}" ]]; then
+  customSTAR
+fi
+
+
 
 #-------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------
