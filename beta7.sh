@@ -668,6 +668,7 @@ customSTAR(){
 
 
 }
+
 geneBodyCov(){
         cd STAR*/*.BAMS
 
@@ -824,6 +825,10 @@ fi
 #-------------------------------------------------------------------------------------------------------------
 ## check if genomeDir provided
 
+if [[ ! -z "${CUSTOMGENOME+x}" ]]; then
+  customSTAR
+fi
+
 if [[ ! -z "${DIR+x}" ]]; then
     if [ ${genomeDir[${DIR}]+_} ]; then
         echo Reference genome selected = $DIR
@@ -869,9 +874,7 @@ if [[ ! -z "${DIR+x}" ]]; then
     fi
 fi
 
-if [[ ! "${CUSTOMGENOME+x}" ]]; then
-  customSTAR
-fi
+
 
 
 
