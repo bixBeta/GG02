@@ -11,7 +11,7 @@ usage(){
     echo "R N A - S E Q   W O R K F L O W - @bixBeta"
     echo ""
     echo ""
-    echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-r arg] [-s arg] [-c arg] [-l]"
+    echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-r arg] [-s arg] [-c arg] [-m]"
     echo
     echo "---------------------------------------------------------------------------------------------------------------------------"
     echo "[-h] --> Display Help"
@@ -22,7 +22,7 @@ usage(){
     echo "[-r] --> <SE> <SES> <PE> <PES> <SEBS> <PEBS> <UNMS> or <UNMP> "
     echo "[-s] --> Library Strandedness <0, 1, 2> where 1 = first strand, 2 = reverse strand, 0 for unstranded counts "
     echo "[-c] --> GeneBody Coverage <yes, no> "
-    echo "[-l] --> Print complete list of genomes available"
+    echo "[-m] --> custom
     echo "---------------------------------------------------------------------------------------------------------------------------"
     echo ""
     echo "***************************************************************** "
@@ -754,7 +754,7 @@ while getopts "hp:t:g:s:r:c:d:m:" opt; do
 
         CUSTOMGENOME=$OPTARG
     ;;
-        
+
     \?)
         echo
         echo
