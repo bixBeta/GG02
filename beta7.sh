@@ -753,7 +753,8 @@ while getopts "hp:t:g:s:r:c:d:m:" opt; do
     m)
 
         CUSTOMGENOME=$OPTARG
-
+    ;;
+        
     \?)
         echo
         echo
