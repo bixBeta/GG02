@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #SBATCH -J fq.screen
 #SBATCH -o %x.out

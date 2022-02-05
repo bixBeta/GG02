@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #SBATCH -J RNAseq
 #SBATCH -o %x.out

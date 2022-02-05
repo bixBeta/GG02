@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # source /programs/bin/util/setup_mirdeep2.sh
 

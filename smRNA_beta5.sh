@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #SBATCH -J smRNA
 #SBATCH -o %x.out
@@ -187,9 +187,9 @@ cleanUp(){
 
   cd expression_analyses_${PIN}_${DATE}
     gzip *.arf *.fa *.mrd
-    
+
     /home/fa286/bin/scripts/firstBase_readLength.sh
-    
+
   cd ..
 
   echo ""

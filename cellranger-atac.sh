@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # initial commit FA200323
 # version 1

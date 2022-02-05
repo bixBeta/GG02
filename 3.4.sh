@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #SBATCH -J ATACseq
 #SBATCH -o %x.out
 #SBATCH -n 12
