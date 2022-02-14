@@ -644,13 +644,10 @@ customSTAR(){
                 --genomeDir $CUSTOMGENOME \
                 --readFilesIn $i \
                 --readFilesCommand gunzip -c \
-                --outSAMstrandField intronMotif \
-                --outFilterIntronMotifs RemoveNoncanonical \
                 --outSAMtype BAM SortedByCoordinate \
                 --outFileNamePrefix ${iSUB}. \
-                --limitBAMsortRAM 61675612266 \
-                --quantMode GeneCounts
-
+                --limitBAMsortRAM 61675612266
+                
             done
 
         #    source activate RSC
