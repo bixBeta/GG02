@@ -647,7 +647,7 @@ customSTAR(){
                 --outSAMtype BAM SortedByCoordinate \
                 --outFileNamePrefix ${iSUB}. \
                 --limitBAMsortRAM 61675612266
-                
+
             done
 
         #    source activate RSC
@@ -949,11 +949,13 @@ else
 
     echo "ENV INFO: " >> beta7.run.log
     echo >> beta7.run.log
-    echo "trim_galore -j 8  version:"`trim_galore -j 8  --version | grep 'version' | cut -d "n" -f2` >> beta7.run.log
-    echo "STAR version:" `~/bin/STAR-2.7.0e/bin/Linux_x86_64/STAR --version` >> beta7.run.log
-    echo "multiqc version:" `~/miniconda2/bin/multiqc --version` >> beta7.run.log
-    echo "samtools version:" `/programs/bin/samtools/samtools --version` >> beta7.run.log
+
+    echo "trim_galore version:"`trim_galore --version | grep 'version' | cut -d "n" -f2` >> beta7.run.log
+    echo "STAR version:" `STAR --version` >> beta7.run.log
+    echo `multiqc --version` >> beta7.run.log
+    echo `/programs/bin/samtools/samtools --version` >> beta7.run.log
     echo "rseqc version: rseqc=2.6.4 " >> beta7.run.log
+
     echo -------------------------------------------------------------------------------------------------- >> beta7.run.log
 
 fi
