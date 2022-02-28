@@ -953,7 +953,7 @@ else
     echo "trim_galore version:"`trim_galore --version | grep 'version' | cut -d "n" -f2` >> beta7.run.log
     echo "STAR version:" `STAR --version` >> beta7.run.log
     echo `multiqc --version` >> beta7.run.log
-    echo `/programs/bin/samtools/samtools --version` >> beta7.run.log
+    echo `/programs/bin/samtools/samtools --version | head -1` >> beta7.run.log
     echo "rseqc version: rseqc=2.6.4 " >> beta7.run.log
 
     echo -------------------------------------------------------------------------------------------------- >> beta7.run.log
