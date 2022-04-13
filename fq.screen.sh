@@ -17,7 +17,8 @@ usage(){
   echo "[-p] --> Project Identifier Number"
   echo "[-r] --> nova , next "
   echo "---------------------------------------------------------------------------------------------------------------------------"
-
+  echo ""
+  echo " Configured DBs: "
 }
 
 
@@ -117,15 +118,15 @@ done
 
 
 
-if [[ ! -z "${r+x}" ]]; then
+if [[ ! -z "${PLATFORM+x}" ]]; then
     #statements
 
-    if   [[ $r == next ]]; then
+    if   [[ $PLATFORM == next ]]; then
 
         F="*_R1.fastq.gz"
         screen
 
-    elif [[ $r == nova ]]; then
+    elif [[ $PLATFORM == nova ]]; then
 
         F="*_val_1.fq.gz"
         screen
