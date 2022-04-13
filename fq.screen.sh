@@ -5,57 +5,162 @@
 #SBATCH -n 12
 #SBATCH --mem-per-cpu=18000
 
+usage(){
 
-if [ "$1" = "help" ] || [ "$1" = "-h" ]
-then
-    echo ""
-    echo "--------------------------------------------------------------------------------------"
-    echo " To run this script, use the following syntax:"
-    echo "  sbatch" $0 
-    echo "--------------------------------------------------------------------------------------"
-    echo " CONFIGURATION FILE "
-    echo "--------------------------------------------------------------------------------------"
-    echo "THREADS         16"
-    echo "DATABASE        Human /workdir/genomes/FastQ_Screen_Genomes/Human/Homo_sapiens.GRCh38"
-    echo "DATABASE        Mouse /workdir/genomes/FastQ_Screen_Genomes/Mouse/Mus_musculus.GRCm38"
-    echo "DATABASE        Rat   /workdir/genomes/FastQ_Screen_Genomes/Rat/Rnor_6.0"
-    echo "DATABASE        Drosophila    /workdir/genomes/FastQ_Screen_Genomes/Drosophila/BDGP6"
-    echo "DATABASE        Worm  /workdir/genomes/FastQ_Screen_Genomes/Worm/Caenorhabditis_elegans.WBcel235"
-    echo "DATABASE        Yeast /workdir/genomes/FastQ_Screen_Genomes/Yeast/Saccharomyces_cerevisiae.R64-1-1"
-    echo "DATABASE	Arabidopsis_thaliana  /workdir/genomes/FastQ_Screen_Genomes/Arabidopsis/Arabidopsis_thaliana.TAIR10"
-    echo "DATABASS	Ecoli /workdir/genomes/FastQ_Screen_Genomes/E_coli/Ecoli"
-    echo "DATABASE  	MT    /workdir/genomes/FastQ_Screen_Genomes/Mitochondria/mitochondria"
-    echo "DATABASE        PhiX  /workdir/genomes/FastQ_Screen_Genomes/PhiX/phi_plus_SNPs"
-    echo "DATABASE	Lambda    /workdir/genomes/FastQ_Screen_Genomes/Lambda/Lambda"
-    echo "DATABASE        Vectors   /workdir/genomes/FastQ_Screen_Genomes/Vectors/Vectors"
-    echo "DATABASE        Adapters  /workdir/genomes/FastQ_Screen_Genomes/Adapters/Contaminants"
-    echo "DATABASE        Chicken   /workdir/genomes/FastQ_Screen_Genomes/Chicken/genome"
-    echo "DATABASE        Dog   /workdir/genomes/FastQ_Screen_Genomes/Dog/genome"
-    echo "DATABASE        Horse /workdir/genomes/FastQ_Screen_Genomes/Horse/genome"
-    echo "DATABASE        Archae    /workdir/genomes/FastQ_Screen_Genomes/Archae/archae"
-    echo "DATABASE        Bacteria  /workdir/genomes/FastQ_Screen_Genomes/Bacteria/bacteria"
-    echo "DATABASE        Virus /workdir/genomes/FastQ_Screen_Genomes/Virus/viral"
-    echo "DATABASE        Fungi /workdir/genomes/FastQ_Screen_Genomes/Fungi/fungi"
-    echo "DATABASE        Protists  /workdir/genomes/FastQ_Screen_Genomes/Protists/protists"
-    echo "DATABASE        AllrRNA   /workdir/genomes/contaminants/SILVA_rRNA/Bowtie2Index/AllrRNA"
-    echo "DATABASE        EHV8  /workdir/genomes/FastQ_Screen_Genomes/EHV8/ehv8"
-    echo ""
+  echo "FASTQ__SCREEN   W O R K F L O W - @bixBeta"
+  echo ""
+  echo ""
+  echo "Usage: bash" $0 "[-h arg] [-p arg] [-r arg] "
+  echo
+  echo "---------------------------------------------------------------------------------------------------------------------------"
+  echo "[-h] --> Display Help"
+  echo "[-p] --> Project Identifier Number"
+  echo "[-r] --> nova , next "
+  echo "---------------------------------------------------------------------------------------------------------------------------"
 
+}
+
+
+
+declare -A db
+
+db=( ["Human"]="/workdir/genomes/FastQ_Screen_Genomes/Human/Homo_sapiens.GRCh38"
+["Mouse"]="/workdir/genomes/FastQ_Screen_Genomes/Mouse/Mus_musculus.GRCm38"
+["Rat"]="/workdir/genomes/FastQ_Screen_Genomes/Rat/Rnor_6.0"
+["Drosophila"]="/workdir/genomes/FastQ_Screen_Genomes/Drosophila/BDGP6"
+["Worm"]="/workdir/genomes/FastQ_Screen_Genomes/Worm/Caenorhabditis_elegans.WBcel235"
+["Yeast"]="/workdir/genomes/FastQ_Screen_Genomes/Yeast/Saccharomyces_cerevisiae.R64-1-1"
+["Arabidopsis_thaliana"]="/workdir/genomes/FastQ_Screen_Genomes/Arabidopsis/Arabidopsis_thaliana.TAIR10""
+["Ecoli"]="/workdir/genomes/FastQ_Screen_Genomes/E_coli/Ecoli""
+["MT"]="/workdir/genomes/FastQ_Screen_Genomes/Mitochondria/mitochondria""
+["PhiX"]="/workdir/genomes/FastQ_Screen_Genomes/PhiX/phi_plus_SNPs"
+["Lambda"]="/workdir/genomes/FastQ_Screen_Genomes/Lambda/Lambda""
+["Vectors"]="/workdir/genomes/FastQ_Screen_Genomes/Vectors/Vectors"
+["Adapters"]="/workdir/genomes/FastQ_Screen_Genomes/Adapters/Contaminants"
+["Chicken"]="/workdir/genomes/FastQ_Screen_Genomes/Chicken/genome"
+["Dog"]="/workdir/genomes/FastQ_Screen_Genomes/Dog/genome"
+["Horse"]="/workdir/genomes/FastQ_Screen_Genomes/Horse/genome"
+["Archae"]="/workdir/genomes/FastQ_Screen_Genomes/Archae/archae"
+["Bacteria"]="/workdir/genomes/FastQ_Screen_Genomes/Bacteria/bacteria"
+["Virus"]="/workdir/genomes/FastQ_Screen_Genomes/Virus/viral"
+["Fungi"]="/workdir/genomes/FastQ_Screen_Genomes/Fungi/fungi"
+["Protists"]="/workdir/genomes/FastQ_Screen_Genomes/Protists/protists"
+["AllrRNA"]="/workdir/genomes/contaminants/SILVA_rRNA/Bowtie2Index/AllrRNA"
+["EHV8"]="/workdir/genomes/FastQ_Screen_Genomes/EHV8/ehv8" )
+
+printDB() {
+  for i in "${!db[@]}"; do echo "[${i}]=${db[$i]}"; done
+}
+
+
+screen(){
+
+
+          for i in $F
+          do
+            fastq_screen --outdir $PIN_fq.screen_out --conf /home/fa286/bin/scripts/my.fastq.conf $i
+          done
+
+          cd $PIN_fq.screen_out
+
+          multiqc -n $PIN_fq.screen_multiqc.report .
+
+          cd ..
+
+
+
+}
+
+
+
+
+while getopts "hp:r:" opt; do
+    case ${opt} in
+
+    h)
+        echo
+        echo
+        echo
+        usage
+        echo
+        printGenomes
+        echo
+        exit 1
+
+    ;;
+
+    p )
+
+        PIN=$OPTARG
+        echo "Project Identifier = " $PIN
+    ;;
+
+    r )
+
+        PLATFORM=$OPTARG
+        echo "Sequencing Platform = " $PLATFORM
+    ;;
+
+
+    \?)
+        echo
+        echo
+        echo
+        usage
+
+    ;;
+
+    esac
+
+done
+
+
+
+
+if [[ ! -z "${r+x}" ]]; then
+    #statements
+
+    if   [[ $r == next ]]; then
+
+        F="*_R1.fastq.gz"
+        screen
+
+    elif [[ $r == nova ]]; then
+
+        F="*_val_1.fq.gz"
+        screen
+
+    else
+        echo "-t only accepts next or nova as arguments"
+        exit 1
+    fi
+fi
+
+
+
+if [[ -z $1 ]] || [[  $1 = "help"  ]] ; then
+    #statements
+    echo
+    echo
+    usage
+    echo
+    printDB
+    echo
     exit 1
 
 else
+    echo
+    echo `date`
+    echo "Project Identifier Specified = " $PIN
+    echo "Sequencing Platform Specified   = " $DIR
+    echo
+
+    echo "ENV INFO: "
+    echo
+
+    echo `fastq_screen --version`
 
 
+    echo --------------------------------------------------------------------------------------------------
 
-
-        for i in *.gz
-        do
-          fastq_screen --outdir fq.screen_out --conf /home/fa286/bin/scripts/my.fastq.conf $i
-        done
-
-        cd fq.screen_out
-        multiqc -n fq.screen.multiqc.report .
-
-        cd ..
 fi
-
