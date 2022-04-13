@@ -62,7 +62,7 @@ screen(){
             fastq_screen --outdir ${PIN}_fq.screen_out --conf /home/fa286/bin/scripts/my.fastq.conf $i
           done
 
-          cd $PIN_fq.screen_out
+          cd ${PIN}_fq.screen_out
 
           multiqc -n ${PIN}_fq.screen_multiqc.report .
 
