@@ -168,6 +168,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["yeast"]="/workdir/genomes/Saccharomyces_cerevisiae/R64-1-1_GCA_000146045.2/ENSEMBL/star.index" \
 ["TAIR10"]="/workdir/genomes/Arabidopsis_thaliana/TAIR10/ENSEMBL/genomeDir" \
 ["crow"]="/workdir/genomes/Corvus_moneduloides/bCorMon1/NCBI/genomeDir" \
+["orbicella"]="/workdir/genomes/Orbicella_faveolata/GCA_002042975.1/ncbi/genomeDir" \
 ["macaca"]="/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir" )
 
 declare -A bed12
