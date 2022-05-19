@@ -642,7 +642,7 @@ customSTAR(){
 
                 iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
 
-                /programs/STAR-2.7.9a/bin/Linux_x86_64_static/STAR \
+                STAR \
                 --runThreadN 12 \
                 --genomeDir $CUSTOMGENOME \
                 --readFilesIn $i \
