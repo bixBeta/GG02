@@ -12,7 +12,7 @@ usage(){
     echo
     echo
 
-    echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-q arg] [-a arg]"
+    echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-q arg] [-a arg] [-qval arg] [-fe arg] "
     echo
     echo "---------------------------------------------------------------------------------------------------------------"
     echo "[-h] --> Display Help"
@@ -22,6 +22,8 @@ usage(){
     echo "[-g] --> Reference Genome <mm10 or hg38>"
     echo "[-a] --> Reference Genome <bwa or bt2 >"
     echo "[-q] --> Execute atacQC.R script <yes>"
+    echo "[-qval] --> macs2 q val cutoff"
+    echo "[-fe] --> macs2 fold enrichment cutoff"
     echo "---------------------------------------------------------------------------------------------------------------"
 }
 
@@ -288,10 +290,10 @@ callPeak(){
         -f BAMPE \
         -n ${iSUB} \
         -g ${gSize[${DIR}]} \
-        -q 0.05 \
+        -q ${QVAL} \
         --outdir peaks.OUT \
         --nomodel --shift 37 --ext 73 \
-        --fe-cutoff 5 \
+        --fe-cutoff ${FE} \
         --keep-dup all
       done
 
@@ -311,10 +313,10 @@ mergedPeaks(){
     -f BAMPE \
     -n allSamplesMergedPeakset \
     -g ${gSize[${DIR}]} \
-    -q 0.05 \
+    -q ${QVAL} \
     --outdir peaks.OUT \
     --nomodel --shift 37 --ext 73 \
-    --fe-cutoff 5 \
+    --fe-cutoff ${FE} \
     --keep-dup all
 
   cd ..
@@ -392,7 +394,7 @@ atacQC(){
 }
 
 
-while getopts "hp:t:g:q:d:a:" opt; do
+while getopts "hp:t:g:q:d:a:qval:fe:" opt; do
     case ${opt} in
 
     h)
@@ -437,6 +439,16 @@ while getopts "hp:t:g:q:d:a:" opt; do
 
     a)
         AL=$OPTARG
+
+    ;;
+
+    qval)
+        QVAL=$OPTARG
+
+    ;;
+
+    fe)
+        FE=$OPTARG
 
     ;;
 
@@ -542,7 +554,7 @@ fi
 
                                 else
                                     echo "Please specify the available genome aligner (bt2 or bwa)"
-                                    exit1
+                                    exit 1
                                 fi
                             fi
 
