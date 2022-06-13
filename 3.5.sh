@@ -12,7 +12,7 @@ usage(){
     echo
     echo
 
-    echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-q arg] [-a arg] [-qval arg] [-fe arg] "
+    echo "Usage: bash" $0 "[-h arg] [-p arg] [-d args] [-t arg] [-g arg] [-q arg] [-a arg] [-Q arg] [-F arg] "
     echo
     echo "---------------------------------------------------------------------------------------------------------------"
     echo "[-h] --> Display Help"
@@ -24,8 +24,8 @@ usage(){
     echo "[-q] --> Execute atacQC.R script <yes>"
     echo ""
     echo "---------------------- MACS2 PARAMS ------------------------"
-    echo "    [-qval] --> macs2 q val cutoff, default = 0.05"
-    echo "    [-fe]   --> macs2 fold enrichment cutoff, default = 5"
+    echo "    [-Q] --> macs2 q val cutoff, default = 0.05"
+    echo "    [-F] --> macs2 fold enrichment cutoff, default = 5"
     echo "---------------------------------------------------------------------------------------------------------------"
 }
 
@@ -402,7 +402,7 @@ atacQC(){
 }
 
 
-while getopts "hp:t:g:q:d:a:qval:fe:" opt; do
+while getopts "hp:t:g:q:d:a:Q:F" opt; do
     case ${opt} in
 
     h)
@@ -450,12 +450,12 @@ while getopts "hp:t:g:q:d:a:qval:fe:" opt; do
 
     ;;
 
-    qval)
+    Q)
         QVAL=$OPTARG
 
     ;;
 
-    fe)
+    F)
         FE=$OPTARG
 
     ;;
@@ -523,16 +523,16 @@ fi
 
                     #-------------------------------------------------------------------------------------------------------------
                     #-------------------------------------------------------------------------------------------------------------
-                    ## check if macs2 cutoffs are provided
-                    # if [[ -z "${QVAL+x}" ]]; then
-                    #
-                    #     QVAL=0.05
-                    # fi
-                    #
-                    # if [[ -z "${FE+x}" ]]; then
-                    #
-                    #     FE=5
-                    # fi
+                    # check if macs2 cutoffs are provided
+                    if [[ -z "${QVAL+x}" ]]; then
+
+                        QVAL=0.05
+                    fi
+
+                    if [[ -z "${FE+x}" ]]; then
+
+                        FE=5
+                    fi
                     #-------------------------------------------------------------------------------------------------------------
                     #-------------------------------------------------------------------------------------------------------------
                     ## check if genomeDir provided
