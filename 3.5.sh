@@ -286,7 +286,7 @@ callPeak(){
     echo "calling peaks on DEDUP bams"
     echo "qval cutoff = $QVAL"
     echo "fe cutoff = $FE"
-    
+
     mkdir peaks.OUT
     for i  in *.DEDUP.bam
       do
@@ -524,12 +524,12 @@ fi
                     #-------------------------------------------------------------------------------------------------------------
                     #-------------------------------------------------------------------------------------------------------------
                     ## check if macs2 cutoffs are provided
-                    if [[ ! -z "${QVAL+x}" ]]; then
+                    if [[ -z "${QVAL+x}" ]]; then
 
                         QVAL=0.05
                     fi
 
-                    if [[ ! -z "${FE+x}" ]]; then
+                    if [[ -z "${FE+x}" ]]; then
 
                         FE=5
                     fi
