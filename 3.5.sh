@@ -23,9 +23,9 @@ usage(){
     echo "[-a] --> Reference Genome <bwa or bt2 >"
     echo "[-q] --> Execute atacQC.R script <yes>"
     echo ""
-    echo "--------------- MACS2 PARAMS -----------------"
-    echo "    [-qval] --> macs2 q val cutoff"
-    echo "    [-fe]   --> macs2 fold enrichment cutoff"
+    echo "---------------------- MACS2 PARAMS ------------------------"
+    echo "    [-qval] --> macs2 q val cutoff, default = 0.05"
+    echo "    [-fe]   --> macs2 fold enrichment cutoff, default = 5"
     echo "---------------------------------------------------------------------------------------------------------------"
 }
 
