@@ -402,7 +402,7 @@ atacQC(){
 }
 
 
-while getopts "hp:t:g:q:d:a:qval:fe:" opt; do
+while getopts "hp:t:g:d:a:qval:fe:q:" opt; do
     case ${opt} in
 
     h)
