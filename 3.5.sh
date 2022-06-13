@@ -17,7 +17,7 @@ usage(){
     echo "---------------------------------------------------------------------------------------------------------------"
     echo "[-h] --> Display Help"
     echo "[-p] --> Project Identifier Number"
-    echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,5 "
+    echo "[-d] --> Comma Spearated Values for Delimiter and Field <delim,field or default> default: _,1 "
     echo "[-t] --> Trimming <nextseq or nova>;"
     echo "[-g] --> Reference Genome <mm10, hg38, dm6>"
     echo "[-a] --> Reference Genome <bwa or bt2 >"
@@ -492,7 +492,7 @@ fi
                         if [[ $DELIM == default ]]; then
 
                         DELIMITER="_"
-                        FIELD="5"
+                        FIELD="1"
                         echo "file naming will be done using the default delimiter settings"
                       else
 
@@ -513,7 +513,7 @@ fi
                         if [[ $T == nextseq ]]; then
                             trimPE
                         elif [[ $T == nova ]]; then
-                            trimHiSeqPE
+                            trimPE
                         else
                         echo "-t only accepts nextseq or nova as arguments"
                         exit 1
@@ -524,15 +524,15 @@ fi
                     #-------------------------------------------------------------------------------------------------------------
                     #-------------------------------------------------------------------------------------------------------------
                     ## check if macs2 cutoffs are provided
-                    if [[ -z "${QVAL+x}" ]]; then
-
-                        QVAL=0.05
-                    fi
-
-                    if [[ -z "${FE+x}" ]]; then
-
-                        FE=5
-                    fi
+                    # if [[ -z "${QVAL+x}" ]]; then
+                    #
+                    #     QVAL=0.05
+                    # fi
+                    #
+                    # if [[ -z "${FE+x}" ]]; then
+                    #
+                    #     FE=5
+                    # fi
                     #-------------------------------------------------------------------------------------------------------------
                     #-------------------------------------------------------------------------------------------------------------
                     ## check if genomeDir provided
