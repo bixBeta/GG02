@@ -284,6 +284,9 @@ callPeak(){
 
   cd dedup-BAMS
     echo "calling peaks on DEDUP bams"
+    echo "qval cutoff = $QVAL"
+    echo "fe cutoff = $FE"
+    
     mkdir peaks.OUT
     for i  in *.DEDUP.bam
       do
@@ -307,6 +310,9 @@ callPeak(){
 mergedPeaks(){
 
   echo "running module mergedPeaks"
+  echo "qval cutoff = $QVAL"
+  echo "fe cutoff = $FE"
+
   cd dedup-BAMS
 
     allBams=`echo *.DEDUP.bam`
@@ -539,11 +545,11 @@ fi
                             if [[ ! -z "${AL+x}" ]]; then
 
                                 if [[ $AL == bwa ]]; then
-                                  alignPE.bwa
-                                  sort
-                                  rmMT
-                                  markDups
-                                  dedupBAM
+                                  # alignPE.bwa
+                                  # sort
+                                  # rmMT
+                                  # markDups
+                                  # dedupBAM
                                   callPeak
                                   mergedPeaks
                                   saf
