@@ -64,7 +64,8 @@ gSize=(
 declare -A blkList
 blkList=(
 ["mm10"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/mm10-blacklist.v2.bed" \
-["hg38"]="/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/hg38-blacklist.v2.bed"
+["hg38"]="/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/hg38-blacklist.v2.bed" \
+["dm6"]="/workdir/genomes/Drosophila_melanogaster/dmel_r6.45/FlyBase/dm6-blacklist.v2.bed"
 )
 
 
@@ -215,13 +216,28 @@ rmMT(){
 
                 done
 
-
+                for i in *.noMT.bam
+                do
+                    iSUB=`echo $i | cut -d "." -f1`
+                    samtools index $i
+                    samtools flagstat $i > ${iSUB}.noMT.flagstat
+                    samtools idxstats $i > ${iSUB}.noMT.idxstats
+                done
 
                 for i in *.noMT.bam
                 do
                     iSUB=`echo $i | cut -d "." -f1`
                     bedtools intersect -v -a $i -b ${blkList[${DIR}]} > ${iSUB}.noBlacklist.noMT.bam
                 done
+
+                for i in *.noBlacklist.noMT.bam
+                do
+                    iSUB=`echo $i | cut -d "." -f1`
+                    samtools index $i
+                    samtools flagstat $i > ${iSUB}*.noBlacklist.noMT.bam
+                    samtools idxstats $i > ${iSUB}*.noBlacklist.noMT.bam
+                done
+
 
 
                 cd ..
@@ -235,7 +251,7 @@ markDups(){
             java -jar /programs/bin/picard-tools/picard.jar \
             MarkDuplicates \
             INPUT=$i \
-            OUTPUT=${iSUB}.dupMarked.noMT.bam \
+            OUTPUT=${iSUB}.dupMarked.noMT.noBlacklist.bam \
             ASSUME_SORTED=true \
             REMOVE_DUPLICATES=false \
             METRICS_FILE=${iSUB}.MarkDuplicates.metrics.txt \
@@ -249,15 +265,15 @@ markDups(){
 dedupBAM(){
                 cd primary-BAMS
                 # alignment stats etc. on dupMarked no MT bams
-                for i in *.dupMarked.noMT.bam
+                for i in *.dupMarked.noMT.noBlacklist.bam
                 do
                     iSUB=`echo $i | cut -d "." -f1`
                     samtools index $i
-                    samtools flagstat $i > ${iSUB}.noMT.flagstat
-                    samtools idxstats $i > ${iSUB}.noMT.idxstats
+                    samtools flagstat $i > ${iSUB}.noMT.noBlacklist.flagstat
+                    samtools idxstats $i > ${iSUB}.noMT.noBlacklist.idxstats
                 done
 
-        for i in *.dupMarked.noMT.bam
+        for i in *.dupMarked.noMT.noBlacklist.bam
         do
                 iSUB=`echo $i | cut -d "." -f1`
                 samtools view -b -h -F 0X400 $i > ${iSUB}.DEDUP.bam
