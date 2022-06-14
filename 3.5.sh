@@ -92,7 +92,7 @@ trimPE(){
 }
 
 
-trimHiSeqPE(){
+trimNovaPE(){
 
                 cd fastqs
                 ls -1 *_1.fq* > .R1
@@ -104,7 +104,7 @@ trimHiSeqPE(){
 
                 for i in "${fastqs[@]}"
                 do
-                        trim_galore --quality 20 --gzip -j 8 --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                        trim_galore --nextseq 20 --gzip -j 8 --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
                 done
 
                 mkdir TrimQC_stats trimmed_fastqs
@@ -154,15 +154,20 @@ alignPE.bt2(){
 
         readarray trimmedFastqs < Trimmed.list
 
-        for i in "${trimmedFastqs[@]}"
+          for i in "${trimmedFastqs[@]}"
+            do
 
-        do
-                # INDEX="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/BWAIndex/genome.fa"
-                iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
+              iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
+              A=`echo $i | cut -d " " -f1`
+              B=`echo $i | cut -d " " -f2`
 
-                bwa mem -t 24 -M -R "@RG\tID:${iSUB}\tSM:${iSUB}\tPL:ILLUMINA\tLB:${iSUB}\tPU:1" ${genomeDir[${DIR}]} $i \
-                | samtools view -@ 24 -b -h -F 0x0100 -O BAM -o ${iSUB}.bam
-        done
+              (bowtie2 \
+              --no-unal \
+              -x ${genomeDir[${DIR}]} \
+              -1 $A -2 $B \
+              -S - | samtools view -@ 24 -b -h -F 0x0100 -O BAM -o ${iSUB}.bam)2>${iSUB}.log
+
+            done
 
                 mkdir primary-BAMS
                 mv *.bam primary-BAMS
@@ -513,7 +518,7 @@ fi
                         if [[ $T == nextseq ]]; then
                             trimPE
                         elif [[ $T == nova ]]; then
-                            trimPE
+                            trimNovaPE
                         else
                         echo "-t only accepts nextseq or nova as arguments"
                         exit 1
