@@ -166,6 +166,7 @@ alignPE.bt2(){
               --no-unal \
               -x ${genomeDir[${DIR}]} \
               -1 $A -2 $B \
+              --threads 12 \
               -S - | samtools view -@ 24 -b -h -F 0x0100 -O BAM -o ${iSUB}.bam)2>${iSUB}.log
 
             done
