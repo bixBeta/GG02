@@ -4,7 +4,7 @@ args <-  commandArgs(trailingOnly = T)
 # check for required argument
 
 if (length(args)==0) {
-  print(" Usage = Rscript atacQC.R < human, mouse  or 'path to gtf annotation' >")
+  print(" Usage = Rscript atacQC.R < human, mouse, fly or 'path to gtf annotation' >")
   stop("Missing gtf annotation path !!! \n", call.=FALSE)
 
 }
@@ -68,6 +68,9 @@ if (args[1]=="mouse") {
 } else  if (args[1]=="human"){
   gtf.path <-  "/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/Homo_sapiens.GRCh38.96.gtf"
   org <- "Homo sapiens"
+} else  if (args[1]=="fly"){
+  gtf.path <-  "/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/Drosophila_melanogaster.BDGP6.32.106.gtf"
+  org <- "Drosophila melanogaster"
 } else {
   gtf.path <- args[1]
   org <- "NA"

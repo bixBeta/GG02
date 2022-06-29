@@ -36,7 +36,7 @@ declare -A genomeDir
 genomeDir=(
 ["mm10"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/BWAIndex/genome.fa" \
 ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/bwa.index/Homo_sapiens.GRCh38.dna.toplevel.fa" \
-["dm6"]="/workdir/genomes/Drosophila_melanogaster/dmel_r6.45/FlyBase/bowtie2/dmel.r6"
+["dm6"]="/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/Bowtie2.Index/dm6"
 )
 
 declare -A gtfs
@@ -44,14 +44,14 @@ declare -A gtfs
 gtfs=(
 ["mm10"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/Mus_musculus.GRCm38.96.gtf" \
 ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/Homo_sapiens.GRCh38.96.gtf" \
-["dm6"]="/workdir/genomes/Drosophila_melanogaster/dmel_r6.45/FlyBase/dmel-all-r6.45.gtf"
+["dm6"]="/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/Drosophila_melanogaster.BDGP6.32.106.gtf"
 )
 
 declare -A gAlias # for compatibility with atacQC.R
 gAlias=(
 ["mm10"]="mouse" \
 ["hg38"]="human" \
-["dm6"]="???"
+["dm6"]="fly"
 )
 
 declare -A gSize # for macs2
@@ -65,7 +65,7 @@ declare -A blkList
 blkList=(
 ["mm10"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/mm10-blacklist.v2.bed" \
 ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/hg38-blacklist.v2.bed" \
-["dm6"]="/workdir/genomes/Drosophila_melanogaster/dmel_r6.45/FlyBase/dm6-blacklist.v2.bed"
+["dm6"]="/workdir/tools/blacklists/dm6-blacklist.v2.bed"
 )
 
 
@@ -213,7 +213,7 @@ rmMT(){
 
                     iSUB=`echo $i | cut -d "." -f1`
 
-                    samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs samtools view -b $i > ${iSUB}.noMT.bam
+                    samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  head -8 | grep -v "mitochondrion_genome" | cut -d ":" -f2 | xargs samtools view -b $i > ${iSUB}.noMT.bam
 
                 done
 
@@ -235,8 +235,8 @@ rmMT(){
                 do
                     iSUB=`echo $i | cut -d "." -f1`
                     samtools index $i
-                    samtools flagstat $i > ${iSUB}*.noBlacklist.noMT.bam
-                    samtools idxstats $i > ${iSUB}*.noBlacklist.noMT.bam
+                    samtools flagstat $i > ${iSUB}.noBlacklist.noMT.flagstat
+                    samtools idxstats $i > ${iSUB}.noBlacklist.noMT.idxstats
                 done
 
 
@@ -277,7 +277,7 @@ dedupBAM(){
         for i in *.dupMarked.noMT.noBlacklist.bam
         do
                 iSUB=`echo $i | cut -d "." -f1`
-                samtools view -b -h -F 0X400 $i > ${iSUB}.DEDUP.bam
+                samtools view -b -h -F 0X400 $i > ${iSUB}.DEDU  P.bam
         done
 
                 for i in *.DEDUP.bam; do samtools index $i ; samtools idxstats $i > `echo $i | cut -d "." -f1`.DEDUP.idxstats; done
@@ -581,18 +581,18 @@ fi
                                   bedGraphs
 
                                 elif [[ $AL == bt2 ]]; then
-                                  alignPE.bt2
-                                  sort
-                                  rmMT
-                                  markDups
-                                  dedupBAM
-                                  callPeak
-                                  mergedPeaks
-                                  saf
-                                  frip
-                                  tagDir
-                                  annotatePeaks
-                                  bedGraphs
+                                  # alignPE.bt2
+                                  # sort
+                                  #rmMT
+                                  # markDups
+                                  # dedupBAM
+                                   callPeak
+                                   mergedPeaks
+                                   saf
+                                   frip
+                                   tagDir
+                                  # annotatePeaks
+                                   bedGraphs
 
                                 else
                                     echo "Please specify the available genome aligner (bt2 or bwa)"
