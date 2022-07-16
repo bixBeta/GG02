@@ -277,7 +277,7 @@ dedupBAM(){
         for i in *.dupMarked.noMT.noBlacklist.bam
         do
                 iSUB=`echo $i | cut -d "." -f1`
-                samtools view -b -h -F 0X400 $i > ${iSUB}.DEDU  P.bam
+                samtools view -b -h -F 0X400 $i > ${iSUB}.DEDUP.bam
         done
 
                 for i in *.DEDUP.bam; do samtools index $i ; samtools idxstats $i > `echo $i | cut -d "." -f1`.DEDUP.idxstats; done
