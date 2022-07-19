@@ -567,11 +567,11 @@ fi
                             if [[ ! -z "${AL+x}" ]]; then
 
                                 if [[ $AL == bwa ]]; then
-                                  # alignPE.bwa
-                                  # sort
-                                  # rmMT
-                                  # markDups
-                                  # dedupBAM
+                                  alignPE.bwa
+                                  sort
+                                  rmMT
+                                  markDups
+                                  dedupBAM
                                   callPeak
                                   mergedPeaks
                                   saf
@@ -581,17 +581,17 @@ fi
                                   bedGraphs
 
                                 elif [[ $AL == bt2 ]]; then
-                                  # alignPE.bt2
-                                  # sort
-                                  #rmMT
-                                  # markDups
-                                  # dedupBAM
+                                  alignPE.bt2
+                                  sort
+                                  rmMT
+                                  markDups
+                                  dedupBAM
                                    callPeak
                                    mergedPeaks
                                    saf
                                    frip
                                    tagDir
-                                  # annotatePeaks
+                                  annotatePeaks
                                    bedGraphs
 
                                 else
