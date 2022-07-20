@@ -110,6 +110,7 @@ while getopts "hp:t:g:d:c:" opt; do
 
         BED=$OPTARG
         echo "Bed file Selected = " $BED
+        geneBodyCov
     ;;
 
     \? )
