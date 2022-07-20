@@ -61,7 +61,9 @@ while getopts "hp:t:g:d:c:" opt; do
         echo
         echo
         usage
+        echo
         echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+        echo
         printBED
         echo
         echo
@@ -90,7 +92,24 @@ while getopts "hp:t:g:d:c:" opt; do
 
     ;;
 
-    
+
     esac
 
 done
+
+
+if [[ -z $1 ]] || [[  $1 = "--help"  ]] ; then
+    #statements
+    echo
+    echo
+    echo
+    usage
+    echo
+    echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+    echo
+    printBED
+    echo
+    echo
+    exit 1
+
+fi
