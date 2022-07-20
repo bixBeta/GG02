@@ -53,6 +53,34 @@ printBED() {
   for i in "${!bed12[@]}"; do echo "[${i}]=${bed12[$i]}"; done
 }
 
+
+geneBodyCov(){
+        # cd STAR*/*.BAMS
+
+        # for i in *.bam
+        # do
+        #   BASE=`basename $(echo $i) .Aligned.sortedByCoord.out.bam `
+        #   mv $i ${BASE}.bam
+        # done
+        #
+        # for i in *.bam
+        # do
+        #     /programs/bin/samtools/samtools index -b $i
+        # done
+        # cd ..
+        # echo
+        # echo
+        # pwd
+        # echo
+        # echo
+        source activate RSeQC
+        geneBody_coverage.py -r ${bed12[${BED}]} -i *.BAMS/ -o ${PIN}
+        mkdir geneBodyCov
+        mv *geneBodyCoverage.* log.txt geneBodyCov
+        cd ..
+}
+
+
 while getopts "hp:t:g:d:c:" opt; do
     case ${opt} in
 
