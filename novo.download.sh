@@ -28,7 +28,7 @@ donwload(){
 	echo ""
 	echo "User = $USER, PW = $PW "
 	echo ""
-	wget -r -c ftp://${USER}:${PW}@01.RawData:21/
+	wget -r -c ftp://${USER}:${PW}@usftp21.novogene.com:21/
 }
 
 
