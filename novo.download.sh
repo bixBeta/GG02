@@ -28,7 +28,7 @@ donwload(){
 	echo ""
 	echo "User = $USER, PW = $PW "
 	echo ""
-	wget -r -c ftp://${USER}:${PW}@usftp21.novogene.com:21/
+	wget -r -c ftp://${USER}:${PW}@01.RawData:21/
 }
 
 
@@ -36,8 +36,8 @@ mdcheck(){
 
 	echo ""
 
-	cd usftp21.novogene.com/
-	md5sum raw_data/*/*.gz >> myMD5s.txt
+	cd 01.RawData
+	md5sum */*.gz >> myMD5s.txt
 
 	sort -k2 -n MD5.txt > sorted.MD5.txt
 	sort -k2 -n myMD5s.txt > sorted.myMD5s.txt
@@ -46,14 +46,14 @@ mdcheck(){
 
     cd ..
 
-    mv usftp21.novogene.com $MASTER
+    mv 01.RawData $MASTER
 
     chmod -R 777 $MASTER
 
     cd $MASTER
 
     mkdir -m 777 fastqs
-    mv raw_data/*/*.gz fastqs
+    mv */*.gz fastqs
 
     cd ..
 
