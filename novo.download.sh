@@ -36,15 +36,17 @@ mdcheck(){
 
 	echo ""
 
-	cd 01.RawData
-	md5sum */*.gz >> myMD5s.txt
+  	cd usftp21.novogene.com
+  	md5sum 01.RawData/*/*.gz >> myMD5s.txt
 
-	sort -k2 -n MD5.txt > sorted.MD5.txt
-	sort -k2 -n myMD5s.txt > sorted.myMD5s.txt
 
-	diff sorted.MD5.txt sorted.myMD5s.txt > diff.command.out
 
-    cd ..
+  	sort -k2 -n MD5.txt > sorted.MD5.txt
+  	sort -k2 -n myMD5s.txt > sorted.myMD5s.txt
+
+  	diff sorted.MD5.txt sorted.myMD5s.txt > diff.command.out
+
+
 
     mv 01.RawData $MASTER
 
@@ -61,7 +63,7 @@ mdcheck(){
     rsync -avR $MASTER/fastqs/ /workdir/fa286/projects/mix/
     rsync -arctuxzv --remove-source-files $MASTER/fastqs/* /home/RSCshare/RSC/Projects/ARCHIVE/$MASTER/
 
-
+    cd ..
 }
 
 
