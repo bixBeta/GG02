@@ -200,6 +200,13 @@ bed12=(	["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12" \
 ["yeast"]="/workdir/genomes/Saccharomyces_cerevisiae/R64-1-1_GCA_000146045.2/ENSEMBL/Saccharomyces_cerevisiae.R64-1-1.bed12" )
 
 
+
+# declare -A chrSub
+#
+# chrSub=(	["GRCh38"]="10" \
+# ["GRCm38"]="10"
+# )
+
 printGenomes() {
   for i in "${!genomeDir[@]}"; do echo "[${i}]=${genomeDir[$i]}"; done
 }
@@ -684,6 +691,8 @@ geneBodyCov(){
         do
             /programs/bin/samtools/samtools index -b $i
         done
+
+
         cd ..
         echo
         echo
@@ -696,6 +705,58 @@ geneBodyCov(){
         mv *geneBodyCoverage.* log.txt geneBodyCov
         cd ..
 }
+
+geneBodyCov.split(){
+
+
+          cd STAR*/*.BAMS
+
+          for i in *.bam
+          do
+            BASE=`basename $(echo $i) .Aligned.sortedByCoord.out.bam `
+            mv $i ${BASE}.bam
+          done
+
+          for i in *.bam
+          do
+              /programs/bin/samtools/samtools index -b $i
+          done
+
+          mkdir chr_${GBCOV}_BAMS
+
+          for i in *.bam
+          do
+            iSUB=`basename $(echo $i) .bam `
+            ​samtools view -b $i $GBCOV > chr_${GBCOV}_BAMS/${iSUB}.chr${GBCOV}.bam
+
+          done
+
+          cd chr_${GBCOV}_BAMS
+          for i in *.bam
+          do
+            samtools index $i
+          done
+
+          cd ..
+
+          source activate RSeQC
+          geneBody_coverage.py -r ${bed12[${DIR}]} -i chr_${GBCOV}_BAMS -o ${PIN}
+          mkdir geneBodyCov_chr_${GBCOV}
+          mv *geneBodyCoverage.* log.txt geneBodyCov_chr_${GBCOV}
+
+          cd ..
+
+
+}
+
+
+
+
+
+
+
+
+
 
 while getopts "hp:t:g:s:r:c:d:m:" opt; do
     case ${opt} in
@@ -747,6 +808,9 @@ while getopts "hp:t:g:s:r:c:d:m:" opt; do
         GBCOV=$OPTARG
 
     ;;
+
+
+
 
     d)
         DELIM=$OPTARG
@@ -924,7 +988,7 @@ if [[ ! -z "${GBCOV+x}" ]]; then
     if [[ $GBCOV = "yes" ]]; then
     geneBodyCov
   else
-    echo "geneBodyCov not True"
+    geneBodyCov.split
   fi
 fi
 
