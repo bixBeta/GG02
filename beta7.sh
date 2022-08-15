@@ -727,14 +727,16 @@ geneBodyCov.split(){
           for i in *.bam
           do
             iSUB=`basename $(echo $i) .bam `
-            ​samtools view -b $i $GBCOV > chr_${GBCOV}_BAMS/${iSUB}.chr${GBCOV}.bam
+            /programs/bin/samtools/samtools view -b $i $GBCOV > ${iSUB}.chr${GBCOV}.bam
 
           done
+
+          mv *.chr*.bam chr_${GBCOV}_BAMS
 
           cd chr_${GBCOV}_BAMS
           for i in *.bam
           do
-            samtools index $i
+            /programs/bin/samtools/samtools index $i
           done
 
           cd ..
