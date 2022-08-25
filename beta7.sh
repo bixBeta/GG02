@@ -83,8 +83,8 @@ trimPE(){
 trimMiSeqPE(){
 
                 cd fastqs
-                ls -1 *_R1_* > .R1
-                ls -1 *_R2_* > .R2
+                ls -1 *_R1*gz > .R1
+                ls -1 *_R2*gz > .R2
                 paste -d " " .R1 .R2 > Reads.list
 
                 readarray fastqs < Reads.list
