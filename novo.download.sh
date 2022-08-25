@@ -60,7 +60,7 @@ mdcheck(){
     cd ..
 
 
-    rsync -avR $MASTER/fastqs/ /workdir/fa286/projects/mix/
+    rsync -avR $MASTER/fastqs/ /workdir/TREx_shared/projects/
     rsync -arctuxzv --remove-source-files $MASTER/fastqs/* /home/RSCshare/RSC/Projects/ARCHIVE/$MASTER/
 
     cd ..
