@@ -593,15 +593,15 @@ UNMPE() {
 
             iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
             #iSUB=`basename $i \.gz`
-
+            # --alignIntronMax 1 \
+            # --alignMatesGapMax 45000 \
+            # --outReadsUnmapped Fastx \
+            
             STAR \
             --runThreadN 12 \
             --genomeDir ${genomeDir[${DIR}]} \
             --readFilesIn $i \
             --outSAMstrandField intronMotif \
-            --alignIntronMax 1 \
-            --alignMatesGapMax 45000 \
-            --outReadsUnmapped Fastx \
             --readFilesCommand gunzip -c \
             --outFilterIntronMotifs RemoveNoncanonical \
             --outSAMtype BAM SortedByCoordinate \
