@@ -595,8 +595,8 @@ UNMPE() {
             #iSUB=`basename $i \.gz`
             # --alignIntronMax 1 \
             # --alignMatesGapMax 45000 \
-            # --outReadsUnmapped Fastx \
-            
+
+
             STAR \
             --runThreadN 12 \
             --genomeDir ${genomeDir[${DIR}]} \
@@ -604,6 +604,7 @@ UNMPE() {
             --outSAMstrandField intronMotif \
             --readFilesCommand gunzip -c \
             --outFilterIntronMotifs RemoveNoncanonical \
+            --outReadsUnmapped Fastx \
             --outSAMtype BAM SortedByCoordinate \
             --outFileNamePrefix ${iSUB}. \
             --limitBAMsortRAM 61675612266 \
