@@ -15,7 +15,7 @@ usage(){
   echo "---------------------------------------------------------------------------------------------------------------------------"
   echo "[-h] --> Display Help"
   echo "[-p] --> Project Identifier Number"
-  echo "[-r] --> nova , next "
+  echo "[-r] --> nova , next, split "
   echo "---------------------------------------------------------------------------------------------------------------------------"
   echo ""
   echo "Configured DBs: "
@@ -131,8 +131,13 @@ if [[ ! -z "${PLATFORM+x}" ]]; then
         F="*_val_1.fq.gz"
         screen
 
+    elif [[ $PLATFORM == split ]]; then
+
+        F="*out.mate1.gz"
+        screen
+
     else
-        echo "-t only accepts next or nova as arguments"
+        echo "-t only accepts next nova or split as arguments"
         exit 1
     fi
 fi
