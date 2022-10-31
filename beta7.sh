@@ -872,7 +872,7 @@ fi
 #-------------------------------------------------------------------------------------------------------------
 ## check if trimming parameter exists
 
-if [[ -n "${T+x}" ]]; then
+if ! [[ -z "${T+x}" ]]; then
     #statements
 
     if   [[ $T == nextSE ]]; then
