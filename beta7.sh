@@ -883,8 +883,8 @@ if [[ ! -z "${T+x}" ]]; then
         trimHiSeq
     elif [[ $T == miSeqPE ]]; then
         trimMiSeqPE
-  elif [[ $T == novaPE ]]; then
-    trimNovaPE
+    elif [[ $T == novaPE ]]; then
+        trimNovaPE
     else
         echo "-t only accepts nextSE, nextPE, 4colorSE, miSeqPE, novaPE as arguments"
         exit 1
