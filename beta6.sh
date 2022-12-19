@@ -671,7 +671,7 @@ geneBodyCov(){
 
         for i in *.bam
         do
-            /programs/bin/samtools/samtools index -b $i
+          /programs/samtools-1.15.1-r/bin/samtools index -b $i
         done
         cd ..
         echo

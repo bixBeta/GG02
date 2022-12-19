@@ -691,7 +691,7 @@ geneBodyCov(){
 
         for i in *.bam
         do
-            /programs/bin/samtools/samtools index -b $i
+          /programs/samtools-1.15.1-r/bin/samtools index -b $i
         done
 
 
@@ -721,7 +721,7 @@ geneBodyCov.split(){
 
           for i in *.bam
           do
-              /programs/bin/samtools/samtools index -b $i
+            /programs/samtools-1.15.1-r/bin/samtools index -b $i
           done
 
           mkdir chr_${GBCOV}_BAMS
@@ -729,7 +729,7 @@ geneBodyCov.split(){
           for i in *.bam
           do
             iSUB=`basename $(echo $i) .bam `
-            /programs/bin/samtools/samtools view -b $i $GBCOV > ${iSUB}.chr${GBCOV}.bam
+          /programs/samtools-1.15.1-r/bin/samtools view -b $i $GBCOV > ${iSUB}.chr${GBCOV}.bam
 
           done
 
@@ -738,7 +738,7 @@ geneBodyCov.split(){
           cd chr_${GBCOV}_BAMS
           for i in *.bam
           do
-            /programs/bin/samtools/samtools index $i
+          /programs/samtools-1.15.1-r/bin/samtools index $i
           done
 
           cd ..
