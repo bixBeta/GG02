@@ -59,7 +59,7 @@ fastq2fasta(){
   for i in *.fq
   do
     iSUB=`echo $i | cut -d "." -f1`
-    fastq2fasta.pl $i > ${iSUB}.fasta
+    singularity run -B /workdir/$USER --pwd /workdir/$USER /programs/miRDeep2-2.0.0.7/mirdeep2.sif fastq2fasta.pl $i > ${iSUB}.fasta
   done
   cd ..
 }
@@ -124,7 +124,7 @@ mapper(){
   else
 
     DATE=`date +"%m_%d_%H-%M"`
-    mapper.pl $CONFIG -d -c -m -s ${PIN}_${DATE}.collapsed.fa
+    singularity run -B /workdir/$USER --pwd /workdir/$USER /programs/miRDeep2-2.0.0.7/mirdeep2.sif mapper.pl $CONFIG -d -c -m -s ${PIN}_${DATE}.collapsed.fa
 
   fi
 
@@ -152,14 +152,14 @@ quant(){
       echo "New DATE = $DATE"
       echo
 
-      quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
+      singularity run -B /workdir/$USER --pwd /workdir/$USER /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
       -m /workdir/genomes/smRNA/mature.fa \
       -t $G -y ${PIN}_${DATE} -r ${COLLAPSED} -W -d
 
 
     else
 
-      quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
+      singularity run -B /workdir/$USER --pwd /workdir/$USER /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
       -m /workdir/genomes/smRNA/mature.fa \
       -t $G -y ${PIN}_${DATE} -r ${PIN}_${DATE}.collapsed.fa -W -d
 
