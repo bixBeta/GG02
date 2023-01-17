@@ -355,7 +355,7 @@ alignPE(){
     # pwd
     # echo
     # echo
-    # source activate RSeQC
+    # source /programs/RSeQC2-2.6.1/setup.sh
     # geneBody_coverage.py -r ${bed12[${DIR}]} -i STAR.BAMS/ -o ${PIN}
     # mkdir geneBodyCov
     # mv *geneBodyCoverage.* log.txt geneBodyCov
@@ -701,7 +701,7 @@ geneBodyCov(){
         pwd
         echo
         echo
-        source activate RSeQC
+        source /programs/RSeQC2-2.6.1/setup.sh
         geneBody_coverage.py -r ${bed12[${DIR}]} -i *.BAMS/ -o ${PIN}
         mkdir geneBodyCov
         mv *geneBodyCoverage.* log.txt geneBodyCov
@@ -743,7 +743,7 @@ geneBodyCov.split(){
 
           cd ..
 
-          source activate RSeQC
+          source /programs/RSeQC2-2.6.1/setup.sh
           geneBody_coverage.py -r ${bed12[${DIR}]} -i chr_${GBCOV}_BAMS -o ${PIN}
           mkdir geneBodyCov_chr_${GBCOV}
           mv *geneBodyCoverage.* log.txt geneBodyCov_chr_${GBCOV}

@@ -73,7 +73,7 @@ geneBodyCov(){
         # pwd
         # echo
         # echo
-        source activate RSeQC
+        source /programs/RSeQC2-2.6.1/setup.sh
         geneBody_coverage.py -r ${bed12[${BED}]} -i *.BAMS/ -o ${PIN}
         mkdir geneBodyCov
         mv *geneBodyCoverage.* log.txt geneBodyCov
