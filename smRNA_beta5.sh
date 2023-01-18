@@ -163,8 +163,8 @@ quant(){
 
     else
 
-      singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
-      -m /workdir/genomes/smRNA/mature.fa \
+      singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p /workdir/fa286/miRBase/smRNA/hairpin.fa \
+      -m /workdir/fa286/miRBase/smRNA/mature.fa \
       -t $G -y ${PIN}_${DATE} -r ${PIN}_${DATE}.collapsed.fa -W -d
 
     fi
