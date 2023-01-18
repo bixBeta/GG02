@@ -29,38 +29,40 @@ usage(){
 
 trimSmall(){
     echo "trimSmall"
-        mkdir TrimQC_stats fastQC mirDeep2_results
+        mkdir TrimQC_stats fastQC mirDeep2_results trimmed_fastqs
         for i in fastqs/*.gz
         do
             /home/fa286/bin/TrimGalore-0.6.0/trim_galore --nextseq 20 --gzip -j 8 --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
         done
         mv *_trimming_report.txt TrimQC_stats
-        mv *trimmed.fq.gz mirDeep2_results
+        mv *trimmed.fq.gz trimmed_fastqs
 
 }
 
 trimHiSeq(){
     echo "trimHiSeq"
-        mkdir TrimQC_stats fastQC mirDeep2_results
+        mkdir TrimQC_stats fastQC mirDeep2_results trimmed_fastqs
         for i in fastqs/*.gz
         do
             /home/fa286/bin/TrimGalore-0.6.0/trim_galore --quality 20 --gzip -j 8 --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
         done
         mv *_trimming_report.txt TrimQC_stats
-        mv *trimmed.fq.gz mirDeep2_results
+        mv *trimmed.fq.gz trimmed_fastqs
 
 }
 
 fastq2fasta(){
   echo "fastq2fasta"
-  cd mirDeep2_results
+  cd trimmed_fastqs
   gunzip *.gz
-
+  USR=`pwd`
   for i in *.fq
   do
     iSUB=`echo $i | cut -d "." -f1`
-    singularity run -B /workdir/$USER --pwd /workdir/$USER /programs/miRDeep2-2.0.0.7/mirdeep2.sif fastq2fasta.pl $i > ${iSUB}.fasta
+    singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif fastq2fasta.pl $i > ${iSUB}.fasta
   done
+  mv *fasta ../mirDeep2_results
+  gzip *
   cd ..
 }
 
@@ -124,7 +126,8 @@ mapper(){
   else
 
     DATE=`date +"%m_%d_%H-%M"`
-    singularity run -B /workdir/$USER --pwd /workdir/$USER /programs/miRDeep2-2.0.0.7/mirdeep2.sif mapper.pl $CONFIG -d -c -m -s ${PIN}_${DATE}.collapsed.fa
+    USR=`pwd`
+    singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif mapper.pl $CONFIG -d -c -m -s ${PIN}_${DATE}.collapsed.fa
 
   fi
 
