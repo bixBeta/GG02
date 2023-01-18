@@ -61,8 +61,9 @@ fastq2fasta(){
     iSUB=`echo $i | cut -d "." -f1`
     singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif fastq2fasta.pl $i > ${iSUB}.fasta
   done
+  mkdir ../mirDeep2_results
   mv *fasta ../mirDeep2_results
-  gzip *
+  #gzip *
   cd ..
 }
 
