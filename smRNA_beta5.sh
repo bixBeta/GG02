@@ -163,6 +163,10 @@ quant(){
 
     else
 
+      USR=`pwd`
+      PIN=`echo *.collapsed.fa | cut -d '_' -f1`
+      DATE=`echo *.collapsed.fa | cut -d '_' -f2- | cut -d '.' -f1`
+
       singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p /workdir/fa286/miRBase/smRNA/hairpin.fa \
       -m /workdir/fa286/miRBase/smRNA/mature.fa \
       -t $G -y ${PIN}_${DATE} -r ${PIN}_${DATE}.collapsed.fa -W -d
@@ -178,7 +182,7 @@ quant(){
 cleanUp(){
   echo "cleanUp"
   cd mirDeep2_results
-  rm -r dir_mapper* f1 f2 *_trimmed.fasta *_trimmed.fq
+  rm -r dir_mapper* f1 f2 *_trimmed.fasta 
   cd expression_analyses/expression_analyses_${PIN}_${DATE}
       mv *.mrd *.arf ../../
   cd ../../
