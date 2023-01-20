@@ -156,8 +156,8 @@ quant(){
       echo "New DATE = $DATE"
       echo
 
-      rsync -av /workdir/fa286/miRBase/smRNA/hairpin.fa .
-      rsync -av /workdir/fa286/miRBase/smRNA/mature.fa .
+      rsync -av /workdir/fa286/miRBase/v22_1/hairpin.fa .
+      rsync -av /workdir/fa286/miRBase/v22_1/smRNA/mature.fa .
 
       singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p hairpin.fa \
       -m mature.fa \
@@ -170,8 +170,8 @@ quant(){
       PIN=`echo *.collapsed.fa | cut -d '_' -f1`
       DATE=`echo *.collapsed.fa | cut -d '_' -f2- | cut -d '.' -f1`
 
-      rsync -av /workdir/fa286/miRBase/smRNA/hairpin.fa .
-      rsync -av /workdir/fa286/miRBase/smRNA/mature.fa .
+      rsync -av /workdir/fa286/miRBase/v22_1/hairpin.fa .
+      rsync -av /workdir/fa286/miRBase/v22_1/mature.fa .
 
       singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p hairpin.fa \
       -m mature.fa \
