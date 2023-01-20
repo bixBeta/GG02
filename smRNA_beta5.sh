@@ -189,25 +189,25 @@ quant(){
 
 
 cleanUp(){
-  echo "cleanUp"
-  cd mirDeep2_results
-  rm -r dir_mapper* f1 f2 *_trimmed.fasta
-  cd expression_analyses/expression_analyses_${PIN}_${DATE}
-      mv *.mrd *.arf ../../
-  cd ../../
-
-  mv miRBase.mrd ${PIN}_${DATE}_miRBase.mrd
-  mv mature_mapped.arf ${PIN}_${DATE}_mature_mapped.arf
-  rm -r expression_analyses
-  mkdir  expression_analyses_${PIN}_${DATE}
-  mv *.arf *.fa *.mrd *.html *.csv  expression_analyses_${PIN}_${DATE}
-
-  cd expression_analyses_${PIN}_${DATE}
-    gzip *.arf *.fa *.mrd
-
-    /home/fa286/bin/scripts/firstBase_readLength.sh
-
-  cd ..
+  # echo "cleanUp"
+  # cd mirDeep2_results
+  # rm -r dir_mapper* f1 f2 *_trimmed.fasta
+  # cd expression_analyses/expression_analyses_${PIN}_${DATE}
+  #     mv *.mrd *.arf ../../
+  # cd ../../
+  #
+  # mv miRBase.mrd ${PIN}_${DATE}_miRBase.mrd
+  # mv mature_mapped.arf ${PIN}_${DATE}_mature_mapped.arf
+  # rm -r expression_analyses
+  # mkdir  expression_analyses_${PIN}_${DATE}
+  # mv *.arf *.fa *.mrd *.html *.csv  expression_analyses_${PIN}_${DATE}
+  #
+  # cd expression_analyses_${PIN}_${DATE}
+  #   gzip *.arf *.fa *.mrd
+  #
+  #   /home/fa286/bin/scripts/firstBase_readLength.sh
+  #
+  # cd ..
 
   echo ""
   echo "DONE =) "
