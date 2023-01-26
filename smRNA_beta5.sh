@@ -157,7 +157,7 @@ quant(){
       echo
 
       rsync -av /workdir/fa286/miRBase/v22_1/hairpin.fa .
-      rsync -av /workdir/fa286/miRBase/v22_1/smRNA/mature.fa .
+      rsync -av /workdir/fa286/miRBase/v22_1/mature.fa .
 
       singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p hairpin.fa \
       -m mature.fa \
