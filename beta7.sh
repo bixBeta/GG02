@@ -604,6 +604,8 @@ UNMPE() {
             --readFilesIn $i \
             --outSAMstrandField intronMotif \
             --readFilesCommand gunzip -c \
+            --alignIntronMax 1 \
+            --alignMatesGapMax 45000 \
             --outFilterIntronMotifs RemoveNoncanonical \
             --outReadsUnmapped Fastx \
             --outSAMtype BAM SortedByCoordinate \
