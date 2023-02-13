@@ -17,7 +17,7 @@ usage(){
     echo "[-h] --> Display Help "
     echo "[-p] --> Project Identifier Number "
     echo "[-g] --> genome < GRCh38, GRCm38, horse > "
-
+    echo "[-c] --> chr to subset on < a numeric option will subset on that chromosome e.g. 10)> "
     echo "-------------------------------------------------------------------------------------------------------------------------------------------------------"
 }
 
