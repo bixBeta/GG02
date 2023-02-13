@@ -154,13 +154,14 @@ while getopts "hp:g:c:" opt; do
 
         BED=$OPTARG
         echo "Bed file Selected = " $BED
-        geneBodyCov.split
+
     ;;
 
     c)
 
         GBCOV=$OPTARG
-
+        echo "Chromosome to subset on = " $GBCOV
+        geneBodyCov.split
     ;;
 
 
