@@ -80,6 +80,50 @@ geneBodyCov(){
         cd ..
 }
 
+geneBodyCov.split(){
+
+
+          cd STAR*/*.BAMS
+
+          for i in *.bam
+          do
+            BASE=`basename $(echo $i) .Aligned.sortedByCoord.out.bam `
+            mv $i ${BASE}.bam
+          done
+
+          for i in *.bam
+          do
+            /programs/samtools-1.15.1-r/bin/samtools index -b $i
+          done
+
+          mkdir chr_${GBCOV}_BAMS
+
+          for i in *.bam
+          do
+            iSUB=`basename $(echo $i) .bam `
+          /programs/samtools-1.15.1-r/bin/samtools view -b $i $GBCOV > ${iSUB}.chr${GBCOV}.bam
+
+          done
+
+          mv *.chr*.bam chr_${GBCOV}_BAMS
+
+          cd chr_${GBCOV}_BAMS
+          for i in *.bam
+          do
+          /programs/samtools-1.15.1-r/bin/samtools index $i
+          done
+
+          cd ..
+
+          source /programs/RSeQC2-2.6.1/setup.sh
+          geneBody_coverage.py -r ${bed12[${DIR}]} -i chr_${GBCOV}_BAMS -o ${PIN}
+          mkdir geneBodyCov_chr_${GBCOV}
+          mv *geneBodyCoverage.* log.txt geneBodyCov_chr_${GBCOV}
+
+          cd ..
+
+
+}
 
 while getopts "hp:t:g:d:c:" opt; do
     case ${opt} in
@@ -110,8 +154,15 @@ while getopts "hp:t:g:d:c:" opt; do
 
         BED=$OPTARG
         echo "Bed file Selected = " $BED
-        geneBodyCov
+        geneBodyCov.split
     ;;
+
+    c)
+
+        GBCOV=$OPTARG
+
+    ;;
+
 
     \? )
         echo
