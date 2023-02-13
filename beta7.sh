@@ -106,8 +106,8 @@ trimMiSeqPE(){
 trimNovaPE(){
 
                 cd fastqs
-                ls -1 *_1.fq* > .R1
-                ls -1 *_2.fq* > .R2
+                ls -1 *_*1.f* > .R1
+                ls -1 *_*2.f* > .R2
                 paste -d " " .R1 .R2 > Reads.list
 
                 readarray fastqs < Reads.list
