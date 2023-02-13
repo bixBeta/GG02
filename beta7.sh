@@ -745,7 +745,11 @@ geneBodyCov.split(){
 
           cd ..
 
-          source /programs/RSeQC2-2.6.1/setup.sh
+#          source /programs/RSeQC2-2.6.1/setup.sh
+
+          export PYTHONPATH=/programs/RSeQC-5.0.1/lib64/python3.9/site-packages:/programs/RSeQC-5.0.1/lib/python3.9/site-packages
+          export PATH=/programs/RSeQC-5.0.1/bin:$PATH
+
           geneBody_coverage.py -r ${bed12[${DIR}]} -i chr_${GBCOV}_BAMS -o ${PIN}
           mkdir geneBodyCov_chr_${GBCOV}
           mv *geneBodyCoverage.* log.txt geneBodyCov_chr_${GBCOV}
