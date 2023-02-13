@@ -125,7 +125,7 @@ geneBodyCov.split(){
 
 }
 
-while getopts "hp:t:g:d:c:" opt; do
+while getopts "hp:g:c:" opt; do
     case ${opt} in
 
     h)
