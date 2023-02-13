@@ -171,6 +171,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["orbicella"]="/workdir/genomes/Orbicella_faveolata/GCA_002042975.1/ncbi/genomeDir" \
 ["bacillus"]="/workdir/genomes/Bacillus_subtilis/GCA_000009045/ENSEMBL/genomeDir" \
 ["pao1"]="/workdir/genomes/Pseudomonas_aeruginosa/PAO1/NCBI/genomeDir" \
+["grape"]="/workdir/genomes/Vitis_vinifera/GCA_000003745.2/ENSEMBL/Vitis_vinifera.star" \
 ["macaca"]="/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir" )
 
 declare -A bed12
