@@ -1,3 +1,11 @@
+#!/bin/bash
+#SBATCH -J rRNA-filter
+#SBATCH -o %x.out
+#SBATCH -n 12
+#SBATCH --mem-per-cpu=1800
+
+
+
 DIR="/workdir/genomes/Mus_musculus/rRNA/Bowtie2Index/rRNA"
 
 
@@ -18,9 +26,10 @@ do
         --un-conc-gz ${iSUB}_rRNA_FILTERED_%.fq.gz \
         -x ${DIR} \
         -1 $A -2 $B \
-        -S - | /programs/samtools-1.9-r9/bin/samtools view -@ 24 -b -O BAM -o ${iSUB}.bam)2>${iSUB}.log
+	--threads 12 \
+        -S - | /programs/samtools-1.9-r9/bin/samtools view -@ 24 -b -O BAM -o ${iSUB}.rRNA_FILTERED.bam)2>${iSUB}.rRNA.log
 done
 
 
 mkdir rRNA_FILTERED_FASTQS
-mv *rRNA_FILTERED* rRNA_FILTERED_FASTQ
+mv *rRNA_FILTERED* *rRNA.log rRNA_FILTERED_FASTQ
