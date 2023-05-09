@@ -661,6 +661,8 @@ customSTAR(){
                 --readFilesIn $i \
                 --readFilesCommand gunzip -c \
                 --outSAMstrandField intronMotif \
+                --alignIntronMax 1 \
+                --alignMatesGapMax 45000 \
                 --outFilterIntronMotifs RemoveNoncanonical \
                 --outSAMtype BAM SortedByCoordinate \
                 --outFileNamePrefix ${iSUB}. \
