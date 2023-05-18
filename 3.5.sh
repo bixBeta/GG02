@@ -4,7 +4,7 @@
 #SBATCH -n 12
 #SBATCH --mem-per-cpu=18000
 
-source ~/.bash_profile
+
 
 usage(){
 
@@ -310,6 +310,9 @@ callPeak(){
     echo "fe cutoff = $FE"
 
     mkdir peaks.OUT
+    export PYTHONPATH=/programs/macs2-2.2.7.1-r9/lib64/python3.9/site-packages
+    export PATH=/programs/macs2-2.2.7.1-r9/bin:$PATH
+
     for i  in *.DEDUP.bam
       do
         iSUB=`echo $i | cut -d "." -f1`
