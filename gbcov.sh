@@ -73,8 +73,8 @@ geneBodyCov(){
         # pwd
         # echo
         # echo
-        source /programs/RSeQC2-2.6.1/setup.sh
-        geneBody_coverage.py -r ${bed12[${BED}]} -i *.BAMS/ -o ${PIN}
+        #source /programs/RSeQC2-2.6.1/setup.sh
+        /workdir/TREx_shared/projects/TREX_rna_1.sif geneBody_coverage.py -r ${bed12[${BED}]} -i *.BAMS/ -o ${PIN}
         mkdir geneBodyCov
         mv *geneBodyCoverage.* log.txt geneBodyCov
         cd ..
@@ -93,7 +93,7 @@ geneBodyCov.split(){
 
           for i in *.bam
           do
-            /programs/samtools-1.15.1-r/bin/samtools index -b $i
+            /workdir/TREx_shared/projects/TREX_rna_1.sif samtools index -b $i
           done
 
           mkdir chr_${GBCOV}_BAMS
@@ -101,7 +101,7 @@ geneBodyCov.split(){
           for i in *.bam
           do
             iSUB=`basename $(echo $i) .bam `
-          /programs/samtools-1.15.1-r/bin/samtools view -b $i $GBCOV > ${iSUB}.chr${GBCOV}.bam
+          /workdir/TREx_shared/projects/TREX_rna_1.sif samtools view -b $i $GBCOV > ${iSUB}.chr${GBCOV}.bam
 
           done
 
@@ -110,15 +110,15 @@ geneBodyCov.split(){
           cd chr_${GBCOV}_BAMS
           for i in *.bam
           do
-          /programs/samtools-1.15.1-r/bin/samtools index $i
+          /workdir/TREx_shared/projects/TREX_rna_1.sif samtools index $i
           done
 
           cd ..
 
-          export PYTHONPATH=/programs/RSeQC-5.0.1/lib64/python3.9/site-packages:/programs/RSeQC-5.0.1/lib/python3.9/site-packages
-          export PATH=/programs/RSeQC-5.0.1/bin:$PATH
+          # export PYTHONPATH=/programs/RSeQC-5.0.1/lib64/python3.9/site-packages:/programs/RSeQC-5.0.1/lib/python3.9/site-packages
+          # export PATH=/programs/RSeQC-5.0.1/bin:$PATH
 
-          geneBody_coverage.py -r ${bed12[${BED}]} -i chr_${GBCOV}_BAMS -o ${PIN}
+          /workdir/TREx_shared/projects/TREX_rna_1.sif geneBody_coverage.py -r ${bed12[${BED}]} -i chr_${GBCOV}_BAMS -o ${PIN}
           mkdir geneBodyCov_chr_${GBCOV}
           mv *geneBodyCoverage.* log.txt geneBodyCov_chr_${GBCOV}
 
