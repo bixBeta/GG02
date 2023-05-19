@@ -32,7 +32,7 @@ trimSmall(){
         mkdir TrimQC_stats fastQC mirDeep2_results trimmed_fastqs
         for i in fastqs/*.gz
         do
-            /home/fa286/bin/TrimGalore-0.6.0/trim_galore --nextseq 20 --gzip -j 8 --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+            /workdir/TREx_shared/projects/TREX_small_1.sif trim_galore --nextseq 20 --gzip -j 8 --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
         done
         mv *_trimming_report.txt TrimQC_stats
         mv *trimmed.fq.gz trimmed_fastqs
@@ -44,7 +44,7 @@ trimHiSeq(){
         mkdir TrimQC_stats fastQC mirDeep2_results trimmed_fastqs
         for i in fastqs/*.gz
         do
-            /home/fa286/bin/TrimGalore-0.6.0/trim_galore --quality 20 --gzip -j 8 --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+          /workdir/TREx_shared/projects/TREX_small_1.sif trim_galore --quality 20 --gzip -j 8 --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
         done
         mv *_trimming_report.txt TrimQC_stats
         mv *trimmed.fq.gz trimmed_fastqs
@@ -59,7 +59,7 @@ fastq2fasta(){
   for i in *.fq
   do
     iSUB=`echo $i | cut -d "." -f1`
-    singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif fastq2fasta.pl $i > ${iSUB}.fasta
+    singularity run -B $USR --pwd $USR /workdir/TREx_shared/projects/TREX_small_1.sif fastq2fasta.pl $i > ${iSUB}.fasta
   done
   mkdir ../mirDeep2_results
   mv *fasta ../mirDeep2_results
@@ -128,7 +128,7 @@ mapper(){
 
     DATE=`date +"%m_%d_%H-%M"`
     USR=`pwd`
-    singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif mapper.pl $CONFIG -d -c -m -s ${PIN}_${DATE}.collapsed.fa
+    singularity run -B $USR --pwd $USR /workdir/TREx_shared/projects/TREX_small_1.sif mapper.pl $CONFIG -d -c -m -s ${PIN}_${DATE}.collapsed.fa
 
   fi
 
@@ -156,11 +156,11 @@ quant(){
       echo "New DATE = $DATE"
       echo
 
-      rsync -av /workdir/fa286/miRBase/v22_1/hairpin.fa .
-      rsync -av /workdir/fa286/miRBase/v22_1/mature.fa .
+      #rsync -av /workdir/fa286/miRBase/v22_1/hairpin.fa .
+      #rsync -av /workdir/fa286/miRBase/v22_1/mature.fa .
 
-      singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p hairpin.fa \
-      -m mature.fa \
+      singularity run -B $USR --pwd $USR /workdir/TREx_shared/projects/TREX_small_1.sif quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
+      -m /workdir/genomes/smRNA/mature.fa \
       -t $G -y ${PIN}_${DATE} -r ${COLLAPSED} -W -d
 
 
@@ -170,18 +170,18 @@ quant(){
       PIN=`echo *.collapsed.fa | cut -d '_' -f1`
       DATE=`echo *.collapsed.fa | cut -d '_' -f2- | cut -d '.' -f1`
 
-      rsync -av /workdir/fa286/miRBase/v22_1/hairpin.fa .
-      rsync -av /workdir/fa286/miRBase/v22_1/mature.fa .
+      #rsync -av /workdir/fa286/miRBase/v22_1/hairpin.fa .
+      #rsync -av /workdir/fa286/miRBase/v22_1/mature.fa .
 
-      singularity run -B $USR --pwd $USR /programs/miRDeep2-2.0.0.7/mirdeep2.sif quantifier.pl -p hairpin.fa \
-      -m mature.fa \
+      singularity run -B $USR --pwd $USR /workdir/TREx_shared/projects/TREX_small_1.sif quantifier.pl -p /workdir/genomes/smRNA/hairpin.fa \
+      -m /workdir/genomes/smRNA/mature.fa \
       -t $G -y ${PIN}_${DATE} -r ${PIN}_${DATE}.collapsed.fa -W -d
 
     fi
 
 
-          rm hairpin.fa
-          rm mature.fa
+          # rm hairpin.fa
+          # rm mature.fa
 
   cd ..
 
