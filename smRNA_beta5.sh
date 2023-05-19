@@ -32,7 +32,7 @@ trimSmall(){
         mkdir TrimQC_stats fastQC mirDeep2_results trimmed_fastqs
         for i in fastqs/*.gz
         do
-            /workdir/TREx_shared/projects/TREX_small_1.sif trim_galore --nextseq 20 --gzip -j 8 --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+            /workdir/TREx_shared/projects/TREX_small_1.sif trim_galore --nextseq 20 --gzip -j 8 --length 10 $i
         done
         mv *_trimming_report.txt TrimQC_stats
         mv *trimmed.fq.gz trimmed_fastqs
@@ -44,7 +44,7 @@ trimHiSeq(){
         mkdir TrimQC_stats fastQC mirDeep2_results trimmed_fastqs
         for i in fastqs/*.gz
         do
-          /workdir/TREx_shared/projects/TREX_small_1.sif trim_galore --quality 20 --gzip -j 8 --length 10  --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+          /workdir/TREx_shared/projects/TREX_small_1.sif trim_galore --quality 20 --gzip -j 8 --length 10 $i
         done
         mv *_trimming_report.txt TrimQC_stats
         mv *trimmed.fq.gz trimmed_fastqs
