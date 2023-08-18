@@ -151,7 +151,7 @@ donwload.roch(){
 donwload.BRC(){
 
     echo "B R C   D O W N L O A D"
-    `cat download.sh`
+    `bash download.sh`
 
     cat $WD/projects.list | while read fq
         do  
