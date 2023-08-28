@@ -123,6 +123,7 @@ donwload.roch(){
     echo "Roch URL -- ${URL}"
     echo ""
     wget -r -c ${URL}
+    mv `find grcweb.circ.rochester.edu/ -type f | grep 'tar.gz'` .
     md5sum *tar.gz >> TAR.md5
 
     tar -xzvf *tar.gz
@@ -141,7 +142,7 @@ donwload.roch(){
     
     cat $WD/projects.list | while read fq
         do
-            rsync -avR $fq/ `grep "$fq" $WD/archive.Path`
+            rsync -avR $fq/*gz `grep "$fq" $WD/archive.Path`
             rsync -arctuxzv --remove-source-files $fq /workdir/TREx_shared/projects/
         done
 
