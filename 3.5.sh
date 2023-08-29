@@ -105,7 +105,22 @@ trimNovaPE(){
 
                 for i in "${fastqs[@]}"
                 do
-                        trim_galore --nextseq 20 --gzip -j 8 --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                        #trim_galore --nextseq 20 --gzip -j 8 --length 50  --paired --fastqc --fastqc_args "-t 4 --outdir ./fastQC" $i
+                
+                    A=`echo $i | cut -d " " -f1`
+                    B=`echo $i | cut -d " " -f2`
+                    iSUB=`echo $i | cut -d ${DELIMITER} -f{$FIELD}`
+                    
+
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif fastp -z 4 -w 20 \
+                    --length_required 50 --qualified_quality_phred 20 \
+                    --trim_poly_g -i $A \
+                    -I $B \
+                    -o ${iSUB}_val_1.fq.gz \
+                    -O ${iSUB}_val_2.fq.gz \
+                    -h ${iSUB}.fastp.html \
+                    -j ${iSUB}.fastp.json
+                
                 done
 
                 mkdir TrimQC_stats trimmed_fastqs
