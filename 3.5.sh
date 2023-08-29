@@ -85,7 +85,7 @@ trimPE(){
                 
                     A=`echo $i | cut -d " " -f1`
                     B=`echo $i | cut -d " " -f2`
-                    iSUB=`echo $i | cut -d ${DELIMITER} -f{$FIELD}`
+                    iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
                     
 
                     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif fastp -z 4 -w 20 \
@@ -125,7 +125,7 @@ trimNovaPE(){
                 
                     A=`echo $i | cut -d " " -f1`
                     B=`echo $i | cut -d " " -f2`
-                    iSUB=`echo $i | cut -d ${DELIMITER} -f{$FIELD}`
+                    iSUB=`echo $i | cut -d ${DELIMITER} -f${FIELD}`
                     
 
                     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif fastp -z 4 -w 20 \
