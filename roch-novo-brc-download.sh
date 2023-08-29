@@ -111,7 +111,7 @@ donwload.novo(){
     
     cat $WD/projects.list | while read fq
         do
-            rsync -avR $fq/ `grep "$fq" $WD/archive.Path`
+            rsync -av $fq/*gz `grep "$fq" $WD/archive.Path`
             rsync -arctuxzv --remove-source-files $fq /workdir/TREx_shared/projects/
         done
 
@@ -142,7 +142,7 @@ donwload.roch(){
     
     cat $WD/projects.list | while read fq
         do
-            rsync -avR $fq/*gz `grep "$fq" $WD/archive.Path`
+            rsync -av $fq/*gz `grep "$fq" $WD/archive.Path`
             rsync -arctuxzv --remove-source-files $fq /workdir/TREx_shared/projects/
         done
 
@@ -162,7 +162,7 @@ donwload.BRC(){
     
     cat $WD/projects.list | while read fq
         do
-            rsync -avR $fq/ `grep "$fq" $WD/archive.Path`
+            rsync -av $fq/*gz `grep "$fq" $WD/archive.Path`
             rsync -arctuxzv --remove-source-files $fq /workdir/TREx_shared/projects/
         done
 
