@@ -629,7 +629,7 @@ fi
                                 elif [[ $AL == bt2 ]]; then
                                 #alignPE.bt2
                                 #   sort
-                                #   rmMT
+                                   rmMT
                                 #   markDups
                                 #   dedupBAM
                                 #    callPeak
