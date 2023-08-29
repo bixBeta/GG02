@@ -201,12 +201,12 @@ alignPE.bt2(){
               A=`echo $i | cut -d " " -f1`
               B=`echo $i | cut -d " " -f2`
 
-              (bowtie2 \
+              (/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif bowtie2 \
               --no-unal \
               -x ${genomeDirBT2[${DIR}]} \
               -1 $A -2 $B \
               --threads 12 \
-              -S - | samtools view -@ 24 -b -h -F 0x0100 -O BAM -o ${iSUB}.bam)2>${iSUB}.log
+              -S - | /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -@ 24 -b -h -F 0x0100 -O BAM -o ${iSUB}.bam)2>${iSUB}.log
 
             done
 
