@@ -218,23 +218,23 @@ alignPE.bt2(){
 
 
 sort(){
-                cd primary-BAMS
+            cd primary-BAMS
             for i in *.bam
             do
-            samtools sort $i > `echo  $i | cut -d "." -f1`.sorted.bam
+            /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools sort $i > `echo  $i | cut -d "." -f1`.sorted.bam
             done
 
             for i in *.sorted.bam
             do
-                samtools index $i
+                /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
             done
 
                     # alignment stats etc. on raw bams
                     for i in *.sorted.bam
                     do
                         iSUB=`echo $i | cut -d "." -f1`
-                        samtools flagstat $i > ${iSUB}.primary.flagstat
-                        samtools idxstats $i > ${iSUB}.primary.idxstats
+                        /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.primary.flagstat
+                        /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.primary.idxstats
                     done
 
                 cd ..
@@ -623,8 +623,8 @@ fi
                                   bedGraphs
 
                                 elif [[ $AL == bt2 ]]; then
-                                  alignPE.bt2
-                                #   sort
+                                #alignPE.bt2
+                                   sort
                                 #   rmMT
                                 #   markDups
                                 #   dedupBAM
@@ -678,22 +678,23 @@ if [[ -z $1 ]] || [[  $1 = "help"  ]] ; then
     exit 1
 
 else
-    echo >> beta6.atac.log
-    echo `date -u` >> beta6.atac.log
-    echo "Project Identifier Specified = " $PIN >> beta6.atac.log
-    echo "Reference Genome Specified   = " $DIR >> beta6.atac.log
-    echo "Trimming                     = " $T >> beta6.atac.log
-    echo "macs2 qval cutoff            = " $QVAL >> beta6.atac.log
-    echo "macs2 fe cutoff              = " $FE >> beta6.atac.log
-    echo >> beta6.atac.log
+    echo >> 3.5.atac.log
+    echo `date -u` >> 3.5.atac.log
+    echo "Project Identifier Specified = " $PIN >> 3.5.atac.log
+    echo "Reference Genome Specified   = " $DIR >> 3.5.atac.log
+    echo "Trimming                     = " $T >> 3.5.atac.log
+    echo "macs2 qval cutoff            = " $QVAL >> 3.5.atac.log
+    echo "macs2 fe cutoff              = " $FE >> 3.5.atac.log
+    echo >> 3.5.atac.log
 
-    echo "ENV INFO: " >> beta6.atac.log
-    echo >> beta6.atac.log
-    echo "STAR version:" `~/bin/STAR-2.7.0e/bin/Linux_x86_64/STAR --version` >> beta6.atac.log
-    echo "multiqc version:" `multiqc --version` >> beta6.atac.log
-    echo "samtools version:" `/programs/bin/samtools/samtools --version` >> beta6.atac.log
-    echo "macs2 version: macs2 2.1.0.20150731 " >> beta6.atac.log
-    echo "HOMER version: v4.10.4" >> beta6.atac.log
-    echo -------------------------------------------------------------------------------------------------- >> beta6.atac.log
+    echo "ENV INFO: " >> 3.5.atac.log
+    echo >> 3.5.atac.log
+    echo "BT2 version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif bowtie2 --version | head -1 | cut -d ' ' -f 2,3` >> 3.5.atac.log
+    echo "BWA version: 0.7.17-r1188" 
+    echo "multiqc version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif multiqc --version` >> 3.5.atac.log
+    echo "samtools version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools --version | head -1` >> 3.5.atac.log
+    echo "macs2 version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif macs2 --version` >> 3.5.atac.log
+    echo "HOMER version: v4.11.1" >> 3.5.atac.log
+    echo -------------------------------------------------------------------------------------------------- >> 3.5.atac.log
 
 fi
