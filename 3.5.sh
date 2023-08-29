@@ -218,7 +218,7 @@ alignPE.bt2(){
 
 
 sort(){
-    pwd
+    
             cd primary-BAMS
             for i in *.bam
             do
@@ -237,7 +237,10 @@ sort(){
                         /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.primary.flagstat
                         /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.primary.idxstats
                     done
+                
 
+                mkdir primary_stats
+                mv *.primary.flagstat *.primary.idxstats primary_stats/
                 cd ..
                 pwd
 }
@@ -253,31 +256,31 @@ rmMT(){
 
                     iSUB=`echo $i | cut -d "." -f1`
 
-                    samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  head -8 | grep -v "mitochondrion_genome" | cut -d ":" -f2 | xargs samtools view -b $i > ${iSUB}.noMT.bam
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -b $i > ${iSUB}.noMT.bam
 
                 done
 
-                for i in *.noMT.bam
-                do
-                    iSUB=`echo $i | cut -d "." -f1`
-                    samtools index $i
-                    samtools flagstat $i > ${iSUB}.noMT.flagstat
-                    samtools idxstats $i > ${iSUB}.noMT.idxstats
-                done
+                # for i in *.noMT.bam
+                # do
+                #     iSUB=`echo $i | cut -d "." -f1`
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noMT.flagstat
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noMT.idxstats
+                # done
 
-                for i in *.noMT.bam
-                do
-                    iSUB=`echo $i | cut -d "." -f1`
-                    bedtools intersect -v -a $i -b ${blkList[${DIR}]} > ${iSUB}.noBlacklist.noMT.bam
-                done
+                # for i in *.noMT.bam
+                # do
+                #     iSUB=`echo $i | cut -d "." -f1`
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif bedtools intersect -v -a $i -b ${blkList[${DIR}]} > ${iSUB}.noBlacklist.noMT.bam
+                # done
 
-                for i in *.noBlacklist.noMT.bam
-                do
-                    iSUB=`echo $i | cut -d "." -f1`
-                    samtools index $i
-                    samtools flagstat $i > ${iSUB}.noBlacklist.noMT.flagstat
-                    samtools idxstats $i > ${iSUB}.noBlacklist.noMT.idxstats
-                done
+                # for i in *.noBlacklist.noMT.bam
+                # do
+                #     iSUB=`echo $i | cut -d "." -f1`
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noBlacklist.noMT.flagstat
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noBlacklist.noMT.idxstats
+                # done
 
 
 
@@ -625,7 +628,7 @@ fi
 
                                 elif [[ $AL == bt2 ]]; then
                                 #alignPE.bt2
-                                   sort
+                                #   sort
                                 #   rmMT
                                 #   markDups
                                 #   dedupBAM
