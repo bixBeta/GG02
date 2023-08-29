@@ -690,12 +690,12 @@ else
 
     echo "ENV INFO: " >> 3.5.atac.log
     echo >> 3.5.atac.log
-    echo "BT2 version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif bowtie2 --version | head -1 | cut -d ' ' -f 2,3` >> 3.5.atac.log
-    echo "BWA version: 0.7.17-r1188" 
-    echo "multiqc version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif multiqc --version` >> 3.5.atac.log
-    echo "samtools version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools --version | head -1` >> 3.5.atac.log
-    echo "macs2 version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif macs2 --version` >> 3.5.atac.log
-    echo "HOMER version: v4.11.1" >> 3.5.atac.log
+    echo "BT2 version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif bowtie2 --version | head -1 | cut -d ' ' -f3` >> 3.5.atac.log
+    echo "BWA version: 0.7.17-r1188" >> 3.5.atac.log
+    echo "multiqc version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif multiqc --version | cut -d ' ' -f3` >> 3.5.atac.log
+    echo "samtools version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools --version | head -1 | cut -d ' ' -f2` >> 3.5.atac.log
+    echo "macs2 version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif macs2 --version | cut -d ' ' -f2` >> 3.5.atac.log
+    echo "HOMER version: 4.11.1" >> 3.5.atac.log
     echo "--------------------------------------------------------------------------------------------------" >> 3.5.atac.log
 
 fi
