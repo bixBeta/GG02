@@ -218,6 +218,7 @@ alignPE.bt2(){
 
 
 sort(){
+    pwd
             cd primary-BAMS
             for i in *.bam
             do
@@ -695,6 +696,6 @@ else
     echo "samtools version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools --version | head -1` >> 3.5.atac.log
     echo "macs2 version:" `/workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif macs2 --version` >> 3.5.atac.log
     echo "HOMER version: v4.11.1" >> 3.5.atac.log
-    echo -------------------------------------------------------------------------------------------------- >> 3.5.atac.log
+    echo "--------------------------------------------------------------------------------------------------" >> 3.5.atac.log
 
 fi
