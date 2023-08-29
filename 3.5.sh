@@ -90,7 +90,8 @@ trimPE(){
 
                     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif fastp -z 4 -w 20 \
                     --length_required 50 --qualified_quality_phred 20 \
-                    --trim_poly_g -i $A \
+                    --trim_poly_g \
+                    -i $A \
                     -I $B \
                     -o ${iSUB}_val_1.fq.gz \
                     -O ${iSUB}_val_2.fq.gz \
@@ -129,7 +130,8 @@ trimNovaPE(){
 
                     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif fastp -z 4 -w 20 \
                     --length_required 50 --qualified_quality_phred 20 \
-                    --trim_poly_g -i $A \
+                    --trim_poly_g \
+                    -i $A \
                     -I $B \
                     -o ${iSUB}_val_1.fq.gz \
                     -O ${iSUB}_val_2.fq.gz \
