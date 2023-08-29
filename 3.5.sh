@@ -36,6 +36,13 @@ declare -A genomeDir
 genomeDir=(
 ["mm10"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/BWAIndex/genome.fa" \
 ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/bwa.index/Homo_sapiens.GRCh38.dna.toplevel.fa" \
+)
+
+declare -A genomeDirBT2
+
+genomeDirBT2=(
+["mm10"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/bowtie2index/mm10" \
+["hg38"]="" \
 ["dm6"]="/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/Bowtie2.Index/dm6"
 )
 
@@ -196,7 +203,7 @@ alignPE.bt2(){
 
               (bowtie2 \
               --no-unal \
-              -x ${genomeDir[${DIR}]} \
+              -x ${genomeDirBT2[${DIR}]} \
               -1 $A -2 $B \
               --threads 12 \
               -S - | samtools view -@ 24 -b -h -F 0x0100 -O BAM -o ${iSUB}.bam)2>${iSUB}.log
@@ -617,17 +624,17 @@ fi
 
                                 elif [[ $AL == bt2 ]]; then
                                   alignPE.bt2
-                                  sort
-                                  rmMT
-                                  markDups
-                                  dedupBAM
-                                   callPeak
-                                   mergedPeaks
-                                   saf
-                                   frip
-                                   tagDir
-                                  annotatePeaks
-                                   bedGraphs
+                                #   sort
+                                #   rmMT
+                                #   markDups
+                                #   dedupBAM
+                                #    callPeak
+                                #    mergedPeaks
+                                #    saf
+                                #    frip
+                                #    tagDir
+                                #   annotatePeaks
+                                #    bedGraphs
 
                                 else
                                     echo "Please specify the available genome aligner (bt2 or bwa)"
