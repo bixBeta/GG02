@@ -251,14 +251,14 @@ sort(){
 
 rmMT(){
                 cd primary-BAMS
-                for i in *.sorted.bam
-                do
+                # for i in *.sorted.bam
+                # do
 
-                    iSUB=`echo $i | cut -d "." -f1`
+                #     iSUB=`echo $i | cut -d "." -f1`
 
-                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -b $i > ${iSUB}.noMT.bam
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -b $i > ${iSUB}.noMT.bam
 
-                done
+                # done
 
                 # for i in *.noMT.bam
                 # do
@@ -268,19 +268,22 @@ rmMT(){
                 #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noMT.idxstats
                 # done
 
-                # for i in *.noMT.bam
-                # do
-                #     iSUB=`echo $i | cut -d "." -f1`
-                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif bedtools intersect -v -a $i -b ${blkList[${DIR}]} > ${iSUB}.noBlacklist.noMT.bam
-                # done
+                # mkdir noMT_stats
+                # mv *noMT.flagstat *noMT.idxstats noMT_stats/
 
-                # for i in *.noBlacklist.noMT.bam
-                # do
-                #     iSUB=`echo $i | cut -d "." -f1`
-                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
-                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noBlacklist.noMT.flagstat
-                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noBlacklist.noMT.idxstats
-                # done
+                for i in *.noMT.bam
+                do
+                    iSUB=`echo $i | cut -d "." -f1`
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif bedtools intersect -v -a $i -b ${blkList[${DIR}]} > ${iSUB}.noBlacklist.noMT.bam
+                done
+
+                for i in *.noBlacklist.noMT.bam
+                do
+                    iSUB=`echo $i | cut -d "." -f1`
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noBlacklist.noMT.flagstat
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noBlacklist.noMT.idxstats
+                done
 
 
 
