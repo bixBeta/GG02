@@ -251,25 +251,25 @@ sort(){
 
 rmMT(){
                 cd primary-BAMS
-                # for i in *.sorted.bam
-                # do
+                for i in *.sorted.bam
+                do
 
-                #     iSUB=`echo $i | cut -d "." -f1`
+                    iSUB=`echo $i | cut -d "." -f1`
 
-                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -b $i > ${iSUB}.noMT.bam
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -H `ls -1 *.sorted.bam | head -1` | cut -f2 | grep "SN:" |  cut -d ":" -f2 | grep -v "MT\|_\|\." | xargs /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -b $i > ${iSUB}.noMT.bam
 
-                # done
+                done
 
-                # for i in *.noMT.bam
-                # do
-                #     iSUB=`echo $i | cut -d "." -f1`
-                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
-                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noMT.flagstat
-                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noMT.idxstats
-                # done
+                for i in *.noMT.bam
+                do
+                    iSUB=`echo $i | cut -d "." -f1`
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noMT.flagstat
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noMT.idxstats
+                done
 
-                # mkdir noMT_stats
-                # mv *noMT.flagstat *noMT.idxstats noMT_stats/
+                mkdir noMT_stats
+                mv *noMT.flagstat *noMT.idxstats noMT_stats/
 
                 for i in *.noMT.bam
                 do
@@ -285,6 +285,8 @@ rmMT(){
                     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noBlacklist.noMT.idxstats
                 done
 
+                mkdir noBLK_stats
+                mv *.noBlacklist.noMT.flagstat *.noBlacklist.noMT.idxstats noBLK_stats/
 
 
                 cd ..
@@ -292,20 +294,21 @@ rmMT(){
 
 markDups(){
                 cd primary-BAMS
-        for i in *.noBlacklist.noMT.bam
-        do
-            iSUB=`echo $i | cut -d "." -f1`
-            java -jar /programs/bin/picard-tools/picard.jar \
-            MarkDuplicates \
-            INPUT=$i \
-            OUTPUT=${iSUB}.dupMarked.noMT.noBlacklist.bam \
-            ASSUME_SORTED=true \
-            REMOVE_DUPLICATES=false \
-            METRICS_FILE=${iSUB}.MarkDuplicates.metrics.txt \
-            VALIDATION_STRINGENCY=LENIENT \
-            TMP_DIR=tmp
 
-        done
+                for i in *.noBlacklist.noMT.bam
+                do
+                    iSUB=`echo $i | cut -d "." -f1`
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif java -jar /myBin/picard.jar \
+                    MarkDuplicates \
+                    INPUT=$i \
+                    OUTPUT=${iSUB}.dupMarked.noMT.noBlacklist.bam \
+                    ASSUME_SORTED=true \
+                    REMOVE_DUPLICATES=false \
+                    METRICS_FILE=${iSUB}.MarkDuplicates.metrics.txt \
+                    VALIDATION_STRINGENCY=LENIENT \
+                    TMP_DIR=tmp
+
+                done
                 cd ..
 }
 
@@ -315,19 +318,19 @@ dedupBAM(){
                 for i in *.dupMarked.noMT.noBlacklist.bam
                 do
                     iSUB=`echo $i | cut -d "." -f1`
-                    samtools index $i
-                    samtools flagstat $i > ${iSUB}.noMT.noBlacklist.flagstat
-                    samtools idxstats $i > ${iSUB}.noMT.noBlacklist.idxstats
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noMT.noBlacklist.flagstat
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noMT.noBlacklist.idxstats
                 done
 
         for i in *.dupMarked.noMT.noBlacklist.bam
         do
                 iSUB=`echo $i | cut -d "." -f1`
-                samtools view -b -h -F 0X400 $i > ${iSUB}.DEDUP.bam
+                /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -b -h -F 0X400 $i > ${iSUB}.DEDUP.bam
         done
 
-                for i in *.DEDUP.bam; do samtools index $i ; samtools idxstats $i > `echo $i | cut -d "." -f1`.DEDUP.idxstats; done
-                for i in *.DEDUP.bam; do samtools flagstat $i > `echo $i | cut -d "." -f1`.DEDUP.flagstat; done
+                for i in *.DEDUP.bam; do /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i ; /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > `echo $i | cut -d "." -f1`.DEDUP.idxstats; done
+                for i in *.DEDUP.bam; do /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > `echo $i | cut -d "." -f1`.DEDUP.flagstat; done
 
                 multiqc -n ${PIN}.multiqc.report .
 
@@ -632,9 +635,9 @@ fi
                                 elif [[ $AL == bt2 ]]; then
                                 #alignPE.bt2
                                 #   sort
-                                   rmMT
-                                #   markDups
-                                #   dedupBAM
+                                #    rmMT
+                                   markDups
+                                   dedupBAM
                                 #    callPeak
                                 #    mergedPeaks
                                 #    saf
