@@ -346,7 +346,7 @@ tagDir(){
   for i in *.DEDUP.bam
   do
   iSUB=`echo "$i" | cut -d'.' -f1` # subset to rename
-  /home/fa286/bin/HOMER/bin/makeTagDirectory "$iSUB".tag.dir "$i"
+  /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif makeTagDirectory "$iSUB".tag.dir "$i"
   done
   cd ..
 }
@@ -359,13 +359,13 @@ callPeak(){
     echo "fe cutoff = $FE"
 
     mkdir peaks.OUT
-    export PYTHONPATH=/programs/macs2-2.2.7.1-r9/lib64/python3.9/site-packages
-    export PATH=/programs/macs2-2.2.7.1-r9/bin:$PATH
+    #export PYTHONPATH=/programs/macs2-2.2.7.1-r9/lib64/python3.9/site-packages
+    #export PATH=/programs/macs2-2.2.7.1-r9/bin:$PATH
 
     for i  in *.DEDUP.bam
       do
         iSUB=`echo $i | cut -d "." -f1`
-        macs2 callpeak -t $i \
+        /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif macs2 callpeak -t $i \
         -f BAMPE \
         -n ${iSUB} \
         -g ${gSize[${DIR}]} \
@@ -391,7 +391,7 @@ mergedPeaks(){
 
     allBams=`echo *.DEDUP.bam`
 
-    macs2 callpeak -t ${allBams} \
+    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif macs2 callpeak -t ${allBams} \
     -f BAMPE \
     -n allSamplesMergedPeakset \
     -g ${gSize[${DIR}]} \
@@ -420,7 +420,7 @@ frip(){
     for i  in *.DEDUP.bam
     do
       iSUB=`echo $i | cut -d "." -f1`
-      featureCounts -p -a peaks.OUT/allSamplesMergedPeakset.saf -F SAF -o "${iSUB}".readCountInPeaks.txt $i
+      /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif featureCounts -p -a peaks.OUT/allSamplesMergedPeakset.saf -F SAF -o "${iSUB}".readCountInPeaks.txt $i
     done
 
   cd ..
@@ -429,7 +429,7 @@ frip(){
 annotatePeaks(){
 
     cd dedup-BAMS/peaks.OUT
-    /home/fa286/bin/HOMER/bin/annotatePeaks.pl allSamplesMergedPeakset.saf ${DIR} -gtf ${gtfs[${DIR}]} > allSamplesMergedPeakset.Annotated.saf
+    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif annotatePeaks.pl allSamplesMergedPeakset.saf ${DIR} -gtf ${gtfs[${DIR}]} > allSamplesMergedPeakset.Annotated.saf
     cd ../..
 }
 
@@ -437,7 +437,7 @@ bedGraphs(){
   cd dedup-BAMS
     for i in *.tag.dir
     do
-        makeUCSCfile ${i} -o auto -fsize 1e10 -res 1 -color 106,42,73 -style chipseq
+       /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif makeUCSCfile ${i} -o auto -fsize 1e10 -res 1 -color 106,42,73 -style chipseq
     done
 
     mkdir tagDirs
@@ -465,13 +465,13 @@ atacQC(){
 
     cd dedup-BAMS
     echo "genome alias" = ${gAlias[${DIR}]}
-    Rscript /home/fa286/bin/scripts/atacQC.R ${gAlias[${DIR}]}
+    /workdir/TREx_shared/projects/TREX_rna_1.sif atacQC.R ${gAlias[${DIR}]}
     # ${gAlias[${DIR}]}
-    ~/bin/scripts/html.atacQC.sh `echo ${PIN}_atacQC`
+    /workdir/TREx_shared/projects/TREX_rna_1.sif html.atacQC.sh `echo ${PIN}_atacQC`
 
     cd ..
 
-    /home/fa286/bin/tree-1.7.0/tree > folder.structure
+    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif tree > folder.structure
 
 }
 
@@ -636,15 +636,15 @@ fi
                                 #alignPE.bt2
                                 #   sort
                                 #    rmMT
-                                   markDups
-                                   dedupBAM
-                                #    callPeak
-                                #    mergedPeaks
-                                #    saf
-                                #    frip
-                                #    tagDir
-                                #   annotatePeaks
-                                #    bedGraphs
+                                #    markDups
+                                #    dedupBAM
+                                   callPeak
+                                   mergedPeaks
+                                   saf
+                                   frip
+                                   tagDir
+                                   annotatePeaks
+                                   bedGraphs
 
                                 else
                                     echo "Please specify the available genome aligner (bt2 or bwa)"
