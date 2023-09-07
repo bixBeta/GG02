@@ -70,8 +70,8 @@ gSize=(
 
 declare -A blkList
 blkList=(
-["mm10"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/mm10-blacklist.v2.bed" \
-["hg38"]="/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/hg38-blacklist.v2.bed" \
+["mm10"]="/workdir/genomes/Mus_musculus/mm10/ENSEMBL/no-chr-mm10-blacklist.v2.bed" \
+["hg38"]="/workdir/genomes/Homo_sapiens/hg38/ENSEMBL/no-chr-hg38-blacklist.v2.bed" \
 ["dm6"]="/workdir/tools/blacklists/dm6-blacklist.v2.bed"
 )
 
@@ -277,16 +277,16 @@ rmMT(){
                     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif bedtools intersect -v -a $i -b ${blkList[${DIR}]} > ${iSUB}.noBlacklist.noMT.bam
                 done
 
-                for i in *.noBlacklist.noMT.bam
-                do
-                    iSUB=`echo $i | cut -d "." -f1`
-                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
-                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noBlacklist.noMT.flagstat
-                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noBlacklist.noMT.idxstats
-                done
+                # for i in *.noBlacklist.noMT.bam
+                # do
+                #     iSUB=`echo $i | cut -d "." -f1`
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noBlacklist.noMT.flagstat
+                #     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noBlacklist.noMT.idxstats
+                # done
 
-                mkdir noBLK_stats
-                mv *.noBlacklist.noMT.flagstat *.noBlacklist.noMT.idxstats noBLK_stats/
+                # mkdir noBLK_stats
+                # mv *.noBlacklist.noMT.flagstat *.noBlacklist.noMT.idxstats noBLK_stats/
 
 
                 cd ..
@@ -301,7 +301,7 @@ markDups(){
                     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif java -jar /myBin/picard.jar \
                     MarkDuplicates \
                     INPUT=$i \
-                    OUTPUT=${iSUB}.dupMarked.noMT.noBlacklist.bam \
+                    OUTPUT=${iSUB}.dupMarked.noBlacklist.noMT.bam \
                     ASSUME_SORTED=true \
                     REMOVE_DUPLICATES=false \
                     METRICS_FILE=${iSUB}.MarkDuplicates.metrics.txt \
@@ -315,15 +315,15 @@ markDups(){
 dedupBAM(){
                 cd primary-BAMS
                 # alignment stats etc. on dupMarked no MT bams
-                for i in *.dupMarked.noMT.noBlacklist.bam
+                for i in *.dupMarked.noBlacklist.noMT.bam
                 do
                     iSUB=`echo $i | cut -d "." -f1`
                     /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools index $i
-                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noMT.noBlacklist.flagstat
-                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noMT.noBlacklist.idxstats
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools flagstat $i > ${iSUB}.noBlacklist.noMT.flagstat
+                    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools idxstats $i > ${iSUB}.noBlacklist.noMT.idxstats
                 done
 
-        for i in *.dupMarked.noMT.noBlacklist.bam
+        for i in *.dupMarked.noBlacklist.noMT.bam
         do
                 iSUB=`echo $i | cut -d "." -f1`
                 /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif samtools view -b -h -F 0X400 $i > ${iSUB}.DEDUP.bam
@@ -636,9 +636,9 @@ fi
                                 elif [[ $AL == bt2 ]]; then
                                 #alignPE.bt2
                                 #   sort
-                                #    rmMT
-                                #    markDups
-                                #    dedupBAM
+                                   rmMT
+                                   markDups
+                                   dedupBAM
                                    callPeak
                                    mergedPeaks
                                    saf
