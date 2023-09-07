@@ -465,13 +465,14 @@ atacQC(){
 
     cd dedup-BAMS
     echo "genome alias" = ${gAlias[${DIR}]}
-    /workdir/TREx_shared/projects/TREX_rna_1.sif atacQC.R ${gAlias[${DIR}]}
+    
+    /workdir/TREx_shared/projects/CHIP_ATAC_V2.sif atacQC.R ${gAlias[${DIR}]}
     # ${gAlias[${DIR}]}
-    /workdir/TREx_shared/projects/TREX_rna_1.sif html.atacQC.sh `echo ${PIN}_atacQC`
+    /workdir/TREx_shared/projects/CHIP_ATAC_V2.sif html.atacQC.sh `echo ${PIN}_atacQC`
 
     cd ..
 
-    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif tree > folder.structure
+    /workdir/TREx_shared/projects/CHIP_ATAC_V2.sif tree > folder.structure
 
 }
 
