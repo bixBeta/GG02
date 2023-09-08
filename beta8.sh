@@ -174,6 +174,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["pao1"]="/workdir/genomes/Pseudomonas_aeruginosa/PAO1/NCBI/genomeDir" \
 ["grape"]="/workdir/genomes/Vitis_vinifera/GCA_000003745.2/ENSEMBL/Vitis_vinifera.star" \
 ["cowUMD"]="/workdir/genomes/Bos_taurus/UMD_3.1.1/NCBI/genomeDir/" \
+["guppy"]="/workdir/genomes/Poecilia_reticulata/GCF_000633615.1/NCBI/genomeDir" \
 ["macaca"]="/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir" )
 
 declare -A bed12
