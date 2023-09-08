@@ -429,7 +429,7 @@ frip(){
 annotatePeaks(){
 
     cd dedup-BAMS/peaks.OUT
-    /workdir/TREx_shared/projects/CHIP_ATAC_DEV.sif annotatePeaks.pl allSamplesMergedPeakset.saf ${DIR} -gtf ${gtfs[${DIR}]} > allSamplesMergedPeakset.Annotated.saf
+    /workdir/TREx_shared/projects/CHIP_ATAC_V3.sif annotatePeaks.pl allSamplesMergedPeakset.saf ${DIR} -gtf ${gtfs[${DIR}]} > allSamplesMergedPeakset.Annotated.saf
     cd ../..
 }
 
