@@ -176,6 +176,7 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["cowUMD"]="/workdir/genomes/Bos_taurus/UMD_3.1.1/NCBI/genomeDir/" \
 ["guppy"]="/workdir/genomes/Poecilia_reticulata/GCF_000633615.1/NCBI/genomeDir" \
 ["dm6"]="/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/genomeDir" \
+["tomato"]="/workdir/genomes/Solanum_lycopersicum/custom/genomeDir" \
 ["macaca"]="/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir" )
 
 declare -A bed12
@@ -205,6 +206,7 @@ bed12=(	["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/genes.bed12" \
 ["ddSmed"]="/workdir/genomes/Schmidtea_mediterranea/dd_Smed_v6/NCBI/dd_Smed_v6.pcf.bed12" \
 ["cowUMD"]="/workdir/genomes/Bos_taurus/UMD_3.1.1/NCBI/GCF_000003055.6_Bos_taurus_UMD_3.1.1_genomic.bed12" \
 ["dm6"]="/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/Drosophila_melanogaster.BDGP6.32.bed12" \
+["tomato"]="/workdir/genomes/Solanum_lycopersicum/custom/ITAG4.0_gene_models.bed12" \
 ["yeast"]="/workdir/genomes/Saccharomyces_cerevisiae/R64-1-1_GCA_000146045.2/ENSEMBL/Saccharomyces_cerevisiae.R64-1-1.bed12" )
 
 
