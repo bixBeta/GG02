@@ -634,8 +634,9 @@ fi
                                   bedGraphs
 
                                 elif [[ $AL == bt2 ]]; then
-                                #alignPE.bt2
-                                #   sort
+                                   
+                                   alignPE.bt2
+                                   sort
                                    rmMT
                                    markDups
                                    dedupBAM
