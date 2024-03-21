@@ -249,7 +249,7 @@ align(){
 
 
         # source activate
-        /workdir/TREx_shared/projects/TREX_rna_1.sif multiqc -f -n ${PIN}.star.multiqc.report .
+        multiqc -f -n ${PIN}.star.multiqc.report .
         mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
         mv *.ReadsPerGene.out.tab STAR.COUNTS
         mv *.bam STAR.BAMS
@@ -288,7 +288,7 @@ se_split(){
         done
 
     #			source activate RSC
-                /workdir/TREx_shared/projects/TREX_rna_1.sif multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
+                multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
                 mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
                 mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
                 cd STAR.SPLIT.Unmapped
@@ -341,7 +341,7 @@ alignPE(){
         done
 
     #    source activate RSC
-        /workdir/TREx_shared/projects/TREX_rna_1.sif multiqc -f -n ${PIN}.star.multiqc.report .
+        multiqc -f -n ${PIN}.star.multiqc.report .
         mkdir STAR.COUNTS STAR.BAMS STAR.LOGS
         mv *.ReadsPerGene.out.tab STAR.COUNTS
         mv *.bam STAR.BAMS
@@ -404,7 +404,7 @@ pe_split(){
           done
 
                     # source activate RSC
-                    /workdir/TREx_shared/projects/TREX_rna_1.sif multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
+                    multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
                     mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
                     mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
                     cd STAR.SPLIT.Unmapped
@@ -458,7 +458,7 @@ pe_bacteria_split(){
           done
 
                     # source activate RSC
-                    /workdir/TREx_shared/projects/TREX_rna_1.sif multiqc -f -n ${PIN}.star.multiqc.report .
+                    multiqc -f -n ${PIN}.star.multiqc.report .
                     mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
                     mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
                     cd STAR.SPLIT.Unmapped
@@ -506,7 +506,7 @@ se_bacteria_split(){
           done
 
   #			source activate RSC
-          /workdir/TREx_shared/projects/TREX_rna_1.sif multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
+          multiqc -f -n ${PIN}.starSPLIT.multiqc.report .
           mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
           mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
           cd STAR.SPLIT.Unmapped
@@ -563,7 +563,7 @@ UNMSE() {
 
           done
 
-          /workdir/TREx_shared/projects/TREX_rna_1.sif multiqc -f -n ${PIN}.star.unmapped.${grepOldRef}.mapped.to.${DIR}.multiqc.report .
+          multiqc -f -n ${PIN}.star.unmapped.${grepOldRef}.mapped.to.${DIR}.multiqc.report .
 
           mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
           mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
@@ -624,7 +624,7 @@ UNMPE() {
 
           done
 
-          /workdir/TREx_shared/projects/TREX_rna_1.sif multiqc -f -n ${PIN}.star.unmapped.${grepOldRef}.mapped.to.${DIR}.multiqc.report .
+          multiqc -f -n ${PIN}.star.unmapped.${grepOldRef}.mapped.to.${DIR}.multiqc.report .
 
           mkdir STAR.SPLIT.COUNTS STAR.SPLIT.BAMS STAR.SPLIT.LOGS STAR.SPLIT.Unmapped
           mv *Unmapped.out.mate* STAR.SPLIT.Unmapped
@@ -1042,7 +1042,7 @@ else
 
     echo "trim_galore version:"`/workdir/TREx_shared/projects/TREX_rna_1.sif trim_galore --version | grep 'version' | cut -d "n" -f2` >> beta8.run.log
     echo "STAR version:" `/workdir/TREx_shared/projects/TREX_rna_1.sif STAR --version` >> beta8.run.log
-    echo `/workdir/TREx_shared/projects/TREX_rna_1.sif multiqc --version` >> beta8.run.log
+    echo `multiqc --version` >> beta8.run.log
     echo `/workdir/TREx_shared/projects/TREX_rna_1.sif samtools --version | head -1` >> beta8.run.log
     echo "rseqc version:" `/workdir/TREx_shared/projects/TREX_rna_1.sif geneBody_coverage.py --version` >> beta8.run.log
 
