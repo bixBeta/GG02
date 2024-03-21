@@ -177,7 +177,8 @@ genomeDir=( ["hg38"]="/workdir/genomes/Homo_sapiens/hg38/UCSC/hg38.star" \
 ["guppy"]="/workdir/genomes/Poecilia_reticulata/GCF_000633615.1/NCBI/genomeDir" \
 ["dm6"]="/workdir/genomes/Drosophila_melanogaster/dm6/ENSEMBL/genomeDir" \
 ["tomato"]="/workdir/genomes/Solanum_lycopersicum/custom/genomeDir" \
-["macaca"]="/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir" )
+["macaca"]="/workdir/genomes/Macaca_fascicularis/GCF_000364345.1_Macaca_fascicularis_5.0/NCBI/genomeDir" \
+["ecoli"]="/workdir/genomes/Escherichia_coli/NCBI/GCA_014935805.1/GenBank/genomeDir" )
 
 declare -A bed12
 
