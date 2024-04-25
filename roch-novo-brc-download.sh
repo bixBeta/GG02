@@ -53,9 +53,9 @@ dirCheck(){
     
     cat $WD/projects.list | while read line
     do
-            DIR="/home/RSCshare/RSC/Projects/dataArchive/500x/${line}*" 
+            DIR="/home/RSCshare/RSC/Projects/dataArchive/600x/${line}*" 
             
-            if [ -d /home/RSCshare/RSC/Projects/dataArchive/500x/$line*  ]; then
+            if [ -d /home/RSCshare/RSC/Projects/dataArchive/600x/$line*  ]; then
 
                 echo "-----------------------------------------------------------------------------"
                 echo "Project Directory Exists, adding reseqs"
@@ -73,7 +73,7 @@ dirCheck(){
                 echo "Project Directory Does not Exist!!! Creating dirs logfiles; raw/$DATE; reports"
                 echo "-----------------------------------------------------------------------------"
 
-                cd /home/RSCshare/RSC/Projects/dataArchive/500x/
+                cd /home/RSCshare/RSC/Projects/dataArchive/600x/
                 mkdir -m 777 -p $line/logfiles $line/raw $line/reports
                 cd $line/raw
                 mkdir -m 777 $DATE && cd $DATE
