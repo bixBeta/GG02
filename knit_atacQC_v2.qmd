@@ -1,0 +1,212 @@
+---
+params:
+  title: title
+  id: trex_id
+  genome: genome
+  annot: annot
+date: today
+
+
+title:  "`r params$title`"
+author: <a href="https://trex.biotech.cornell.edu/"> Transcriptional Regulation & Expression Facility </a>
+format: 
+  html:
+    standalone: true
+    embed-resources: true
+    toc: true
+    toc-location: left
+    toc-title: "Summary"
+    grid: 
+      content-mode: full
+      sidebar-width: 350px
+      body-width: 1600px
+---
+
+------------------------------------------------------------------------
+
+```{=html}
+<style type="text/css">
+  .quarto-title-banner {
+    height: 100px; /* Adjust the height value as needed */
+  }
+.main-container {
+  max-width: 90% !important;
+  margin: auto;
+}
+.quarto-title-meta-contents a:hover {
+  color: #c44900; 
+}
+.trex-logo:hover {
+  transform: scale(2);
+  transition: transform 0.2s ease-in-out;
+  transform-origin: right center;
+}
+
+
+
+
+
+</style>
+```
+[![](https://raw.githubusercontent.com/bixBeta/atac/main/img/trex-mini.png){.trex-logo fig-align="right"}](https://trex.biotech.cornell.edu/)
+
+<hr>
+
+
+## Fragment Size Distributions
+```{r , fig.show='hold', echo=F, results='asis'}
+
+# Begin the tabset panel
+cat('::: {.panel-tabset}\n')
+
+p1 <- list.files("./atacQC.out", pattern = "fragSize.png$", full.names = T)
+
+my_elements <- c("Tab 1", "Tab 2", "Tab 3")
+
+# Loop over the elements and create a tab for each
+for (element in p1) {
+  cat(paste0('## ',  gsub(pattern = ".fragSize.png", replacement = "", x = basename(element)), '\n\n'))
+  
+  cat(paste0("![](", element , ")", "{width=800}" ))
+  # Your content for each tab goes here
+  #knitr::include_graphics(p1[element])
+  # For example, you can include images, text, or other R outputs
+  cat('\n\n')
+}
+
+# End the tabset panel
+cat(':::\n')
+
+```
+
+
+## TSSE Scores 
+
+[Encode Guidelines](https://www.encodeproject.org/atac-seq/#standards)
+
+```{r echo=FALSE, warning=FALSE, out.width='60%', out.height='100%'}
+
+
+
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(plotly))
+
+tsseScores <- readRDS("atacQC.out/tsseScores.RDS")
+tsseScores.df = as.data.frame(round(unlist(tsseScores), 2))
+colnames(tsseScores.df) = "value"
+tsseScores.df$Samples = rownames(tsseScores.df)
+
+# ggplotly(ggplot(data = tsseScores.df, aes(x = labels, y = value )) + geom_bar(stat = "identity") +
+#   geom_text(aes(label=value), vjust=1.6, color="white", size=3.5) + ggtitle("Transcription Start Site (TSS) Enrichment Scores") +
+#   xlab("Sample") + ylab("TSS Score") + scale_y_continuous() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)))
+
+m <- list(
+  l = 1,
+  r = 1,
+  b = 50,
+  t = 50,
+  pad = 1
+)
+
+plot_ly(data = tsseScores.df,  x = ~  Samples, y= ~ value, type = "bar",
+
+        colors = c('#c1b8c8'),
+        text = ~ value,
+        marker = list(size = 14,
+                      color = '#c1b8c8',
+                      line = list(width = 1)),
+        hovertemplate = paste("%{x}<br> TSSE-Score: %{text}")) %>%
+  layout(autosize = T, margin =m, title = "Transcription Start Site (TSS) Enrichment Scores",
+         scene = list(xaxis = list(title = paste0(" %")),
+                      yaxis = list(title = paste0(" %"))
+         ), margin = m
+  ) %>% layout(legend = list(orientation = 'v', xanchor = "left"))
+
+
+```
+
+
+
+
+## Peaks Annotations
+
+
+```{r echo=FALSE, eval=T, out.width=1000, out.height=1000, warning=FALSE}
+logs = list.files(path = "./atacQC.out/", pattern = "__percent__annot__log.txt$", full.names = T)
+
+logs.list = list()
+for (i in 1:length(logs)) {
+  logs.list[[i]] <- read.table(logs[i], header = T, sep = "\t", row.names = 1)
+  names(logs.list)[[i]] <-  gsub(pattern = "_peaks.narrowPeak__percent__annot__log.txt",
+                                 replacement = "", basename(logs[[i]]))
+}
+
+
+logs.df <- do.call("rbind", logs.list)
+
+suppressPackageStartupMessages(library(tidyr))
+logs.df$tmp = rownames(logs.df)
+logs.df = separate(logs.df, col = tmp, into = "sampleID", sep = "\\.", extra = "drop")
+
+colors<-  c("#EF8A62",
+            "#1f78b4",
+            "#1b9e77",
+            "#736372",
+            "#E9A3C9",
+            "#A1D76A",
+            "#FFFF33",
+            "grey",
+            "#b3e2cd",
+            "#67A9CF",
+            "peachpuff2",
+            "red",
+            "magenta3",
+            "blue",
+            "yellow"
+)
+
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(plotly))
+logs.df$Frequency = round(logs.df$Frequency, 1)
+  m <- list(
+      l = 50,
+      r = 50,
+      b = 100,
+      pad = 20
+    )
+logs.df %>% plot_ly(x = ~Frequency, y = ~sampleID, type = 'bar', orientation = "h",
+        name = ~Feature, color = ~Feature, colors =rev(colors) ) %>%
+  layout(yaxis = list(title = 'Percentage(%)'), barmode = 'stack',
+         legend = list(orientation = 'h', xanchor = "center",
+                       x = 0.5, y = -0.1), margin = m)
+
+
+
+
+```
+
+
+## Read Count Frequencies
+
+```{r , fig.show='hold', echo=F, results='asis'}
+
+# Begin the tabset panel
+cat('::: {.panel-tabset}\n')
+
+p2 <- list.files("./atacQC.out/", pattern = ".narrowPeak.Distribution.png$", full.names = T)
+
+# Loop over the elements and create a tab for each
+for (element in p2) {
+  cat(paste0('## ',  gsub(pattern = ".narrowPeak.Distribution.png", replacement = "", x = basename(element)), '\n\n'))
+  
+  cat(paste0("![](", element , ")", "{width=800}" ))
+  # Your content for each tab goes here
+  #knitr::include_graphics(p1[element])
+  # For example, you can include images, text, or other R outputs
+  cat('\n\n')
+}
+
+# End the tabset panel
+cat(':::\n')
+
+```
