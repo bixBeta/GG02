@@ -111,11 +111,11 @@ m <- list(
 plot_ly(data = tsseScores.df,  x = ~  Samples, y= ~ value, type = "bar",
 
         colors = c('#c1b8c8'),
-        text = ~ value,
+        text = ~ value, height = 600,
         marker = list(size = 14,
                       color = '#c1b8c8',
                       line = list(width = 1)),
-        hovertemplate = paste("%{x}<br> TSSE-Score: %{text}")) %>%
+        hovertemplate = paste("%{x}<br>%{text}<extra>TSSE-Score</extra>")) %>%
   layout(autosize = T, margin =m, title = "Transcription Start Site (TSS) Enrichment Scores",
          scene = list(xaxis = list(title = paste0(" %")),
                       yaxis = list(title = paste0(" %"))
